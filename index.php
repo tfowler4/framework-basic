@@ -1,2 +1,3 @@
 <?php
-    echo "HERE WE GO";
+    include 'application/initialize.php';
+    $app = new App();

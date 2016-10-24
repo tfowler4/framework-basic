@@ -1,0 +1,18 @@
+<table id="<?php echo $id; ?>" class="table table-striped table-condensed">
+    <thead>
+        <?php foreach( $headerItems as $item ) { ?>
+            <tr>
+                <th><?php echo $item->text; ?></th>
+            </tr>
+        <?php } ?>
+    </thead>
+    <tbody>
+        <?php foreach( $bodyItems as $item ) { ?>
+            <tr>
+                <td><?php echo $item->text; ?></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+    <tfoot>
+    </tfoot>
+</table>

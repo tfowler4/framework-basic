@@ -13,10 +13,14 @@ function __autoload($className)  {
     );
 
     $className = str_replace('_', '/', $className);
-echo "ClassName: $className<br>";
+    
+    echo "ClassName: $className<br>";
+    
     foreach( $directorys as $directory ) {
         $classPath = ABS_BASE_PATH . 'application/' . $directory . $className . '.php';
-echo 'ClassPath: ' . $classPath . "<br>";
+        
+        echo 'ClassPath: ' . $classPath . "<br>";
+        
         if( file_exists($classPath) ) {
             require $classPath;
 

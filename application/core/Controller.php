@@ -6,7 +6,10 @@
 class Controller {
     protected $_modelName;
     protected $_modelFile;
+    protected $_viewFile;
     protected $_contentFile;
+    protected $_header;
+    protected $_footer;
 
     /**
      * creates requested model class
@@ -21,11 +24,17 @@ class Controller {
         $this->_modelFile = ucfirst($model) . 'Model';
 
         // include all class files of model
-        foreach ( glob('./application/models/' . $this->_modelFile . '/model/*.php') as $fileName ) {
-            include $fileName;
-        }
+        //foreach ( glob('./application/models/' . $this->_modelFile . '/model/*.php') as $fileName ) {
+            //include $fileName;
+        //}
 
-        return new $this->_modelFile($model, $params);
+        $file = $this->_modelFile . '_model_' . $this->_modelFile;
+
+        //echo "File: $file<br>";
+        $test = "new $file($model, $params)";
+        //echo "After test";
+        //return new $file($model, $params);
+        //return new $this->_modelFile . '_model_' . $this->_modelFile($model, $params);
     }
 
     /**
@@ -36,11 +45,39 @@ class Controller {
      *
      * @return void
      */
-    protected function _view($view = '', $data = array() ) {
-        $this->_contentFile = '';
-        $this->_contentFile = './application/models/' . $this->_modelFile . '/view/index.html';
+    protected function _view($view = '', $data = array()) {
+        if ( !empty($view) ) {
+            $this->_contentFile = $_SERVER['DOCUMENT_ROOT'] . '/framework-basic/application/models/' . $this->_modelFile . '/view/' . strtolower($view) . '.html';
+        }
+
+        if ( !file_exists($this->_contentFile) ) {
+            $this->_loadError();
+        }
+
+        // convert array values to variables
+        extract((array)$data);
+
+        // load header content
+        $header = $this->_loadHeader($this->_modelName);
+        extract((array)$header);
+
+        // load footer content
+        $footer = $this->_loaderFooter();
+        extract((array)$footer);
 
         // include the index html file
         include './public/templates/default/index.html';
+    }
+
+    private function _loadError() {
+        header('Location: http://localhost/framework-basic/error/');
+    }
+
+    private function _loadHeader($activeModel) {
+        return new Header($activeModel);
+    }
+
+    private function _loaderFooter() {
+        return new Footer();
     }
 }

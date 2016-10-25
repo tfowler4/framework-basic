@@ -1,10 +1,10 @@
 <?php
 
 /**
- * home controller
+ * admin controller
  */
-class Home extends Controller {
-    protected $_modelName = 'Home';
+class Admin extends Controller {
+    protected $_modelName = 'Admin';
     /**
      * index model function when page is accessed
      *
@@ -14,9 +14,5 @@ class Home extends Controller {
      */
     public function index($params = array()) {
         $this->_view('index', $this->_model($this->_modelName, $params));
-    }
-
-    public function grid($params = array()) {
-        $this->_view('grid', $this->_model($this->_modelName, $params));
     }
 }

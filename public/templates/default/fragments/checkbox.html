@@ -1,0 +1,8 @@
+<?php foreach( $checkboxItems as $item ) { ?>
+    <div class="checkbox" <?php echo $item->disabled; ?>>
+        <label>
+            <input type="checkbox" <?php echo $item->id; ?> value="<?php echo $item->value; ?>" <?php echo $item->disabled; ?>>
+            <?php echo $item->text; ?>
+        </label>
+    </div>
+<?php } ?>

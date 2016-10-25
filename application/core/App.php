@@ -13,22 +13,23 @@ class App {
      */
     public function __construct() {
         $url  = $this->_parseURL();
-        $file = '/application/controllers/' . $url[0] . '.php';
+        $file = ABS_BASE_PATH . 'application/controllers/' . $url[0] . '.php';
 
         if ( file_exists($file) ) {
             $this->_controller = $url[0];
             unset($url[0]);
         }
 
-        // specified controller file
-        include '/application/controllers/' . $this->_controller . '.php';
+        // load config
+        $this->_loadAppConfig();
 
+        // load the new controller
         $this->_controller = new $this->_controller;
 
-        if ( isset($url[1]) ) {
-            if ( method_exists($this->_controller, $url[1]) ) {
-                $this->_method = $url[1];
-                unset($url[1]);
+        if ( isset($url[0]) ) {
+            if ( method_exists($this->_controller, $url[0]) ) {
+                $this->_method = $url[0];
+                unset($url[0]);
             }
         }
 
@@ -46,5 +47,14 @@ class App {
         if ( isset($_GET['url']) ) {
             return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL) );
         }
+    }
+
+    /**
+     * load configuration file
+     *
+     * @return void
+     */
+    private function _loadAppConfig() {
+        new Config();
     }
 }

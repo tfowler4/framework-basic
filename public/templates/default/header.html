@@ -1,6 +1,5 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#header-navbar" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -11,7 +10,6 @@
             <a class="navbar-brand" href="<?php echo $siteLink; ?>"><?php echo $siteName; ?></a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="header-navbar">
             <ul class="nav navbar-nav">
                 <?php foreach( $headerItems as $headerItem ) { ?>
@@ -46,8 +44,8 @@
             </ul>
 
             <div class="pull-right">
-                <button type="button" class="btn btn-default navbar-btn "><i class="glyphicon glyphicon-user" aria-hidden="true"></i>  Sign up</button>
-                <button type="button" class="btn btn-primary navbar-btn "><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i>  Login</button>
+                <button type="button" class="btn btn-default navbar-btn" ><i class="glyphicon glyphicon-user" aria-hidden="true"></i>  Sign up</button>
+                <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i>  Login</button>
             </div>
         </div>
     </div>

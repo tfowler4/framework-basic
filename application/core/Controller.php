@@ -24,11 +24,17 @@ class Controller {
         $this->_modelFile = ucfirst($model) . 'Model';
 
         // include all class files of model
-        foreach ( glob('./application/models/' . $this->_modelFile . '/model/*.php') as $fileName ) {
-            include $fileName;
-        }
+        //foreach ( glob('./application/models/' . $this->_modelFile . '/model/*.php') as $fileName ) {
+            //include $fileName;
+        //}
 
-        return new $this->_modelFile($model, $params);
+        $file = $this->_modelFile . '_model_' . $this->_modelFile;
+
+        //echo "File: $file<br>";
+        $test = "new $file($model, $params)";
+        //echo "After test";
+        //return new $file($model, $params);
+        //return new $this->_modelFile . '_model_' . $this->_modelFile($model, $params);
     }
 
     /**
@@ -52,30 +58,26 @@ class Controller {
         extract((array)$data);
 
         // load header content
-        $header = $this->_headerContent();
+        $header = $this->_loadHeader($this->_modelName);
         extract((array)$header);
 
         // load footer content
-        $footer = $this->_footerContent();
+        $footer = $this->_loaderFooter();
         extract((array)$footer);
 
         // include the index html file
         include './public/templates/default/index.html';
     }
 
-    protected function _loadError() {
+    private function _loadError() {
         header('Location: http://localhost/framework-basic/error/');
     }
 
-    protected function _headerContent() {
-        include './application/views/header.php';
-
-        return new Header();
+    private function _loadHeader($activeModel) {
+        return new Header($activeModel);
     }
 
-    protected function _footerContent() {
-        include './application/views/footer.php';
-
+    private function _loaderFooter() {
         return new Footer();
     }
 }

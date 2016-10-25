@@ -9,8 +9,6 @@ class Config {
     }
 
     protected function _loadDb() {
-        require 'Database.php';
-
         Database::init('root', '', 'framework_test', 'localhost');
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
+// constants class
+require 'config/Constants.php';
+
+// autoloader class
+require 'config/Autoloader.php';
+
 // base app class
-include 'core/App.php';
+require 'core/App.php';
 
 // base controller class
-include 'core/Controller.php';
+require 'core/Controller.php';
 
 // base model class
-include 'core/Model.php';
-
-// base config class
-include 'config/Config.php';
+require 'core/Model.php';

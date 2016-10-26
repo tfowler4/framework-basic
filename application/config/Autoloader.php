@@ -21,7 +21,7 @@ function __autoload($className)  {
     foreach( $directorys as $directory ) {
         $classPath = ABS_BASE_PATH . 'application/' . $directory . $className . '.php';
 echo "ClassPath: $classPath<br>";
-        if( file_exists($classPath) || file_exists(strtolower($classPath)) ) {
+        if( file_exists($classPath) ) {
             echo "Including it!<br>";
             include_once $classPath;
 

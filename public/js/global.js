@@ -9,7 +9,7 @@
         
         console.log('clicked: ' +layout);
         
-        var url = location.hostname + '/session/template/' + layout;
+        var url = 'http://' + location.hostname + '/session/template/' + layout;
         alert("The URL: " + url);
         // ajax call to retrieve new encounter dropdown select html
          $.ajax({

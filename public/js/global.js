@@ -17,7 +17,7 @@
             type: 'GET',
             success: function(data) {
                 console.log('success: ' +data);
-                //location.reload();
+                location.reload();
             },
             error: function(xhr, desc, err) {
                 console.log(xhr);

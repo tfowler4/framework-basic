@@ -12,17 +12,6 @@ function __autoload($className)  {
         'views/'
     );
 
-<<<<<<< HEAD
-    $className = str_replace('_', '/', $className);
-    
-    echo 'ClassName: ' . $className . '<br>';
-    
-    foreach( $directorys as $directory ) {
-        $classPath = ABS_BASE_PATH . 'application/' . $directory . $className . '.php';
-        
-        echo 'ClassPath: ' . $classPath . "<br>";
-        
-=======
     $isModelFile = false;
 
     if ( strpos($className, 'Model') !== FALSE ) {
@@ -32,7 +21,6 @@ function __autoload($className)  {
     foreach( $directorys as $directory ) {
         $classPath = ABS_BASE_PATH . 'application/' . $directory . $className . '.php';
 
->>>>>>> stage
         if( file_exists($classPath) ) {
             include_once $classPath;
 

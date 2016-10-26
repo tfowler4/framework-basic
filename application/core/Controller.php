@@ -61,7 +61,7 @@ class Controller {
         $this->_loadCSS();
         
         // include the index html file
-        include './public/templates/default/index.html';
+        include './public/templates/index.html';
     }
 
     private function _loadError() {

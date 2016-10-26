@@ -3,7 +3,7 @@
  * session controller
  */
 class Session extends Controller {
-    protected $_modelName = 'Example';
+    protected $_modelName = 'Session';
     /**
      * index model function when page is accessed
      *

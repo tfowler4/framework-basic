@@ -1,16 +1,11 @@
 (function() {
-    console.log("here");
-
     // for testing switching teplates and ajax calls
     $('.template-selector').click(function(e) {
         e.preventDefault();
 
         var layout = $(this).find('a').text().toLowerCase();
+        var url    = 'http://' + location.hostname + '/session/template/' + layout;
         
-        console.log('clicked: ' +layout);
-        
-        var url = 'http://' + location.hostname + '/session/template/' + layout;
-        alert("The URL: " + url);
         // ajax call to retrieve new encounter dropdown select html
          $.ajax({
             url: url,

@@ -7,14 +7,15 @@ class Constants {
     public function __construct() {
         // site details
         define('SITE_NAME', 'Framework Basic');
-        define('SITE_URL',  'http://localhost/framework-basic');
         define('SITE_STATUS', 1);
         define('APP_NAME', 'framework-basic');
 
         // paths
         if ( strpos($_SERVER['DOCUMENT_ROOT'], 'htdocs') !== FALSE ) {
+            define('SITE_URL',  'http://localhost/framework-basic/');
             define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . APP_NAME . '/');
         } else {
+            define('SITE_URL',  'http://framework-basic.topofrift.com/');
             define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/');
         }
 

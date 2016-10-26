@@ -17,4 +17,11 @@ class Session extends Controller {
             $_SESSION['template'] = $params[0];
         }
     }
+    
+    public function index($params = array()) {
+        echo "inside session->template with: "; var_dump($params);
+        if ( !empty($params) ) {
+            $_SESSION['template'] = $params[0];
+        }
+    }
 }

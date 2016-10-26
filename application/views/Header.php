@@ -26,7 +26,7 @@ class Header {
 
     private function _createNavItem($navItem) {
         if ( empty($navItem['link']) ) {
-            $navItem['link'] = 'http://localhost/framework-basic/' . strtolower($navItem['model']);
+            $navItem['link'] = SITE_URL . strtolower($navItem['model']);
             $navItem['target'] = '_self';
         } else {
             $navItem['target'] = '_blank';

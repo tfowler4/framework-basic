@@ -2,9 +2,11 @@
     console.log("here");
 
     // for testing switching teplates and ajax calls
-    $('#test-template-selector').parent().find('li a').click(function(e) {
+    $('.template-selector').click(function(e) {
         e.preventDefault();
 
-        console.log('clicked');
+        var layout = $(this).find('a').text().toLowerCase();
+        
+        console.log('clicked: ' +layout);
     });
 })();

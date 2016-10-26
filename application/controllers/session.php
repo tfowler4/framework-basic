@@ -14,14 +14,14 @@ class Session extends Controller {
     public function template($params = array()) {
         echo "inside session->template with: "; var_dump($params);
         if ( !empty($params) ) {
-            $_SESSION['template'] = $params[0];
+            $_SESSION['template'] = $params[1];
         }
     }
     
     public function index($params = array()) {
         echo "inside session->template with: "; var_dump($params);
         if ( !empty($params) ) {
-            $_SESSION['template'] = $params[0];
+            $_SESSION['template'] = $params[1];
         }
     }
 }

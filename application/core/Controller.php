@@ -23,18 +23,7 @@ class Controller {
         $this->_modelName = strtolower($model);
         $this->_modelFile = ucfirst($model) . 'Model';
 
-        // include all class files of model
-        //foreach ( glob('./application/models/' . $this->_modelFile . '/model/*.php') as $fileName ) {
-            //include $fileName;
-        //}
-
-        $file = $this->_modelFile . '_model_' . $this->_modelFile;
-
-        //echo "File: $file<br>";
-        $test = "new $file($model, $params)";
-        //echo "After test";
-        //return new $file($model, $params);
-        //return new $this->_modelFile . '_model_' . $this->_modelFile($model, $params);
+        return new $this->_modelFile($model, $params);
     }
 
     /**

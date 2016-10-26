@@ -1,9 +1,9 @@
 <?php
 
 /**
- * example model
+ * sub example model
  */
-class ExampleModel extends Model {
+class SubExampleModel extends Model {
     public $content = array();
 
     /**
@@ -12,6 +12,6 @@ class ExampleModel extends Model {
     public function __construct($module, $params) {
         parent::__construct();
 
-        $this->pageTitle = 'Example';
+        $this->pageTitle = 'Sub Example';
     }
 }

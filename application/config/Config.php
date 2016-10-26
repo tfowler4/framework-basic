@@ -9,6 +9,6 @@ class Config {
     }
 
     protected function _loadDb() {
-        Database::init('root', '', 'framework_test', 'localhost');
+        Database::init(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     }
 }

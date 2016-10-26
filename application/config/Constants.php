@@ -12,7 +12,12 @@ class Constants {
         define('APP_NAME', 'framework-basic');
 
         // paths
-        define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . APP_NAME . '/');
+        if ( strpos($_SERVER['DOCUMENT_ROOT'], 'htdocs') !== FALSE ) {
+            define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . APP_NAME . '/');
+        } else {
+            define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/');
+        }
+
 
         // modules
         define('MODULE_HOME_STATUS', 1);
@@ -20,7 +25,7 @@ class Constants {
 
         // database settings
         define('DB_HOST', 'localhost');
-        define('DB_NAME', 'framework_test');
+        define('DB_NAME', 'xeonsold_framework_test');
         define('DB_USER', 'root');
         define('DB_PASS', '');
 

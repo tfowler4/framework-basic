@@ -59,7 +59,7 @@ class Controller {
     }
 
     private function _loadError() {
-        //header('Location: ' . SITE_URL . 'error');
+        header('Location: ' . SITE_URL . 'error');
     }
 
     private function _loadHeader($activeModel) {

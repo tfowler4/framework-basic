@@ -12,6 +12,7 @@ class Session extends Controller {
      * @return void
      */
     public function template($params = array()) {
+        echo "inside session->template with: "; var_dump($params);
         if ( !empty($params) ) {
             $_SESSION['template'] = $params[0];
         }

@@ -12,8 +12,10 @@ class Constants {
 
         // template
         if ( empty($_SESSION['template']) ) {
+            echo "Setting site templte as default";
             define('SITE_TEMPLATE', 'default'); 
         } else {
+            echo "Setting site template as " . $_SESSION['template'];
             define('SITE_TEMPLATE', $_SESSION['template']);    
         }
         

@@ -10,6 +10,13 @@ class Constants {
         define('SITE_STATUS', 1);
         define('APP_NAME', 'framework-basic');
 
+        // template
+        if ( empty($_SESSION['template']) ) {
+            define('SITE_TEMPLATE', 'default'); 
+        } else {
+            define('SITE_TEMPLATE', $_SESSION['template']);    
+        }
+        
         // paths
         if ( strpos($_SERVER['DOCUMENT_ROOT'], 'htdocs') !== FALSE ) {
             define('SITE_URL',  'http://localhost/framework-basic/');

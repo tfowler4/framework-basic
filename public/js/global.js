@@ -1,7 +1,8 @@
 (function() {
     console.log("here");
 
-    $('#test-template-selector li a').click(function(e) {
+    // for testing switching teplates and ajax calls
+    $('#test-template-selector).parent().find(li a').click(function(e) {
         e.preventDefault();
 
         console.log('clicked');

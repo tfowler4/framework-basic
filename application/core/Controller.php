@@ -59,7 +59,7 @@ class Controller {
     }
 
     private function _loadError() {
-        header('Location: http://localhost/framework-basic/error/');
+        header('Location: ' . SITE_URL . 'error');
     }
 
     private function _loadHeader($activeModel) {

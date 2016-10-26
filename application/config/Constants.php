@@ -26,8 +26,8 @@ class Constants {
         // database settings
         define('DB_HOST', 'localhost');
         define('DB_NAME', 'xeonsold_framework_test');
-        define('DB_USER', 'root');
-        define('DB_PASS', '');
+        define('DB_USER', 'xeonsold_test');
+        define('DB_PASS', 'test74108520');
 
         $this->_loadSiteNavigation();
     }

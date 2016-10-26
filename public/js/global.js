@@ -10,13 +10,13 @@
         console.log('clicked: ' +layout);
         
         var url = location.hostname + '/session/template/' + layout;
-        console.log("The URL: " + url);
+        alert("The URL: " + url);
         // ajax call to retrieve new encounter dropdown select html
          $.ajax({
             url: url,
             type: 'GET',
             success: function(data) {
-                console.log('success');
+                console.log('success: ' +data);
                 location.reload();
             },
             error: function(xhr, desc, err) {

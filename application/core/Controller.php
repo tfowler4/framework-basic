@@ -56,10 +56,10 @@ class Controller {
 
         // load javascript content
         $this->_loadJS();
-        
+
         // load css content
         $this->_loadCSS();
-        
+
         // include the index html file
         include './public/templates/index.html';
     }
@@ -75,16 +75,16 @@ class Controller {
     private function _loaderFooter() {
         return new Footer();
     }
-    
+
     private function _loadCSS() {
-        
+
     }
-    
+
     private function _loadJS() {
         $jsPath = ABS_BASE_PATH . 'public/js/ ' . $this->_modelName . '/*.js';
-        
+
         foreach( glob($jsPath) as $file ) {
-            include $file;   
+            include $file;
         }
     }
 }

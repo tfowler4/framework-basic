@@ -26,10 +26,10 @@ class App {
         // load the new controller
         $this->_controller = new $this->_controller;
 
-        if ( isset($url[0]) ) {
-            if ( method_exists($this->_controller, $url[0]) ) {
-                $this->_method = $url[0];
-                unset($url[0]);
+        if ( !empty($url[1]) ) {
+            if ( method_exists($this->_controller, $url[1]) ) {
+                $this->_method = $url[1];
+                unset($url[1]);
             }
         }
 

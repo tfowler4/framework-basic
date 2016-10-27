@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * application configuration class
+ */
 class Config {
     /**
      * constructor
@@ -8,7 +11,7 @@ class Config {
         $this->_loadDb();
     }
 
-    protected function _loadDb() {
+    private function _loadDb() {
         Database::init(DB_USER, DB_PASS, DB_NAME, DB_HOST);
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * constants defining class
+ */
 class Constants {
     /**
      * constructor
@@ -12,11 +15,11 @@ class Constants {
 
         // template
         if ( empty($_SESSION['template']) ) {
-            define('SITE_TEMPLATE', 'default'); 
+            define('SITE_TEMPLATE', 'default');
         } else {
-            define('SITE_TEMPLATE', $_SESSION['template']);    
+            define('SITE_TEMPLATE', $_SESSION['template']);
         }
-        
+
         // paths
         if ( strpos($_SERVER['DOCUMENT_ROOT'], 'htdocs') !== FALSE ) {
             define('SITE_URL',  'http://localhost/framework-basic/');

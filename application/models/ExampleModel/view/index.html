@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-xs-12">
+        <?php echo $data->formInput('Test Field1', 'test1', 'text', 'Placeholder Stuff1', ''); ?>
+        <?php echo $data->formInput('Test Field2', 'test2', 'text', 'Placeholder Stuff2', '', 'disabled'); ?>
+        <?php echo $data->formInput('Test Field3', 'test3', 'text', 'Placeholder Stuff3', ''); ?>
+
+        <?php
+            $checkBoxes = array();
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 1';
+            $checkBox->value     = 'test1';
+            $checkBox->inline    = '-inline';
+            $checkBox->disabled  = '';
+            array_push($checkBoxes, $checkBox);
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 2';
+            $checkBox->value     = 'test2';
+            $checkBox->inline    = '-inline';
+            $checkBox->disabled  = 'disabled';
+            array_push($checkBoxes, $checkBox);
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 3';
+            $checkBox->value     = 'test3';
+            $checkBox->inline    = '-inline';
+            $checkBox->disabled  = '';
+            array_push($checkBoxes, $checkBox);
+        ?>
+
+        <?php echo $data->formCheckboxes('Test Checkboxes Inline', '', $checkBoxes); ?>
+
+        <?php
+            $checkBoxes = array();
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 1';
+            $checkBox->value     = 'test1';
+            $checkBox->inline    = '';
+            $checkBox->disabled  = '';
+            array_push($checkBoxes, $checkBox);
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 2';
+            $checkBox->value     = 'test2';
+            $checkBox->inline    = '';
+            $checkBox->disabled  = 'disabled';
+            array_push($checkBoxes, $checkBox);
+
+            $checkBox            = new stdClass();
+            $checkBox->labelName = 'Test 3';
+            $checkBox->value     = 'test3';
+            $checkBox->inline    = '';
+            $checkBox->disabled  = '';
+            array_push($checkBoxes, $checkBox);
+        ?>
+
+        <?php echo $data->formCheckboxes('Test Checkboxes', '', $checkBoxes); ?>
+
+        <?php
+            $radioButtons = array();
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 1';
+            $radioButton->value     = 'test1';
+            $radioButton->inline    = '';
+            $radioButton->disabled  = '';
+            array_push($radioButtons, $radioButton);
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 2';
+            $radioButton->value     = 'test2';
+            $radioButton->inline    = '';
+            $radioButton->disabled  = 'disabled';
+            array_push($radioButtons, $radioButton);
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 3';
+            $radioButton->value     = 'test3';
+            $radioButton->inline    = '';
+            $radioButton->disabled  = '';
+            array_push($radioButtons, $radioButton);
+        ?>
+
+        <?php echo $data->formRadioButtons('Test Radio Buttons', 'testRadio', $radioButtons); ?>
+
+        <?php
+            $radioButtons = array();
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 1';
+            $radioButton->value     = 'test1';
+            $radioButton->inline    = '-inline';
+            $radioButton->disabled  = '';
+            array_push($radioButtons, $radioButton);
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 2';
+            $radioButton->value     = 'test2';
+            $radioButton->inline    = '-inline';
+            $radioButton->disabled  = 'disabled';
+            array_push($radioButtons, $radioButton);
+
+            $radioButton            = new stdClass();
+            $radioButton->labelName = 'Test 3';
+            $radioButton->value     = 'test3';
+            $radioButton->inline    = '-inline';
+            $radioButton->disabled  = '';
+            array_push($radioButtons, $radioButton);
+        ?>
+
+        <?php echo $data->formRadioButtons('Test Radio Buttons Inline', 'testRadio', $radioButtons); ?>
+    </div>
+</div>

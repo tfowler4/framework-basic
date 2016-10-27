@@ -1,4 +1,5 @@
 <?php
+
 /**
  * session controller
  */
@@ -12,16 +13,8 @@ class Session extends Controller {
      * @return void
      */
     public function template($params = array()) {
-        echo "inside session->template with: "; var_dump($params);
-        if ( !empty($params) ) {
-            $_SESSION['template'] = $params[1];
-        }
-    }
-    
-    public function index($params = array()) {
-        echo "inside session->index with: "; var_dump($params);
-        if ( !empty($params) ) {
-            $_SESSION['template'] = $params[1];
+        if ( !empty($params[0]) ) {
+            $_SESSION['template'] = $params[0];
         }
     }
 }

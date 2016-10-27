@@ -4,8 +4,8 @@
         e.preventDefault();
 
         var layout = $(this).find('a').text().toLowerCase();
-        var url    = 'http://' + location.hostname + '/session/template/' + layout;
-        
+        var url    = site_url + 'session/template/' + layout;
+
         // ajax call to retrieve new encounter dropdown select html
          $.ajax({
             url: url,

@@ -1,1 +1,5 @@
 /* Global CSS */
+
+#content {
+    min-height: 533px;
+}

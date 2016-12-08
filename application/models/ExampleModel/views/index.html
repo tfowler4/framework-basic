@@ -111,5 +111,28 @@
         ?>
 
         <?php echo $data->formRadioButtons('Test Radio Buttons Inline', 'testRadio', $radioButtons); ?>
+
+        <?php
+            $selectOptions = array();
+
+            $selectOption            = new stdClass();
+            $selectOption->text      = 'Test 1';
+            $selectOption->value     = 'test1';
+            $selectOption->selected  = '';
+            array_push($selectOptions, $selectOption);
+
+            $selectOption            = new stdClass();
+            $selectOption->text      = 'Test 2';
+            $selectOption->value     = 'test2';
+            $selectOption->selected  = '';
+            array_push($selectOptions, $selectOption);
+
+            $selectOption            = new stdClass();
+            $selectOption->text      = 'Test 3';
+            $selectOption->value     = 'test3';
+            $selectOption->selected  = 'selected';
+            array_push($selectOptions, $selectOption);
+        ?>
+        <?php echo $data->formSelect('Test Select Dropdown', 'testSelect', $selectOptions); ?>
     </div>
 </div>

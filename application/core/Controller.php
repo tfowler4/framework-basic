@@ -36,7 +36,7 @@ class Controller {
      */
     protected function _view($view = '', $data = array()) {
         if ( !empty($view) ) {
-            $this->_contentFile = ABS_BASE_PATH . 'application/models/' . $this->_modelFile . '/view/' . strtolower($view) . '.html';
+            $this->_contentFile = ABS_BASE_PATH . 'application/models/' . $this->_modelFile . '/views/' . strtolower($view) . '.html';
         }
 
         if ( !file_exists($this->_contentFile) ) {

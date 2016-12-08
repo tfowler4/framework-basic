@@ -63,9 +63,21 @@ abstract class Model {
         $id   = 'input-' . strtolower($fieldName) . '-' . $fieldType;
         $html ='';
 
-        $html .= '<div class="form-group">';
-            $html .= '<label for="' . $id . '">' . $labelName  . '</label>';
+        $html .= '<div class="form-group has-feedback">';
+            $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
             $html .= '<input type="' . $fieldType . '" class="form-control" id="' . $id . '" placeholder="' . $placeHolder . '" value="' . $value . '" ' . $isDisabled . '>';
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    public function formTextarea($labelName, $fieldName, $placeHolder, $value, $rows, $isDisabled = '') {
+        $id   = 'textarea-' . strtolower($fieldName);
+        $html ='';
+
+        $html .= '<div class="form-group has-feedback">';
+            $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
+            $html .= '<textarea class="form-control" id="' . $id . '" rows="' . $rows . '" placeholder="' . $placeHolder . '" value="' . $value . '" ' . $isDisabled . ' style="resize:none;"></textarea>';
         $html .= '</div>';
 
         return $html;
@@ -74,12 +86,12 @@ abstract class Model {
     public function formCheckboxes($labelName, $fieldName, $checkBoxes) {
         $html ='';
 
-        $html .= '<div class="form-group">';
+        $html .= '<div class="form-group has-feedback">';
             $html .= '<label>' . $labelName  . '</label><br>';
 
             foreach( $checkBoxes as $checkBox ) {
                 $html .= '<div class="checkbox' . $checkBox->inline . ' ' . $checkBox->disabled . '">';
-                    $html .= '<label>';
+                    $html .= '<label control-label>';
                         $html .= '<input type="checkbox" value="' . $checkBox->value . '" ' . $checkBox->disabled . '>';
                         $html .= $checkBox->labelName;
                     $html .= '</label>';
@@ -93,12 +105,12 @@ abstract class Model {
     public function formRadioButtons($labelName, $fieldName, $radioButtons) {
         $html ='';
 
-        $html .= '<div class="form-group">';
+        $html .= '<div class="form-group has-feedback">';
             $html .= '<label>' . $labelName  . '</label><br>';
 
             foreach( $radioButtons as $radioButton ) {
                 $html .= '<div class="radio' . $radioButton->inline . ' ' . $radioButton->disabled . '">';
-                    $html .= '<label>';
+                    $html .= '<label control-label>';
                         $html .= '<input type="radio" name="' . $fieldName . '" value="' . $radioButton->value . '" ' . $radioButton->disabled . '>';
                         $html .= $radioButton->labelName;
                     $html .= '</label>';
@@ -113,11 +125,11 @@ abstract class Model {
         $id   = 'select-' . strtolower($fieldName);
         $html ='';
 
-        $html .= '<div class="form-group">';
-            $html .= '<label for="' . $id . '">' . $labelName  . '</label>';
+        $html .= '<div class="form-group has-feedback">';
+            $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
             $html .= '<select class="form-control" id="' . $id . '">';
                 foreach( $selectOptions as $option ) {
-                    $html .= '<option value="' . $option->value . '">' . $option->text . '</option>';
+                    $html .= '<option value="' . $option->value . '" ' . $option->selected . '>' . $option->text . '</option>';
                 }
             $html .= '</select>';
         $html .= '</div>';

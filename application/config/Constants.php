@@ -66,6 +66,10 @@ class Constants {
         $navItem = array('title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
+        // Admin
+        $navItem = array('title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
+        array_push($navigationArray, $navItem);
+
         // navigation
         define('NAV', serialize($navigationArray));
     }

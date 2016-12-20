@@ -6,6 +6,7 @@
 abstract class Model {
     public $pageTitle;
     public $pageDescription;
+    public $form;
     public $db;
 
     /**
@@ -23,22 +24,6 @@ abstract class Model {
         $query = $this->db->query(sprintf($queryString));
 
         return $query->fetch(PDO::FETCH_ASSOC);
-        /*
-            private static function _getServers() {
-                $query = self::$_dbh->query(sprintf(
-                    "SELECT server_id,
-                            name,
-                            country,
-                            region,
-                            type,
-                            type2
-                       FROM %s
-                   ORDER BY region ASC, name ASC",
-                    self::TABLE_SERVERS
-                    ));
-                while ($row = $query->fetch(PDO::FETCH_ASSOC)) { $row['name'] = utf8_encode($row['name']); CommonDataContainer::$serverArray[$row['name']] = new Server($row); }
-            }
-         */
     }
 
     protected function _extractFields($fields) {
@@ -65,7 +50,7 @@ abstract class Model {
 
         $html .= '<div class="form-group has-feedback">';
             $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
-            $html .= '<input type="' . $fieldType . '" class="form-control" id="' . $id . '" placeholder="' . $placeHolder . '" value="' . $value . '" ' . $isDisabled . '>';
+            $html .= '<input type="' . $fieldType . '" class="form-control" id="' . $id . '" placeholder="' . $placeHolder . '" name="' . $fieldName . '" value="' . $value . '" ' . $isDisabled . '>';
         $html .= '</div>';
 
         return $html;
@@ -77,7 +62,7 @@ abstract class Model {
 
         $html .= '<div class="form-group has-feedback">';
             $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
-            $html .= '<textarea class="form-control" id="' . $id . '" rows="' . $rows . '" placeholder="' . $placeHolder . '" value="' . $value . '" ' . $isDisabled . ' style="resize:none;"></textarea>';
+            $html .= '<textarea class="form-control" id="' . $id . '" rows="' . $rows . '" placeholder="' . $placeHolder . '" name="' . $fieldName . '" ' . $isDisabled . ' style="resize:none;">' . $value . '</textarea>';
         $html .= '</div>';
 
         return $html;
@@ -127,7 +112,7 @@ abstract class Model {
 
         $html .= '<div class="form-group has-feedback">';
             $html .= '<label for="' . $id . '" control-label>' . $labelName  . '</label>';
-            $html .= '<select class="form-control" id="' . $id . '">';
+            $html .= '<select class="form-control" id="' . $id . '" name="' . $fieldName . '">';
                 foreach( $selectOptions as $option ) {
                     $html .= '<option value="' . $option->value . '" ' . $option->selected . '>' . $option->text . '</option>';
                 }

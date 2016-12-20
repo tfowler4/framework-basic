@@ -8,6 +8,7 @@ class Controller {
     protected $_modelFile;
     protected $_viewFile;
     protected $_contentFile;
+    protected $_alert;
     protected $_header;
     protected $_footer;
 
@@ -41,6 +42,20 @@ class Controller {
 
         if ( !file_exists($this->_contentFile) ) {
             $this->_loadError();
+        }
+
+        // handle if any form submission took place
+        if ( FormHandler::isFormSubmitted() ) {
+            FormHandler::process();
+        }
+
+        if ( !empty(SessionData::get('message')) ) {
+            $data->alert = SessionData::get('message');
+            SessionData::remove('message');
+        }
+
+        if ( !empty(SessionData::get('form')) ) {
+            //$data->form = SessionData::get('form');
         }
 
         // convert array values to variables

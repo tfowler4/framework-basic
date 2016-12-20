@@ -1,0 +1,6 @@
+<?php if ( !empty($alert) ) { ?>
+    <div class="alert alert-<?php echo $alert['type']; ?> alert-dismissible fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong><?php echo $alert['title']; ?></strong> <span><?php echo $alert['message']; ?></span>
+    </div>
+<?php } ?>

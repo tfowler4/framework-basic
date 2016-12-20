@@ -13,11 +13,13 @@ class HomeModel extends Model {
         parent::__construct();
         $this->pageTitle = 'Home';
 
-        $this->content = $this->_getContent();
+        //$this->content = $this->_getContent();
+        $this->content = $this->_getArticles();
 
-        $articles = $this->_selectQuery('article_table', array('article_id', 'title', 'body', 'editor'), '');
+        //$articles = $this->_selectQuery('article_table', array('article_id', 'title', 'body', 'editor'), '');
     }
 
+    /*
     protected function _getContent() {
         $content = array();
 
@@ -28,6 +30,36 @@ class HomeModel extends Model {
             $stdObj->footer = 'Panel Footer';
 
             array_push($content, $stdObj);
+        }
+
+        return $content;
+    }
+    */
+
+    /**
+     * get a list of all article categories from database
+     *
+     * @return void
+     */
+    protected function _getArticles() {
+        $dbh     = Database::getHandler();
+        $content = array();
+
+        $query = $dbh->query(sprintf(
+            "SELECT article_id,
+                    title,
+                    category,
+                    content
+               FROM article_table"
+        ));
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $article         = new stdClass();
+            $article->title  = $row['title'];
+            $article->body   = $row['content'];
+            $article->footer = $row['category'];
+
+            array_push($content, $article);
         }
 
         return $content;

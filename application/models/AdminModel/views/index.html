@@ -72,61 +72,20 @@
             <div id="article-add" class="tab-pane fade">
                 <h2>Articles <small>Add New Article</small></h2>
 
-                <?php echo $data->formInput('Title', 'title', 'text', 'Name of Article', ''); ?>
+                <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                    <?php echo $data->formInput('Title', 'title', 'text', 'Name of Article', $forms->createArticle->title); ?>
 
-                <?php
-                $categories = array();
+                    <?php echo $data->formSelect('Category', 'category', $categories); ?>
 
-                $category            = new stdClass();
-                $category->text      = 'Technology';
-                $category->value     = 'tech';
-                $category->selected  = '';
-                array_push($categories, $category);
+                    <?php echo $data->formTextarea('Content', 'content', 'Content of Article', $forms->createArticle->content, 10); ?>
 
-                $category            = new stdClass();
-                $category->text      = 'Sports';
-                $category->value     = 'sports';
-                $category->selected  = '';
-                array_push($categories, $category);
-
-                $category            = new stdClass();
-                $category->text      = 'Health & Fitness';
-                $category->value     = 'health';
-                $category->selected  = '';
-                array_push($categories, $category);
-                ?>
-                <?php echo $data->formSelect('Category', 'category', $categories); ?>
-
-                <?php echo $data->formTextarea('Content', 'content', 'Content of Article', '', 10); ?>
-
-                <button type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Submit</button>
+                    <button type="submit" name="form" value="create-article" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Article</button>
+                </form>
             </div>
 
             <div id="article-edit" class="tab-pane fade">
                 <h2>Articles <small>Edit/Remove Article</small></h2>
 
-                <?php
-                $articles = array();
-
-                $article            = new stdClass();
-                $article->text      = 'Welcome To My Blog!';
-                $article->value     = '1';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                $article            = new stdClass();
-                $article->text      = 'What I ate today!';
-                $article->value     = '2';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                $article            = new stdClass();
-                $article->text      = 'Lets Talk Code!';
-                $article->value     = '3';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                ?>
                 <?php echo $data->formSelect('Article', 'article', $articles); ?>
 
                 <button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
@@ -136,39 +95,19 @@
             <div id="category-add" class="tab-pane fade">
                 <h2>Categories <small>Add New Categories</small></h2>
 
-                <?php echo $data->formInput('Name', 'name', 'text', 'Name of Category', ''); ?>
+                <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                    <?php echo $data->formInput('Name', 'name', 'text', 'Name of Category', $forms->createCategory->name); ?>
 
-                <?php echo $data->formInput('Meta Tags', 'meta-tags', 'text', 'Ex. cars,sports,games', ''); ?>
+                    <?php echo $data->formInput('Meta Tags', 'meta', 'text', 'Ex. cars,sports,games', $forms->createCategory->meta); ?>
 
-                <button type="button" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Submit</button>
+                    <button type="submit" name="form" value="create-category" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</button>
+                </form>
             </div>
 
             <div id="category-edit" class="tab-pane fade">
                 <h2>Categories <small>Edit/Remove Categories</small></h2>
 
-                <?php
-                $articles = array();
-
-                $article            = new stdClass();
-                $article->text      = 'Welcome To My Blog!';
-                $article->value     = '1';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                $article            = new stdClass();
-                $article->text      = 'What I ate today!';
-                $article->value     = '2';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                $article            = new stdClass();
-                $article->text      = 'Lets Talk Code!';
-                $article->value     = '3';
-                $article->selected  = '';
-                array_push($articles, $article);
-
-                ?>
-                <?php echo $data->formSelect('Article', 'article', $articles); ?>
+                <?php echo $data->formSelect('Categories', 'category', $categories); ?>
 
                 <button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
                 <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
@@ -218,3 +157,7 @@
         </div>
     </div>
 </div>
+
+<script>
+
+</script>

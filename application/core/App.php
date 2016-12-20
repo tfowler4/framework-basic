@@ -56,5 +56,7 @@ class App {
      */
     private function _loadAppConfig() {
         new Config();
+
+        SessionData::start();
     }
 }

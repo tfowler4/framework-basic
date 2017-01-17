@@ -29,8 +29,8 @@ abstract class Form {
         return $areRequiredFieldsValid;
     }
 
-    public function setFieldRequired($fieldName) {
-        array_push($this->requiredFields, $fieldName);
+    public function setFieldRequired($fields) {
+        $this->requiredFields = $fields;
     }
 
     public function prePopulateFields() {
@@ -40,7 +40,7 @@ abstract class Form {
             foreach( $sessionForm as $formField => $fieldValue ) {
                 $this->$formField = '';
 
-                if ( is_string($fieldValue) ) {
+                if ( !empty($fieldValue) && is_string($fieldValue) ) {
                     $this->$formField = $fieldValue;
                 }
             }

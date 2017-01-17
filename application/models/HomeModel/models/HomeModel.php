@@ -30,7 +30,9 @@ class HomeModel extends Model {
                 content,
                 category_table.category_id,
                 meta,
-                category_table.name as category
+                category_table.name as category,
+                article_table.date_added as date_added,
+                article_table.last_modified as last_modified
             FROM
                 article_table
             INNER JOIN
@@ -38,7 +40,7 @@ class HomeModel extends Model {
             ON
                 article_table.category_id = category_table.category_id
             ORDER BY
-                date_added DESC"
+                article_table.date_added DESC"
         );
 
         $query = $dbh->query($query);

@@ -23,6 +23,9 @@ class AdminModel extends Model {
         $this->forms = new stdClass();
         $this->forms->createArticle  = new CreateArticleForm();
         $this->forms->createCategory = new CreateCategoryForm();
+        $this->forms->editArticle    = new EditArticleForm();
+        $this->forms->editCategory   = new EditCategoryForm();
+        $this->forms->removeCategory = new RemoveCategoryForm();
     }
 
     /**
@@ -38,11 +41,13 @@ class AdminModel extends Model {
                 category_id,
                 name,
                 meta,
-                num_of_articles
+                num_of_articles,
+                date_added,
+                last_modified
             FROM
                category_table
             ORDER BY
-                name"
+                name DESC"
         );
 
         $query = $dbh->query($query);
@@ -69,7 +74,9 @@ class AdminModel extends Model {
                 content,
                 category_table.category_id,
                 meta,
-                category_table.name as category
+                category_table.name as category,
+                article_table.date_added as date_added,
+                article_table.last_modified as last_modified
             FROM
                 article_table
             INNER JOIN
@@ -77,7 +84,7 @@ class AdminModel extends Model {
             ON
                 article_table.category_id = category_table.category_id
             ORDER BY
-                date_added DESC"
+                article_table.date_added DESC"
         );
 
         $query = $dbh->query($query);

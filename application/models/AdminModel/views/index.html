@@ -12,46 +12,39 @@
     }
 </style>
 
-<div class="row">
-    <div class="col-xs-3">
-        <div class="panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading" data-toggle="collapse" href="#collapse-article">
-                    <h4 class="panel-title"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Articles</h4>
-                </div>
-                <div id="collapse-article" class="panel-collapse collapse">
-                    <ul class="list-group">
-                        <a class="list-group-item" href="#article-add" data-toggle="tab"><i class="fa fa-plus" aria-hidden="true"></i> Add New Articles</a>
-                        <a class="list-group-item" href="#article-edit" data-toggle="tab"><i class="fa fa-pencil" aria-hidden="true"></i> Edit/Remove Articles</a>
-                    </ul>
-                </div>
+<div id="adminModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">...</h4>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading" data-toggle="collapse" href="#collapse-category">
-                    <h4 class="panel-title"><i class="fa fa-tags" aria-hidden="true"></i> Categories</h4>
-                </div>
-                <div id="collapse-category" class="panel-collapse collapse">
-                    <ul class="list-group">
-                        <a class="list-group-item" href="#category-add" data-toggle="tab"><i class="fa fa-plus" aria-hidden="true"></i> Add New Categories</a>
-                        <a class="list-group-item" href="#category-edit" data-toggle="tab"><i class="fa fa-pencil" aria-hidden="true"></i> Edit/Remove Categories</a>
-                    </ul>
-                </div>
+            <div class="modal-body">
+                <p class="text-center">
+                    <span id="confirmText"></span>
+                    <form id="modalForm" action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                        <div class="form-group has-feedback">
+                            <input type="hidden" name="id" value="">
+                        </div>
+
+                        <div class="form-group has-feedback text-center">
+                            <button type="submit" name="" class="btn btn-danger"><i class="fa fa-times"></i> Confirm Removal</button>
+                        </div>
+                    </form>
+                </p>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading" data-toggle="collapse" href="#collapse-social">
-                    <h4 class="panel-title"><i class="fa fa-twitter" aria-hidden="true"></i> Social Networking</h4>
-                </div>
-                <div id="collapse-social" class="panel-collapse collapse">
-                    <ul class="list-group">
-                        <a class="list-group-item" href="#social-facebook" data-toggle="tab"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
-                        <a class="list-group-item" href="#social-twitter" data-toggle="tab"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
-                        <a class="list-group-item" href="#social-linkedin" data-toggle="tab"><i class="fa fa-linkedin" aria-hidden="true"></i> Linkedin</a>
-                    </ul>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-3">
+        <?php include 'left-menu.html'; ?>
     </div>
 
     <div class="col-xs-9">
@@ -65,190 +58,11 @@
                 </div>
             </div>
 
-            <div id="article-add" class="tab-pane fade">
-                <h2>Articles <small>Add New Article</small></h2>
+            <?php include 'tab-pane-articles.html'; ?>
 
-                <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
-                    <div class="form-group has-feedback">
-                        <label for="input-title-text" class="control-label">Title</label>
-                        <input type="text" class="form-control" id="input-title-text" placeholder="Title of Article" name="title" value="<?php echo $forms->createArticle->title; ?>">
-                    </div>
+            <?php include 'tab-pane-categories.html'; ?>
 
-                    <div class="form-group has-feedback">
-                        <label for="select-category" class="control-label">Category</label>
-                        <select class="form-control" id="select-category" name="category">
-                            <option></option>
-                            <?php foreach( $categories as $category ) { ?>
-                                <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-
-                    <div class="form-group has-feedback">
-                        <label for="textarea-content" class="control-label">Content</label>
-                        <textarea class="form-control" id="textarea-content" rows="10" placeholder="Content of Article" name="content" style="resize:none;"><?php echo $forms->createArticle->content; ?></textarea>
-                    </div>
-
-                    <button type="submit" name="form" value="create-article" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Article</button>
-                </form>
-            </div>
-
-            <div id="article-edit" class="tab-pane fade">
-                <h2>Articles <small>Edit/Remove Article</small></h2>
-
-                <div class="form-group has-feedback">
-                    <label for="select-article" class="control-label">Article</label>
-                    <select class="form-control" id="select-article" name="article">
-                        <option></option>
-                        <?php foreach( $articles as $article ) { ?>
-                            <option value="<?php echo $article->articleId; ?>"><?php echo $article->title; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <hr>
-
-                <div id="article-edit-content" style="display:none;">
-                    <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
-                        <div class="form-group has-feedback">
-                            <label for="input-article-edit-title" class="control-label">Title</label>
-                            <input type="text" class="form-control" id="input-article-edit-title" placeholder="Title of Article" name="title" value="">
-                        </div>
-
-                        <div class="form-group has-feedback">
-                            <label for="select-category" class="control-label">Category</label>
-                            <select class="form-control" id="select-article-edit-category" name="category">
-                                <option></option>
-                                <?php foreach( $categories as $category ) { ?>
-                                    <option value="<?php echo $category->categoryId; ?>"><?php echo $category->name; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group has-feedback">
-                            <label for="textarea-content" class="control-label">Content</label>
-                            <textarea class="form-control" id="textarea-article-edit-content" rows="10" placeholder="Content of Article" name="content" style="resize:none;"></textarea>
-                        </div>
-
-                        <!--<button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>-->
-                        <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
-                        <button type="submit" name="form" value="create-article" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Confirm</button>
-                    </form>
-                </div>
-            </div>
-
-            <div id="category-add" class="tab-pane fade">
-                <h2>Categories <small>Add New Categories</small></h2>
-
-                <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
-                    <div class="form-group has-feedback">
-                        <label for="input-name-text" class="control-label">Name</label>
-                        <input type="text" class="form-control" id="input-name-text" placeholder="Name of Category" name="name" value="<?php echo $forms->createCategory->name; ?>">
-                    </div>
-
-                    <div class="form-group has-feedback">
-                        <label for="input-meta-text" class="control-label">Meta Tags</label>
-                        <input type="text" class="form-control" id="input-meta-text" placeholder="Ex. cars,sports,games" name="title" value="<?php echo $forms->createCategory->meta; ?>">
-                    </div>
-
-                    <button type="submit" name="form" value="create-category" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</button>
-                </form>
-            </div>
-
-            <div id="category-edit" class="tab-pane fade">
-                <h2>Categories <small>Edit/Remove Categories</small></h2>
-
-                <div class="form-group has-feedback">
-                    <label for="select-category" class="control-label">Category</label>
-                    <select class="form-control" id="select-category" name="category">
-                        <option></option>
-                        <?php foreach( $categories as $category ) { ?>
-                            <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>
-                        <?php } ?>
-                    </select>
-                </div>
-
-                <button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-                <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
-            </div>
-
-            <div id="social-facebook" class="tab-pane fade">
-                <h2>Social Networking <small>Facebook Settings</small></h2>
-
-                <div class="form-group has-feedback">
-                    <label for="input-token-text" class="control-label">Token</label>
-                    <input type="text" class="form-control" id="input-token-text" placeholder="" name="token" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-secretkey-text" class="control-label">Secret Key</label>
-                    <input type="text" class="form-control" id="input-secretkey-text" placeholder="" name="secretkey" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-username-text" class="control-label">Username</label>
-                    <input type="text" class="form-control" id="input-username-text" placeholder="" name="username" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-password-password" class="control-label">Password</label>
-                    <input type="password" class="form-control" id="input-password-password" placeholder="" name="password" value="">
-                </div>
-
-                <button type="button" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-            </div>
-
-            <div id="social-twitter" class="tab-pane fade">
-                <h2>Social Networking <small>Twitter Settings</small></h2>
-
-                <div class="form-group has-feedback">
-                    <label for="input-token-text" class="control-label">Token</label>
-                    <input type="text" class="form-control" id="input-token-text" placeholder="" name="token" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-secretkey-text" class="control-label">Secret Key</label>
-                    <input type="text" class="form-control" id="input-secretkey-text" placeholder="" name="secretkey" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-username-text" class="control-label">Username</label>
-                    <input type="text" class="form-control" id="input-username-text" placeholder="" name="username" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-password-password" class="control-label">Password</label>
-                    <input type="password" class="form-control" id="input-password-password" placeholder="" name="password" value="">
-                </div>
-
-                <button type="button" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-            </div>
-
-            <div id="social-linkedin" class="tab-pane fade">
-                <h2>Social Networking <small>Linkedin Settings</small></h2>
-
-                <div class="form-group has-feedback">
-                    <label for="input-token-text" class="control-label">Token</label>
-                    <input type="text" class="form-control" id="input-token-text" placeholder="" name="token" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-secretkey-text" class="control-label">Secret Key</label>
-                    <input type="text" class="form-control" id="input-secretkey-text" placeholder="" name="secretkey" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-username-text" class="control-label">Username</label>
-                    <input type="text" class="form-control" id="input-username-text" placeholder="" name="username" value="">
-                </div>
-
-                <div class="form-group has-feedback">
-                    <label for="input-password-password" class="control-label">Password</label>
-                    <input type="password" class="form-control" id="input-password-password" placeholder="" name="password" value="">
-                </div>
-
-                <button type="button" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Submit</button>
-            </div>
+            <?php include 'tab-pane-social-networks.html'; ?>
         </div>
     </div>
 </div>

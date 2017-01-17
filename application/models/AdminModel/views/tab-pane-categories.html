@@ -1,0 +1,62 @@
+<div id="category-add" class="tab-pane fade">
+    <h2>Categories <small>Add New Categories</small></h2>
+
+    <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+        <div class="form-group has-feedback">
+            <label for="input-name-text" class="control-label">Name</label>
+            <input type="text" class="form-control" id="input-name-text" placeholder="Name of Category" name="name" value="<?php echo $forms->createCategory->name; ?>">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label for="input-meta-text" class="control-label">Meta Tags</label>
+            <input type="text" class="form-control" id="input-meta-text" placeholder="Ex. cars,sports,games" name="meta" value="<?php echo $forms->createCategory->meta; ?>">
+        </div>
+
+        <button type="submit" name="form" value="create-category" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</button>
+    </form>
+</div>
+
+<div id="category-edit" class="tab-pane fade">
+    <h2>Categories <small>Edit/Remove Categories</small></h2>
+
+    <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+        <div class="form-group has-feedback">
+            <label for="edit-category-id" class="control-label">Category</label>
+            <div class="input-group">
+                <select class="form-control" id="edit-category-id" name="id">
+                    <option></option>
+                    <?php foreach( $categories as $category ) { ?>
+                        <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>
+                    <?php } ?>
+                </select>
+
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary select-edit-category"><i class="fa fa-pencil"></i></button>
+                    <button type="button" class="btn btn-danger select-remove-category"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div id="edit-category-pane" style="display:none;">
+            <div class="form-group has-feedback">
+                <label for="edit-category-name" class="control-label">Title</label>
+                <input type="text" class="form-control" id="edit-category-name" placeholder="Name of Category" name="name" value="">
+            </div>
+
+            <div class="form-group has-feedback">
+                <label for="edit-category-meta" class="control-label">Meta Tags</label>
+                <input type="text" class="form-control" id="edit-category-meta" placeholder="Ex. cars,sports,games" name="meta" value="">
+            </div>
+
+            <div class="form-group has-feedback">
+                <label for="edit-category-articles" class="control-label">Number of Articles</label>
+                <input type="text" class="form-control" id="edit-category-articles" placeholder="0" value="" disabled>
+            </div>
+
+            <button type="button" class="btn btn-danger btn-remove-category"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+            <button type="submit" name="form" value="edit-category" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Confirm</button>
+        </div>
+    </form>
+</div>

@@ -58,7 +58,7 @@ class FormHandler {
     }
 
     public static function generateError() {
-        SessionData::set('message', MESSAGE_GENERIC);
+        SessionData::set('message', self::MESSAGE_GENERIC);
     }
 
     public static function populateFormFields() {

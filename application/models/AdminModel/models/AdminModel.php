@@ -17,9 +17,6 @@ class AdminModel extends Model {
         $this->pageTitle = 'Administration';
 
         $this->_loadForms();
-
-        $this->_getArticles();
-        $this->_getCategories();
     }
 
     protected function _loadForms() {
@@ -33,7 +30,7 @@ class AdminModel extends Model {
      *
      * @return void
      */
-    private function _getCategories() {
+    public function getCategories() {
         $dbh = Database::getHandler();
 
         $query = $dbh->query(sprintf(
@@ -46,10 +43,7 @@ class AdminModel extends Model {
         ));
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $category           = new stdClass();
-            $category->text     = $row['name'];
-            $category->value    = $row['category_id'];
-            $category->selected = '';
+            $category = new Category($row);
 
             array_push($this->categories, $category);
         }
@@ -60,7 +54,7 @@ class AdminModel extends Model {
      *
      * @return void
      */
-    private function _getArticles() {
+    public function getArticles() {
         $dbh = Database::getHandler();
 
         $query = $dbh->query(sprintf(
@@ -73,10 +67,7 @@ class AdminModel extends Model {
         ));
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $article           = new stdClass();
-            $article->text     = $row['title'];
-            $article->value    = $row['article_id'];
-            $article->selected = '';
+            $article = new Article($row);
 
             array_push($this->articles, $article);
         }

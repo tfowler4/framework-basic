@@ -13,6 +13,8 @@ class Portfolio extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+        $portfolioModel = $this->_model($this->_modelName, $params);
+
+        $this->_view('index', $portfolioModel);
     }
 }

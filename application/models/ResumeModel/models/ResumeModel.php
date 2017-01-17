@@ -4,8 +4,6 @@
  * resume model
  */
 class ResumeModel extends Model {
-    public $content = array();
-
     /**
      * constructor
      */

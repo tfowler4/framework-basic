@@ -1,7 +1,7 @@
 <?php
 
 /**
- * example controller
+ * resume controller
  */
 class Resume extends Controller {
     protected $_modelName = 'Resume';
@@ -13,6 +13,8 @@ class Resume extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+        $resumeModel = $this->_model($this->_modelName, $params);
+
+        $this->_view('index', $resumeModel);
     }
 }

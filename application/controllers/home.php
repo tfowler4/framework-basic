@@ -13,10 +13,16 @@ class Home extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+        $homeModel = $this->_model($this->_modelName, $params);
+        $homeModel->getArticles();
+
+        $this->_view('index', $homeModel);
     }
 
     public function grid($params = array()) {
-        $this->_view('grid', $this->_model($this->_modelName, $params));
+        $homeModel = $this->_model($this->_modelName, $params);
+        $homeModel->getArticles();
+
+        $this->_view('grid', $homeModel);
     }
 }

@@ -3,7 +3,7 @@
 /**
  * base controller class
  */
-class Controller {
+abstract class Controller {
     protected $_modelName;
     protected $_modelFile;
     protected $_viewFile;

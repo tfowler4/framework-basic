@@ -13,6 +13,10 @@ class Admin extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+        $adminModel = $this->_model($this->_modelName, $params);
+        $adminModel->getArticles();
+        $adminModel->getCategories();
+
+        $this->_view('index', $adminModel);
     }
 }

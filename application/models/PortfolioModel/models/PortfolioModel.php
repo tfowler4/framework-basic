@@ -4,8 +4,6 @@
  * portfolio model
  */
 class PortfolioModel extends Model {
-    public $content = array();
-
     /**
      * constructor
      */

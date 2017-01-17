@@ -33,14 +33,19 @@ class AdminModel extends Model {
     public function getCategories() {
         $dbh = Database::getHandler();
 
-        $query = $dbh->query(sprintf(
-            "SELECT category_id,
-                    name,
-                    meta,
-                    num_of_articles
-               FROM category_table
-           ORDER BY name"
-        ));
+        $query = sprintf(
+            "SELECT
+                category_id,
+                name,
+                meta,
+                num_of_articles
+            FROM
+               category_table
+            ORDER BY
+                name"
+        );
+
+        $query = $dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $category = new Category($row);
@@ -57,14 +62,25 @@ class AdminModel extends Model {
     public function getArticles() {
         $dbh = Database::getHandler();
 
-        $query = $dbh->query(sprintf(
-            "SELECT article_id,
-                    title,
-                    content,
-                    category
-               FROM article_table
-           ORDER BY title"
-        ));
+        $query = sprintf(
+            "SELECT
+                article_id,
+                title,
+                content,
+                category_table.category_id,
+                meta,
+                category_table.name as category
+            FROM
+                article_table
+            INNER JOIN
+                category_table
+            ON
+                article_table.category_id = category_table.category_id
+            ORDER BY
+                date_added DESC"
+        );
+
+        $query = $dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $article = new Article($row);

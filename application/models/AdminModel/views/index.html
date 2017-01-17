@@ -77,8 +77,9 @@
                     <div class="form-group has-feedback">
                         <label for="select-category" class="control-label">Category</label>
                         <select class="form-control" id="select-category" name="category">
+                            <option></option>
                             <?php foreach( $categories as $category ) { ?>
-                                <option value="<?php echo $category->categoryId; ?>" <?php echo $category->selected; ?>><?php echo $category->title; ?></option>
+                                <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -100,13 +101,12 @@
                     <select class="form-control" id="select-article" name="article">
                         <option></option>
                         <?php foreach( $articles as $article ) { ?>
-                            <option value="<?php echo $article->articleId; ?>" <?php echo $article->selected; ?>><?php echo $article->title; ?></option>
+                            <option value="<?php echo $article->articleId; ?>"><?php echo $article->title; ?></option>
                         <?php } ?>
                     </select>
                 </div>
 
-                <button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-                <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
+                <hr>
 
                 <div id="article-edit-content" style="display:none;">
                     <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
@@ -118,8 +118,9 @@
                         <div class="form-group has-feedback">
                             <label for="select-category" class="control-label">Category</label>
                             <select class="form-control" id="select-article-edit-category" name="category">
+                                <option></option>
                                 <?php foreach( $categories as $category ) { ?>
-                                    <option value="<?php echo $category->categoryId; ?>" <?php echo $category->selected; ?>><?php echo $category->title; ?></option>
+                                    <option value="<?php echo $category->categoryId; ?>"><?php echo $category->name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -129,6 +130,8 @@
                             <textarea class="form-control" id="textarea-article-edit-content" rows="10" placeholder="Content of Article" name="content" style="resize:none;"></textarea>
                         </div>
 
+                        <!--<button type="button" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>-->
+                        <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
                         <button type="submit" name="form" value="create-article" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Confirm</button>
                     </form>
                 </div>
@@ -158,8 +161,9 @@
                 <div class="form-group has-feedback">
                     <label for="select-category" class="control-label">Category</label>
                     <select class="form-control" id="select-category" name="category">
+                        <option></option>
                         <?php foreach( $categories as $category ) { ?>
-                            <option value="<?php echo $category->categoryId; ?>" <?php echo $category->selected; ?>><?php echo $category->title; ?></option>
+                            <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>
                         <?php } ?>
                     </select>
                 </div>

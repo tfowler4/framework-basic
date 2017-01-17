@@ -23,13 +23,25 @@ class HomeModel extends Model {
     public function getArticles() {
         $dbh = Database::getHandler();
 
-        $query = $dbh->query(sprintf(
-            "SELECT article_id,
-                    title,
-                    category,
-                    content
-               FROM article_table"
-        ));
+        $query = sprintf(
+            "SELECT
+                article_id,
+                title,
+                content,
+                category_table.category_id,
+                meta,
+                category_table.name as category
+            FROM
+                article_table
+            INNER JOIN
+                category_table
+            ON
+                article_table.category_id = category_table.category_id
+            ORDER BY
+                date_added DESC"
+        );
+
+        $query = $dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $article = new Article($row);

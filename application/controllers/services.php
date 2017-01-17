@@ -29,10 +29,16 @@ class Services extends Controller {
             "SELECT
                 article_id,
                 title,
-                category,
-                content
+                content,
+                category_table.category_id,
+                meta,
+                category_table.name as category
             FROM
                 article_table
+            INNER JOIN
+                category_table
+            ON
+                article_table.category_id = category_table.category_id
             WHERE
                 article_id=%d",
             $params[0]

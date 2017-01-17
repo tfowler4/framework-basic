@@ -38,13 +38,16 @@ class CreateCategoryForm extends Form {
     private function _insertCategorytoDb() {
         $dbh = Database::getHandler();
 
-        $query = $dbh->prepare(sprintf(
-            "INSERT INTO category_table
-            (name, meta)
-            values('%s', '%s')",
+        $query = sprintf(
+            "INSERT INTO
+                category_table (name, meta)
+            values
+                ('%s', '%s')",
             $this->name,
             $this->meta
-            ));
+        );
+
+        $query = $dbh->prepare($query);
 
         return $query->execute();
     }
@@ -72,10 +75,13 @@ class CreateArticleForm extends Form {
         $response   = parent::MESSAGE_GENERIC;
         $dbResponse = FALSE;
 
-        if ( $this->validateRequiredFields() ) {
-            $dbResponse = $this->_insertArticletoDb();
+        $this->prePopulateFields();
 
-            if ( $dbResponse ) {
+        if ( $this->validateRequiredFields() ) {
+            $dbResponsePrimary   = $this->_insertArticletoDb();
+            $dbResponseSecondary = $this->_updateCategoryArticleCount();
+
+            if ( $dbResponsePrimary && $dbResponseSecondary ) {
                 $response = self::MESSAGE_SUCCESS;
             } else {
                 $response = self::MESSAGE_ERROR;
@@ -90,14 +96,36 @@ class CreateArticleForm extends Form {
     private function _insertArticletoDb() {
         $dbh = Database::getHandler();
 
-        $query = $dbh->prepare(sprintf(
-            "INSERT INTO article_table
-            (title, category, content)
-            values('%s', '%s', '%s')",
+        $query = sprintf(
+            "INSERT INTO
+                article_table (title, category_id, content)
+            values
+                ('%s', '%d', '%s')",
             $this->title,
             $this->category,
             $this->content
-            ));
+        );
+
+        $query = $dbh->prepare($query);
+
+        return $query->execute();
+    }
+
+    private function _updateCategoryArticleCount() {
+        $dbh = Database::getHandler();
+
+        // update count for category
+        $query = sprintf(
+            "UPDATE
+                category_table
+            SET
+                num_of_articles = num_of_articles + 1
+            WHERE
+                category_id=%d",
+            $this->category
+        );
+
+        $query = $dbh->prepare($query);
 
         return $query->execute();
     }

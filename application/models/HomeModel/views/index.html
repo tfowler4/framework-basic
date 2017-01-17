@@ -5,10 +5,11 @@
                 <h3 class="panel-title"><?php echo $item->title; ?></h3>
             </div>
             <div class="panel-body">
-                <?php echo $item->body; ?>
+                <?php echo $item->content; ?>
             </div>
             <div class="panel-footer">
-                <?php echo $item->footer; ?>
+                Category: <i><?php echo $item->category; ?></i>
+                Tags: <i><?php echo $item->meta; ?></i>
             </div>
         </div>
     <?php } ?>

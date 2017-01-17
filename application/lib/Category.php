@@ -8,7 +8,6 @@ class Category {
     public $name;
     public $meta;
     public $numOfArticles;
-    public $selected;
 
     public function __construct($data) {
         $this->categoryId    = $data['category_id'];

@@ -39,7 +39,7 @@
         <div class="form-group has-feedback">
             <label for="edit-article-id" class="control-label">Article</label>
             <div class="input-group">
-                <select class="form-control" id="edit-article-id" name="id">
+                <select class="form-control" id="edit-article-id" name="id" <?php if ( empty($articles) ) { ?> disabled <?php } ?> >
                     <option></option>
                     <?php foreach( $articles as $article ) { ?>
                         <option value="<?php echo $article->articleId; ?>"><?php echo $article->title; ?> - Posted on <?php echo $article->dateAdded; ?></option>

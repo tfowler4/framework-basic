@@ -25,11 +25,11 @@
                     <span id="confirmText"></span>
                     <form id="modalForm" action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
                         <div class="form-group has-feedback">
-                            <input type="hidden" name="id" value="">
+                            <input id="remove-id" type="hidden" name="id" value="">
                         </div>
 
                         <div class="form-group has-feedback text-center">
-                            <button type="submit" name="" class="btn btn-danger"><i class="fa fa-times"></i> Confirm Removal</button>
+                            <button type="submit" name="form" class="btn btn-danger"><i class="fa fa-times"></i> Confirm Removal</button>
                         </div>
                     </form>
                 </p>

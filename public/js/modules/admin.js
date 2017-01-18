@@ -135,8 +135,8 @@
 
         $('#adminModal').find('.modal-title').text('Confirmation');
         $('#confirmText').text(confirmText);
-        $('#modalForm').find('input[name="id"]').val(id);
-        $('#modalForm').find('[type="submit"]').attr('name', 'remove-' + type);
+        $('#remove-id').val(id);
+        $('#modalForm').find('[type="submit"]').attr('value', 'remove-' + type);
 
         $('#adminModal').modal('show');
     }

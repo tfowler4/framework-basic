@@ -42,7 +42,7 @@ class Services extends Controller {
             ON
                 article_table.category_id = category_table.category_id
             WHERE
-                article_id=%d",
+                article_id = '%d'",
             $params[0]
         );
 
@@ -69,7 +69,7 @@ class Services extends Controller {
             FROM
                 category_table
             WHERE
-                category_id=%d",
+                category_id = '%d'",
             $params[0]
         );
 

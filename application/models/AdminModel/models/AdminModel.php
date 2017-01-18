@@ -26,6 +26,7 @@ class AdminModel extends Model {
         $this->forms->editArticle    = new EditArticleForm();
         $this->forms->editCategory   = new EditCategoryForm();
         $this->forms->removeCategory = new RemoveCategoryForm();
+        $this->forms->removeArticle  = new RemoveArticleForm();
     }
 
     /**

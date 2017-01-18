@@ -17,15 +17,12 @@ class CreateCategoryForm extends Form {
     }
 
     public function submitForm() {
-        $response   = parent::MESSAGE_GENERIC;
-        $dbResponse = FALSE;
+        $response = parent::MESSAGE_GENERIC;
 
         $this->prePopulateFields();
 
         if ( $this->validateRequiredFields() ) {
-            $dbResponse = $this->_insertCategorytoDb();
-
-            if ( $dbResponse ) {
+            if ( $this->_insertCategorytoDb() ) {
                 $response = self::MESSAGE_SUCCESS;
             } else {
                 $response = self::MESSAGE_ERROR;
@@ -63,8 +60,8 @@ class EditCategoryForm extends Form {
     public $name;
     public $meta;
 
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully saved!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while saving your Article Category!');
+    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully saved!');
+    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while saving your Category!');
 
     public function __construct() {
         parent::__construct();
@@ -73,15 +70,12 @@ class EditCategoryForm extends Form {
     }
 
     public function submitForm() {
-        $response   = parent::MESSAGE_GENERIC;
-        $dbResponse = FALSE;
+        $response = parent::MESSAGE_GENERIC;
 
         $this->prePopulateFields();
 
         if ( $this->validateRequiredFields() ) {
-            $dbResponse = $this->_updateCategorytoDb();
-
-            if ( $dbResponse ) {
+            if ( $this->_updateCategorytoDb() ) {
                 $response = self::MESSAGE_SUCCESS;
             } else {
                 $response = self::MESSAGE_ERROR;
@@ -115,11 +109,14 @@ class EditCategoryForm extends Form {
     }
 }
 
+/**
+ * remove category form
+ */
 class RemoveCategoryForm extends Form {
     public $id;
 
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully removed!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article Category!');
+    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully removed!');
+    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Category!');
 
     public function __construct() {
         parent::__construct();
@@ -128,17 +125,17 @@ class RemoveCategoryForm extends Form {
     }
 
     public function submitForm() {
-        $response   = parent::MESSAGE_GENERIC;
-        $dbResponse = FALSE;
+        $response = parent::MESSAGE_GENERIC;
 
         $this->prePopulateFields();
 
         if ( $this->validateRequiredFields() ) {
-            $dbResponsePrimary   = $this->_verifyRemainingCategoryArticles();
-            $dbResponseSecondary = $this->_removeCategorytoDb();
-
-            if ( $dbResponsePrimary && $dbResponseSecondary ) {
-                $response = self::MESSAGE_SUCCESS;
+            if ( $this->_verifyRemainingCategoryArticles() ) {
+                if ( $this->_removeCategoryFromDb() ) {
+                    $response = self::MESSAGE_SUCCESS;
+                } else {
+                    $response = self::MESSAGE_ERROR;
+                }
             } else {
                 $response = self::MESSAGE_ERROR;
             }
@@ -152,7 +149,7 @@ class RemoveCategoryForm extends Form {
     private function _verifyRemainingCategoryArticles() {
         $dbh = Database::getHandler();
 
-        $clearedArticlesWithCategory = true;
+        $clearedArticlesWithCategory = TRUE;
 
         $query = sprintf(
             "SELECT
@@ -172,20 +169,21 @@ class RemoveCategoryForm extends Form {
             $numOfArticles = $row['num_of_articles'];
 
             if ( $numOfArticles > 0 ) {
-                $clearedArticlesWithCategory = false;
+                $clearedArticlesWithCategory = FALSE;
             }
 
             break;
-        }echo "HERE";
-exit;
+        }
+
         return $clearedArticlesWithCategory;
     }
 
-    private function _removeCategorytoDb() {
+    private function _removeCategoryFromDb() {
         $dbh = Database::getHandler();
 
         $query = sprintf(
             "DELETE
+            FROM
                 category_table
             WHERE
                 category_id = '%d'",
@@ -220,16 +218,12 @@ class CreateArticleForm extends Form {
     }
 
     public function submitForm() {
-        $response   = parent::MESSAGE_GENERIC;
-        $dbResponse = FALSE;
+        $response = parent::MESSAGE_GENERIC;
 
         $this->prePopulateFields();
 
         if ( $this->validateRequiredFields() ) {
-            $dbResponsePrimary   = $this->_insertArticletoDb();
-            $dbResponseSecondary = $this->_updateCategoryArticleCount();
-
-            if ( $dbResponsePrimary && $dbResponseSecondary ) {
+            if ( $this->_insertArticletoDb() && $this->_updateCategoryArticleCount() ) {
                 $response = self::MESSAGE_SUCCESS;
             } else {
                 $response = self::MESSAGE_ERROR;
@@ -308,7 +302,7 @@ class CreateArticleForm extends Form {
 }
 
 /**
- * edit category form
+ * edit article form
  */
 class EditArticleForm extends Form {
     public $id;
@@ -330,16 +324,12 @@ class EditArticleForm extends Form {
     }
 
     public function submitForm() {
-        $response   = parent::MESSAGE_GENERIC;
-        $dbResponse = FALSE;
+        $response = parent::MESSAGE_GENERIC;
 
         $this->prePopulateFields();
 
         if ( $this->validateRequiredFields() ) {
-            $dbResponsePrimary   = $this->_updateArticletoDb();
-            $dbResponseSecondary = $this->_updateCategoryArticleCount();
-
-            if ( $dbResponsePrimary && $dbResponseSecondary ) {
+            if ( $this->_updateArticletoDb() && $this->_updateCategoryArticleCount() ) {
                 $response = self::MESSAGE_SUCCESS;
             } else {
                 $response = self::MESSAGE_ERROR;
@@ -414,6 +404,57 @@ class EditArticleForm extends Form {
                 category_id IN (%s)",
             $updateString,
             $categories
+        );
+
+        $query = $dbh->prepare($query);
+
+        return $query->execute();
+    }
+}
+
+/**
+ * remove article form
+ */
+class RemoveArticleForm extends Form {
+    public $id;
+
+    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully removed!');
+    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article!');
+
+    public function __construct() {
+        parent::__construct();
+
+        $this->setFieldRequired(array('id'));
+    }
+
+    public function submitForm() {
+        $response = parent::MESSAGE_GENERIC;
+
+        $this->prePopulateFields();
+
+        if ( $this->validateRequiredFields() ) {
+            if ( $this->_removeArticleFromDb() ) {
+                $response = self::MESSAGE_SUCCESS;
+            } else {
+                $response = self::MESSAGE_ERROR;
+            }
+        } else {
+            $response = self::MESSAGE_ERROR;
+        }
+
+        return $response;
+    }
+
+    private function _removeArticleFromDb() {
+        $dbh = Database::getHandler();
+
+        $query = sprintf(
+            "DELETE
+            FROM
+                article_table
+            WHERE
+                article_id = '%d'",
+            $this->id
         );
 
         $query = $dbh->prepare($query);

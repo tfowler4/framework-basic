@@ -23,7 +23,7 @@
         <div class="form-group has-feedback">
             <label for="edit-category-id" class="control-label">Category</label>
             <div class="input-group">
-                <select class="form-control" id="edit-category-id" name="id">
+                <select class="form-control" id="edit-category-id" name="id" <?php if ( empty($categories) ) { ?> disabled <?php } ?> >
                     <option></option>
                     <?php foreach( $categories as $category ) { ?>
                         <option value="<?php echo $category->categoryId; ?>" ><?php echo $category->name; ?></option>

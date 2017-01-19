@@ -4,17 +4,14 @@
  * Admin model
  */
 class AdminModel extends Model {
-    public $categories = array();
     public $articles   = array();
-    public $forms;
+    public $categories = array();
 
     /**
      * constructor
      */
-    public function __construct($module, $params) {
-        parent::__construct();
-
-        $this->pageTitle = 'Administration';
+    public function __construct($dbh, $params) {
+        parent::__construct($dbh);
 
         $this->_loadForms();
     }
@@ -35,8 +32,6 @@ class AdminModel extends Model {
      * @return void
      */
     public function getCategories() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "SELECT
                 category_id,
@@ -51,7 +46,7 @@ class AdminModel extends Model {
                 name DESC"
         );
 
-        $query = $dbh->query($query);
+        $query = $this->_dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $category = new Category($row);
@@ -66,8 +61,6 @@ class AdminModel extends Model {
      * @return void
      */
     public function getArticles() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "SELECT
                 article_id,
@@ -88,7 +81,7 @@ class AdminModel extends Model {
                 article_table.date_added DESC"
         );
 
-        $query = $dbh->query($query);
+        $query = $this->_dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $article = new Article($row);

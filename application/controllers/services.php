@@ -4,11 +4,10 @@
  * services controller
  */
 class Services extends Controller {
-    protected $_modelName = 'Service';
-    protected $_dbh;
+    protected $_modelName = 'Services';
 
     public function __construct() {
-        $this->_dbh = Database::getHandler();
+        parent::__construct();
     }
 
     /**

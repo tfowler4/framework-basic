@@ -17,7 +17,7 @@ class App {
 
         if ( file_exists($file) ) {
             $this->_controller = $url[0];
-            unset($url[0]);
+            array_splice($url, 0, 1);
         }
 
         // load config
@@ -26,10 +26,10 @@ class App {
         // load the new controller
         $this->_controller = new $this->_controller;
 
-        if ( !empty($url[1]) ) {
-            if ( method_exists($this->_controller, $url[1]) ) {
-                $this->_method = $url[1];
-                unset($url[1]);
+        if ( !empty($url[0]) ) {
+            if ( method_exists($this->_controller, $url[0]) ) {
+                $this->_method = $url[0];
+                array_splice($url, 0, 1);
             }
         }
 

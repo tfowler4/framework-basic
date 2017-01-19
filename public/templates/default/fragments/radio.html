@@ -1,8 +1,0 @@
-<?php foreach( $radioItems as $item ) { ?>
-    <div class="radio <?php echo $item->disabled; ?>">
-        <label>
-            <input type="radio" id="<?php echo $item->id; ?>" name="<?php echo $item->fieldName; ?>" <?php echo $item->disabled; ?>>
-            <?php echo $item->text; ?>
-        </label>
-    </div>
-<?php } ?>

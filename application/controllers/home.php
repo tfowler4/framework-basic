@@ -5,6 +5,32 @@
  */
 class Home extends Controller {
     protected $_modelName = 'Home';
+
+    const PAGE_TITLE       = 'Home';
+    const PAGE_DESCRIPTION = 'Home Description';
+
+    public function __construct() {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription();
+    }
+
+    public function index($params = array()) {
+        $homeModel = $this->_loadModal($this->_modelName, $params);
+        $homeModel->getArticles();
+        $homeModel->getCategories();
+
+        $this->_loadPageView('index', $homeModel);
+    }
+
+    public function grid($params = array()) {
+        $homeModel = $this->_loadModal($this->_modelName, $params);
+        $homeModel->getArticles();
+        $homeModel->getCategories();
+
+        $this->_loadPageView('grid', $homeModel);
+    }
+
     /**
      * index model function when page is accessed
      *
@@ -12,17 +38,11 @@ class Home extends Controller {
      *
      * @return void
      */
+    /*
     public function index($params = array()) {
         $homeModel = $this->_model($this->_modelName, $params);
-        $homeModel->getArticles();
 
         $this->_view('index', $homeModel);
     }
-
-    public function grid($params = array()) {
-        $homeModel = $this->_model($this->_modelName, $params);
-        $homeModel->getArticles();
-
-        $this->_view('grid', $homeModel);
-    }
+    */
 }

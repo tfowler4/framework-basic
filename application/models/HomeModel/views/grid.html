@@ -1,17 +1,23 @@
-<div class="row">
-    <?php foreach( $content as $item ) { ?>
-        <div class="col-xs-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><?php echo $item->title; ?></h3>
-                </div>
-                <div class="panel-body">
-                    <?php echo $item->content; ?>
-                </div>
-                <div class="panel-footer">
-                    <?php echo $item->footer; ?>
-                </div>
+<div id="content" class="container-fluid" style="background-color:#fff;">
+    <div class="row">
+        <div class="col-xs-8 col-xs-push-2">
+            <div class="row">
+                <?php foreach( $articles as $article ) { ?>
+                    <div class="col-xs-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><?php echo $article->title; ?></h3>
+                            </div>
+                            <div class="panel-body">
+                                <?php echo $article->content; ?>
+                            </div>
+                            <div class="panel-footer">
+                                <?php echo $article->category; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             </div>
         </div>
-    <?php } ?>
+    </div>
 </div>

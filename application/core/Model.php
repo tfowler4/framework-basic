@@ -4,18 +4,13 @@
  * base model class
  */
 abstract class Model {
-    public $pageTitle;
-    public $pageDescription;
-    public $form;
+    protected $_dbh;
+    public $forms;
 
     /**
      * constructor
      */
-    public function __construct() {
-
-    }
-
-    public function loadFragment($fragment) {
-
+    public function __construct($dbh) {
+        $this->_dbh = $dbh;
     }
 }

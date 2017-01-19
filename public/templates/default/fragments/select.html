@@ -1,8 +1,0 @@
-<div class="form-group">
-    <label for="<?php echo $id; ?>"><?php echo $fiedName; ?></label>
-    <select class="form-control" id="<?php echo $id; ?>">
-        <?php forech( $optionItems as $item ) { ?>
-            <option id="<?php echo $id; ?>" value="<?php echo $item->value; ?>" <?php echo $item->selected; ?>><?php echo $item->text; ?></option>
-        <?php } ?>
-    </select>
-</div>

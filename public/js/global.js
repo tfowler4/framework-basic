@@ -1,5 +1,6 @@
-(function() {
-    // for testing switching teplates and ajax calls
+var global = function() {
+    var siteUrl = 'public/js/modules/';
+
     $('.template-selector').click(function(e) {
         e.preventDefault();
 
@@ -22,4 +23,8 @@
             }
         });
     });
-})();
+
+    this.loadScript = function(fileName) {
+        $.getScript(siteUrl + fileName +'.js?v=' + Math.floor((Math.random() * 10000000000) + 0), function( data, textStatus, jqxhr ) {});
+    }
+};

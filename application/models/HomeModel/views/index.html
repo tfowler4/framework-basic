@@ -1,16 +1,16 @@
-<div class="row">
-    <?php foreach( $content as $item ) { ?>
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $item->title; ?></h3>
-            </div>
-            <div class="panel-body">
-                <?php echo $item->content; ?>
-            </div>
-            <div class="panel-footer">
-                Category: <i><?php echo $item->category; ?></i>
-                Tags: <i><?php echo $item->meta; ?></i>
+<div id="content" class="container-fluid" style="background-color:#fff;">
+    <div class="row">
+        <div class="col-xs-8 col-xs-push-2">
+            <div class="row">
+                <div class="col-xs-9">
+                    <?php include 'articles.html'; ?>
+                </div>
+
+                <div class="col-xs-3">
+                    <?php include 'categories.html'; ?>
+                    <?php include 'archives.html'; ?>
+                </div>
             </div>
         </div>
-    <?php } ?>
+    </div>
 </div>

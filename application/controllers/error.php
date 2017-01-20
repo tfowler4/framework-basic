@@ -4,7 +4,16 @@
  * Error controller
  */
 class Error extends Controller {
-    protected $_modelName = 'Error';
+    const MODEL_NAME       = 'Error';
+    const PAGE_TITLE       = 'Error';
+    const PAGE_DESCRIPTION = 'An Error Page';
+
+    public function __construct() {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription();
+    }
+
     /**
      * index model function when page is accessed
      *
@@ -13,8 +22,8 @@ class Error extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $errorModel = $this->_model($this->_modelName, $params);
+        $errorModel = $this->_loadModal(self::MODEL_NAME, $params);
 
-        $this->_view('index', $errorModel);
+        $this->_loadPageView('index', $errorModel);
     }
 }

@@ -11,4 +11,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 <!-- Global CSS -->
-<link rel='stylesheet' type='text/css' href='<?php echo SITE_URL . 'public/css/global.css?v=' . rand(0,100000000); ?>'>
+<!--
+<link rel='stylesheet' type='text/css' href='<?php echo SITE_URL . 'public/css/global.css?v=' . TIMESTAMP; ?>'>
+-->
+<!-- Global JS -->
+
+<?php $this->_loadJS(); ?>
+<?php $this->_loadCSS(); ?>

@@ -4,7 +4,12 @@
  * session controller
  */
 class Session extends Controller {
-    protected $_modelName = 'Session';
+    const MODEL_NAME = 'Session';
+
+    public function __construct() {
+        parent::__construct();
+    }
+
     /**
      * index model function when page is accessed
      *

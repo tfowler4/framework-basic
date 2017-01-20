@@ -1,0 +1,11 @@
+.list-group-item {
+    padding-left:30px;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.panel-heading:hover {
+    cursor: pointer;
+}

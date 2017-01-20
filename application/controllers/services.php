@@ -4,7 +4,7 @@
  * services controller
  */
 class Services extends Controller {
-    protected $_modelName = 'Services';
+    const MODEL_NAME = 'Services';
 
     public function __construct() {
         parent::__construct();

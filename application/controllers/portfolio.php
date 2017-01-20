@@ -4,7 +4,16 @@
  * portfolio controller
  */
 class Portfolio extends Controller {
-    protected $_modelName = 'Portfolio';
+    const MODEL_NAME       = 'Portfolio';
+    const PAGE_TITLE       = 'Portfolio';
+    const PAGE_DESCRIPTION = 'Portfilio & Work';
+
+    public function __construct() {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription();
+    }
+
     /**
      * index model function when page is accessed
      *
@@ -13,8 +22,8 @@ class Portfolio extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $portfolioModel = $this->_model($this->_modelName, $params);
+        $portfolioModel = $this->_loadModal(self::MODEL_NAME, $params);
 
-        $this->_view('index', $portfolioModel);
+        $this->_loadPageView('index', $portfolioModel);
     }
 }

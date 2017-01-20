@@ -1,0 +1,69 @@
+<div id="content" class="container-fluid" style="background-color:#fff;">
+    <div class="row">
+        <div class="col-xs-8 col-xs-push-2">
+            <div class="row">
+                <?php if ( !empty($this->_alert) ) { ?>
+                    <div class="alert alert-<?php echo $this->_alert['type']; ?> alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong><?php echo $this->_alert['title']; ?></strong> <span><?php echo $this->_alert['message']; ?></span>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-3">
+                    <?php include 'left-menu.html'; ?>
+                </div>
+
+                <div class="col-xs-9">
+                    <div class="tab-content">
+                        <div id="welcome" class="tab-pane fade in active">
+                            <div class="well text-center">
+                                <strong>Administrator Panel</strong>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at gravida leo, eu fermentum tortor. Maecenas scelerisque metus eu arcu rhoncus, eget pretium augue sollicitudin. Maecenas feugiat, lorem quis consequat tempus, sem urna commodo lorem, id pellentesque odio urna non neque. Quisque nisi elit, luctus id sem vitae, finibus vulputate dolor. Sed maximus dapibus rhoncus. Vestibulum congue hendrerit facilisis. Integer nec mauris mi. Quisque sem lorem, euismod a metus eu, finibus sodales massa. Phasellus non ipsum sit amet nisl auctor lobortis eu ac turpis. Suspendisse vehicula nunc sed metus scelerisque, id faucibus neque hendrerit. Nunc ac mi ullamcorper, sagittis risus posuere, ultricies lacus. Sed fringilla enim ac ligula luctus, ac convallis nunc tincidunt. Nullam non augue sit amet massa semper molestie. Proin porta justo porttitor, ultrices mi et, sodales velit. Donec eleifend tincidunt volutpat.
+                                </p>
+                            </div>
+                        </div>
+
+                        <?php include 'tab-pane-articles.html'; ?>
+
+                        <?php include 'tab-pane-categories.html'; ?>
+
+                        <?php include 'tab-pane-social-networks.html'; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="adminModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">...</h4>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-center">
+                    <span id="confirmText"></span>
+                    <form id="modalForm" action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                        <div class="form-group has-feedback">
+                            <input id="remove-id" type="hidden" name="id" value="">
+                        </div>
+
+                        <div class="form-group has-feedback text-center">
+                            <button type="submit" name="form" class="btn btn-danger"><i class="fa fa-times"></i> Confirm Removal</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

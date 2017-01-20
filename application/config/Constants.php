@@ -12,6 +12,7 @@ class Constants {
         define('SITE_NAME', 'Framework Basic');
         define('SITE_STATUS', 1);
         define('APP_NAME', 'framework-basic');
+        define('TIMESTAMP', rand(0,100000000));
 
         // template
         if ( empty($_SESSION['template']) ) {
@@ -29,6 +30,15 @@ class Constants {
             define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/');
         }
 
+        define('FOLDER_VIEWS',       ABS_BASE_PATH . 'application/views/');
+        define('FOLDER_CONTROLLERS', ABS_BASE_PATH . 'application/controllers/');
+        define('FOLDER_MODELS',      ABS_BASE_PATH . 'application/models/');
+        define('FOLDER_TEMPLATES',   ABS_BASE_PATH . 'public/templates/');
+        define('FOLDER_JS',          ABS_BASE_PATH . 'public/js/');
+        define('FOLDER_CSS',         ABS_BASE_PATH . 'public/css/');
+
+        define('SITE_JS',  SITE_URL . 'public/js/');
+        define('SITE_CSS', SITE_URL . 'public/css/');
 
         // modules
         define('MODULE_HOME_STATUS', 1);

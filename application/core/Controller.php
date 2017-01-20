@@ -8,70 +8,110 @@ abstract class Controller {
     protected $_pageDescription;
     protected $_siteName;
     protected $_modelName;
-    protected $_modelFile;
     protected $_alert;
-    protected $_viewPath = ABS_BASE_PATH . 'application/models/';
+    protected $_viewPath = FOLDER_VIEWS;
     protected $_dbh;
-    //protected $_header;
-    //protected $_footer;
-    //protected $_viewFile;
-    //protected $_contentFile;
 
     public function __construct() {
         $this->_dbh = Database::getHandler();
         $this->_setSiteName();
     }
 
-    protected function _loadModal($modalName, $params) {
+    protected function _loadModal($modalName, $params = '') {
         $this->_modelName = strtolower($modalName);
-        $this->_modelFile = ucfirst($this->_modelName) . 'Model';
+        $modelFile        = ucfirst($this->_modelName) . 'Model';
 
-        return new $this->_modelFile($this->_dbh, $params);
+        return new $modelFile($this->_dbh, $params);
     }
 
-    protected function _loadView($viewName, $data = array()) {
+    protected function _loadView($viewName, $data = '') {
+        $viewFile = '';
+
         if ( !empty($viewName) ) {
-            $viewName           = strtolower($viewName);
-            $this->_contentFile = $this->_viewPath . $this->_modelFile . '/views/' . $viewName . '.html';
+            $viewName = strtolower($viewName);
+            $viewFile = $this->_viewPath . $this->_modelName . '/' . $viewName . '.html';
         } else {
-            header('Location: ' . SITE_URL . 'error');
+            $this->_loadError();
         }
 
         extract((array)$data);
 
-        include $this->_contentFile;
+        include $viewFile;
+    }
+
+    protected function _loadJS() {
+        // load global JS file
+        $globalFile = FOLDER_JS . 'global.js';
+
+        if ( file_exists($globalFile) ) {
+            $globalFile = SITE_JS . 'global.js';
+            echo '<script src="' . $globalFile . '"></script>';
+        }
+
+        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) { echo "HERE";
+            $filePath = FOLDER_JS . strtolower(static::MODEL_NAME) . '/*.js';
+
+            foreach(glob($filePath) as $file) {
+                $file = SITE_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file);
+                echo '<script src="' . $file . '"></script>';
+            }
+        } else {
+            echo "NOT HERE";
+        }
+    }
+
+    protected function _loadCSS() {
+
+    }
+
+    protected function _loadFile($filePath) {
+        if ( file_exists($filePath) ) {
+            include $filePath;
+        }
     }
 
     protected function _loadError() {
         header('Location: ' . SITE_URL . 'error');
+        exit;
     }
 
-    protected function _loadHeader($activeModel) {
-        $header = new Header($activeModel);
-
-        extract((array)$header);
-
-        $headerFile = ABS_BASE_PATH . 'public/templates/default/header.html';
-        include $headerFile;
+    protected function _loadHeader() {
+        $headerModel = $this->_loadModal('header', static::MODEL_NAME);
+        $this->_loadView('index', $headerModel);
     }
 
     protected function _loadFooter() {
-        $footer = new Footer();
-
-        extract((array)$footer);
-
-        $footerFile = ABS_BASE_PATH . 'public/templates/default/footer.html';
-        include $footerFile;
+        $footerModel = $this->_loadModal('footer');
+        $this->_loadView('index', $footerModel);
     }
 
     protected function _loadPageView($view, $model) {
-        $this->_loadHeader($this->_modelName);
+        $this->_handleSessionData();
+
+        // load header
+        $this->_loadHeader();
+
+        // load main content
+        $this->_modelName = static::MODEL_NAME;
         $this->_loadView($view, $model);
+
+        // load footer
         $this->_loadFooter();
     }
 
+    protected function _handleSessionData() {
+        if ( FormHandler::isFormSubmitted() ) {
+            FormHandler::process();
+        }
+
+        if ( !empty(SessionData::get('message')) ) {
+            $this->_alert = SessionData::get('message');
+            SessionData::remove('message');
+        }
+    }
+
     protected function _setSiteName() {
-        if ( !empty(SITE_NAME) ) {
+        if ( defined('SITE_NAME') && !empty(SITE_NAME) ) {
             $this->_siteName = SITE_NAME;
         } else {
             $this->_siteName = 'Unnamed Site';
@@ -79,7 +119,7 @@ abstract class Controller {
     }
 
     protected function _setPageTitle() {
-        if ( !empty(static::PAGE_TITLE) ) {
+        if ( defined('static::PAGE_TITLE') && !empty(static::PAGE_TITLE) ) {
             $this->_pageTitle = static::PAGE_TITLE;
         } else {
             $this->_pageTitle = 'No Title Set';
@@ -89,75 +129,10 @@ abstract class Controller {
     }
 
     protected function _setPageDescription() {
-        if ( !empty(static::PAGE_DESCRIPTION) ) {
+        if ( defined('static::PAGE_DESCRIPTION') && !empty(static::PAGE_DESCRIPTION) ) {
             $this->_pageDescription = static::PAGE_DESCRIPTION;
         } else {
             $this->_pageDescription = 'No Description Set';
         }
     }
-
-    /**
-     * creates requested model class
-     *
-     * @param string $model  [ name of model class ]
-     * @param array  $params [ parameters passed ]
-     *
-     * @return object [ new model object ]
-     */
-    /*
-    protected function _model($model, $params) {
-        $this->_modelName = strtolower($model);
-        $this->_modelFile = ucfirst($model) . 'Model';
-
-        return new $this->_modelFile($model, $params);
-    }
-    */
-
-    /**
-     * creates a view of the requested model class
-     *
-     * @param  string $view [ name of specific view file to use ]
-     * @param  object $data [ returned model object ]
-     *
-     * @return void
-     */
-    /*
-    protected function _view($view = '', $data = array()) {
-        if ( !empty($view) ) {
-            $this->_contentFile = ABS_BASE_PATH . 'application/models/' . $this->_modelFile . '/views/' . strtolower($view) . '.html';
-        }
-
-        if ( !file_exists($this->_contentFile) ) {
-            $this->_loadError();
-        }
-
-        // handle if any form submission took place
-        if ( FormHandler::isFormSubmitted() ) {
-            FormHandler::process();
-        }
-
-        if ( !empty(SessionData::get('message')) ) {
-            $data->alert = SessionData::get('message');
-            SessionData::remove('message');
-        }
-
-        if ( !empty(SessionData::get('form')) ) {
-            //$data->form = SessionData::get('form');
-        }
-
-        // convert array values to variables
-        extract((array)$data);
-
-        // load header content
-        $header = $this->_loadHeader($this->_modelName);
-        extract((array)$header);
-
-        // load footer content
-        $footer = $this->_loaderFooter();
-        extract((array)$footer);
-
-        // include the index html file
-        include './public/templates/index.html';
-    }
-    */
 }

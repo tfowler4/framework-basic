@@ -4,7 +4,16 @@
  * example controller
  */
 class Example extends Controller {
-    protected $_modelName = 'Example';
+    const MODEL_NAME       = 'Example';
+    const PAGE_TITLE       = 'Example';
+    const PAGE_DESCRIPTION = 'Example Test Page';
+
+    public function __construct() {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription();
+    }
+
     /**
      * index model function when page is accessed
      *
@@ -13,6 +22,8 @@ class Example extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+        $exampleModel = $this->_loadModal(self::MODEL_NAME, $params);
+
+        $this->_loadPageView('index', $exampleModel);
     }
 }

@@ -4,7 +4,16 @@
  * resume controller
  */
 class Resume extends Controller {
-    protected $_modelName = 'Resume';
+    const MODEL_NAME       = 'Resume';
+    const PAGE_TITLE       = 'Resume';
+    const PAGE_DESCRIPTION = 'Interactive Resume';
+
+    public function __construct() {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription();
+    }
+
     /**
      * index model function when page is accessed
      *
@@ -13,8 +22,8 @@ class Resume extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $resumeModel = $this->_model($this->_modelName, $params);
+        $resumeModel = $this->_loadModal(self::MODEL_NAME, $params);
 
-        $this->_view('index', $resumeModel);
+        $this->_loadPageView('index', $resumeModel);
     }
 }

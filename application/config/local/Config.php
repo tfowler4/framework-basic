@@ -1,17 +1,18 @@
 <?php
 
 /**
- * constants defining class
+ * app configuration class
  */
-class Constants {
+class Config {
     /**
      * constructor
      */
     public function __construct() {
         // site details
         define('SITE_NAME', 'Framework Basic');
+        define('APP_NAME',  'framework-basic');
+        define('SITE_URL',  'http://localhost/framework-basic/');
         define('SITE_STATUS', 1);
-        define('APP_NAME', 'framework-basic');
         define('TIMESTAMP', rand(0,100000000));
 
         // template
@@ -22,13 +23,7 @@ class Constants {
         }
 
         // paths
-        if ( strpos($_SERVER['DOCUMENT_ROOT'], 'htdocs') !== FALSE ) {
-            define('SITE_URL',  'http://localhost/framework-basic/');
-            define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . APP_NAME . '/');
-        } else {
-            define('SITE_URL',  'http://framework-basic.topofrift.com/');
-            define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/');
-        }
+        define('ABS_BASE_PATH', $_SERVER['DOCUMENT_ROOT'] . '/' . APP_NAME . '/');
 
         define('FOLDER_VIEWS',       ABS_BASE_PATH . 'application/views/');
         define('FOLDER_CONTROLLERS', ABS_BASE_PATH . 'application/controllers/');
@@ -51,6 +46,7 @@ class Constants {
         define('DB_PASS', 'test74108520');
 
         $this->_loadSiteNavigation();
+        $this->_loadDb();
     }
 
     private function _loadSiteNavigation() {
@@ -83,6 +79,12 @@ class Constants {
         // navigation
         define('NAV', serialize($navigationArray));
     }
+
+    private function _loadDb() {
+        Database::init(DB_USER, DB_PASS, DB_NAME, DB_HOST);
+    }
 }
 
-new Constants();
+new Config();
+
+SessionData::start();

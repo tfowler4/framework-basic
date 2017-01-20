@@ -20,9 +20,6 @@ class App {
             array_splice($url, 0, 1);
         }
 
-        // load config
-        $this->_loadAppConfig();
-
         // load the new controller
         $this->_controller = new $this->_controller;
 
@@ -47,16 +44,5 @@ class App {
         if ( isset($_GET['url']) ) {
             return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL) );
         }
-    }
-
-    /**
-     * load configuration file
-     *
-     * @return void
-     */
-    private function _loadAppConfig() {
-        new Config();
-
-        SessionData::start();
     }
 }

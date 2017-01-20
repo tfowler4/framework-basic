@@ -44,24 +44,37 @@ abstract class Controller {
         $globalFile = FOLDER_JS . 'global.js';
 
         if ( file_exists($globalFile) ) {
-            $globalFile = SITE_JS . 'global.js';
+            $globalFile = SITE_JS . 'global.js?v=' . TIMESTAMP;
             echo '<script src="' . $globalFile . '"></script>';
         }
 
-        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) { echo "HERE";
-            $filePath = FOLDER_JS . strtolower(static::MODEL_NAME) . '/*.js';
+        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) {
+            $filePath = FOLDER_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/*.js';
 
             foreach(glob($filePath) as $file) {
-                $file = SITE_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file);
+                $file = SITE_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
                 echo '<script src="' . $file . '"></script>';
             }
-        } else {
-            echo "NOT HERE";
         }
     }
 
     protected function _loadCSS() {
+        // load global CSS file
+        $globalFile = FOLDER_CSS . 'global.css';
 
+        if ( file_exists($globalFile) ) {
+            $globalFile = SITE_CSS . 'global.css?v=' . TIMESTAMP;
+            echo '<link rel="stylesheet" type="text/css" href="' . $globalFile  . '">';
+        }
+
+        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) {
+            $filePath = FOLDER_CSS . 'modules/' . strtolower(static::MODEL_NAME) . '/*.css';
+
+            foreach(glob($filePath) as $file) {
+                $file = SITE_CSS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
+                echo '<link rel="stylesheet" type="text/css" href="' . $file  . '">';
+            }
+        }
     }
 
     protected function _loadFile($filePath) {
@@ -88,6 +101,9 @@ abstract class Controller {
     protected function _loadPageView($view, $model) {
         $this->_handleSessionData();
 
+        // Begin Compression
+        ob_start('ob_gzhandler');
+
         // load header
         $this->_loadHeader();
 
@@ -97,6 +113,8 @@ abstract class Controller {
 
         // load footer
         $this->_loadFooter();
+
+        ob_end_flush();
     }
 
     protected function _handleSessionData() {

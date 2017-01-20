@@ -1,10 +1,13 @@
 <?php
 
-// constants class
-require 'config/Constants.php';
-
 // autoloader class
 require 'config/Autoloader.php';
+
+// globals class
+require 'config/Globals.php';
+
+// config class
+require 'config/' . SERVER . '/Config.php';
 
 // base app class
 require 'core/App.php';

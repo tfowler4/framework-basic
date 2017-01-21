@@ -8,9 +8,10 @@ abstract class Controller {
     protected $_pageDescription;
     protected $_siteName;
     protected $_modelName;
-    protected $_alert;
     protected $_viewPath = FOLDER_VIEWS;
     protected $_dbh;
+
+    public $alert;
 
     public function __construct() {
         $this->_dbh = Database::getHandler();
@@ -36,7 +37,7 @@ abstract class Controller {
 
         extract((array)$data);
 
-        include $viewFile;
+        include strtolower($viewFile);
     }
 
     protected function _loadJS() {
@@ -118,12 +119,14 @@ abstract class Controller {
     }
 
     protected function _handleSessionData() {
-        if ( FormHandler::isFormSubmitted() ) {
-            FormHandler::process();
+        $formHandler = new FormHandler($this->_dbh);
+
+        if ( $formHandler->isFormSubmitted() ) {
+            $formHandler->process();
         }
 
         if ( !empty(SessionData::get('message')) ) {
-            $this->_alert = SessionData::get('message');
+            $this->alert = new Alert(SessionData::get('message'));
             SessionData::remove('message');
         }
     }

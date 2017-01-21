@@ -82,9 +82,9 @@
         $.ajax({
             type : "GET",
             url :'./services/getArticle/' + articleId,
-            dataType : 'json',
             cache : true,
             success: function(data) {
+                console.log(data);
                 callBack(data);
             },
             error: function(xhr, status, thrownError, error){

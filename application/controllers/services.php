@@ -80,4 +80,14 @@ class Services extends Controller {
 
         echo json_encode($category);
     }
+
+    public function getAdminForm() {
+        $adminModel = $this->_loadModal('admin');
+
+        ob_start();
+        $this->_loadView('admin-login');
+
+        $data = array(ob_get_clean());
+        echo json_encode($data);
+    }
 }

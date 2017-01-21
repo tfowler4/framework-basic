@@ -37,7 +37,7 @@
                                     </ul>
                                 </li>
                             <?php } else { ?>
-                                <li class="<?php echo $headerItem['class']; ?>">
+                                <li id="<?php echo $headerItem['id']; ?>" class="<?php echo $headerItem['class']; ?>">
                                     <a href="<?php echo $headerItem['link']; ?>" target="<?php echo $headerItem['target']; ?>">
                                         <i class="<?php echo $headerItem['icon']; ?>" aria-hidden="true"></i>  <?php echo $headerItem['title']; ?>
 
@@ -51,6 +51,7 @@
                     </ul>
 
                     <div class="pull-right">
+                        <button type="button" class="btn btn-info navbar-btn" id="admin-nav2"><i class="glyphicon glyphicon-user" aria-hidden="true"></i>  Admin</button>
                         <button type="button" class="btn btn-default navbar-btn" ><i class="glyphicon glyphicon-user" aria-hidden="true"></i>  Sign up</button>
                         <button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target="#globalModal"><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i>  Login</button>
                     </div>

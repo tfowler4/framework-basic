@@ -45,39 +45,7 @@ class Config {
         define('DB_USER', 'xeonsold_test');
         define('DB_PASS', 'test74108520');
 
-        $this->_loadSiteNavigation();
         $this->_loadDb();
-    }
-
-    private function _loadSiteNavigation() {
-        $navigationArray = array();
-
-        // Biography
-        $navItem = array('title' => 'Bio', 'model' => 'Bio', 'link' => '', 'icon' => 'glyphicon glyphicon-user', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // Resume
-        $navItem = array('title' => 'Resume', 'model' => 'Resume', 'link' => '', 'icon' => 'fa fa-file-pdf-o', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // Portfolio
-        $navItem = array('title' => 'Portfolio', 'model' => 'Portfolio', 'link' => '', 'icon' => 'fa fa-file-text', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // Example Page
-        $navItem = array('title' => 'Example', 'model' => 'Example', 'link' => '', 'icon' => 'fa fa-info-circle', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // Github
-        $navItem = array('title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // Admin
-        $navItem = array('title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
-        // navigation
-        define('NAV', serialize($navigationArray));
     }
 
     private function _loadDb() {

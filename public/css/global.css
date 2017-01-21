@@ -3,3 +3,7 @@
 #content {
     min-height: 533px;
 }
+
+ul.nav li.active {
+    font-weight: bold;
+}

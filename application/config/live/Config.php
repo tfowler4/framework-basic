@@ -45,7 +45,6 @@ class Config {
         define('DB_USER', 'xeonsold_test');
         define('DB_PASS', 'test74108520');
 
-        $this->_loadSiteNavigation();
         $this->_loadDb();
     }
 

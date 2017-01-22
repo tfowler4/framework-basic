@@ -18,12 +18,16 @@ class AdminModel extends Model {
 
     protected function _loadForms() {
         $this->forms = new stdClass();
-        $this->forms->createArticle  = new CreateArticleForm();
-        $this->forms->createCategory = new CreateCategoryForm();
-        $this->forms->editArticle    = new EditArticleForm();
-        $this->forms->editCategory   = new EditCategoryForm();
-        $this->forms->removeCategory = new RemoveCategoryForm();
-        $this->forms->removeArticle  = new RemoveArticleForm();
+        $this->forms->createArticle  = new CreateArticleForm($this->_dbh);
+        $this->forms->createCategory = new CreateCategoryForm($this->_dbh);
+        $this->forms->editArticle    = new EditArticleForm($this->_dbh);
+        $this->forms->editCategory   = new EditCategoryForm($this->_dbh);
+        $this->forms->removeCategory = new RemoveCategoryForm($this->_dbh);
+        $this->forms->removeArticle  = new RemoveArticleForm($this->_dbh);
+
+        foreach ( $this->forms as $form ) {
+            $form->repopulateForm($form);
+        }
     }
 
     /**

@@ -65,8 +65,8 @@ class HeaderModel extends Model {
         array_push($navigationArray, $navItem);
 
         // Admin
-        $navItem = array('id' => 'admin-nav', 'title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
+        //$navItem = array('id' => 'admin-nav', 'title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
+        //array_push($navigationArray, $navItem);
 
         // Github
         $navItem = array('id' => 'git-nav','title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());

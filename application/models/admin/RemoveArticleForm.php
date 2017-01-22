@@ -7,34 +7,42 @@ class RemoveArticleForm extends Form {
     public $id;
     public $form;
 
+    const FORM_NAME       = 'remove-article';
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully removed!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article!');
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($dbh) {
+        parent::__construct($dbh);
 
-        $this->setFieldRequired(array('id'));
+        $this->_setFieldRequired(array('id'));
+
+        $this->populateForm();
+    }
+
+    public function populateForm() {
+        $this->id   = $this->_populateField('id');
+        $this->form = $this->_populateField('form');
     }
 
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
-        $this->prePopulateFields();
-
-        if ( $this->validateRequiredFields() ) {
+        if ( $this->_validateRequiredFields() ) {
             if ( $this->_removeArticleFromDb() ) {
                 $response = self::MESSAGE_SUCCESS;
+                SessionData::remove('form');
             } else {
                 $response = self::MESSAGE_ERROR;
             }
         } else {
-            $response = $this->generateMissingFieldsError($this->form);
+            $response = $this->_generateMissingFieldsError($this->form);
         }
 
         return $response;
     }
 
     private function _removeArticleFromDb() {
+        logger(0,'yeh we logging this');
         $dbh = Database::getHandler();
 
         $query = sprintf(
@@ -45,7 +53,7 @@ class RemoveArticleForm extends Form {
                 article_id = '%d'",
             $this->id
         );
-
+logger(0, 'ID: ' . $this->id);
         $query = $dbh->prepare($query);
 
         return $query->execute();

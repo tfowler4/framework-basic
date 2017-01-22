@@ -4,7 +4,7 @@
  * example controller
  */
 class Example extends Controller {
-    const MODEL_NAME       = 'Example';
+    const CONTROLLER_NAME  = 'Example';
     const PAGE_TITLE       = 'Example';
     const PAGE_DESCRIPTION = 'Example Test Page';
 
@@ -22,8 +22,8 @@ class Example extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $exampleModel = $this->_loadModal(self::MODEL_NAME, $params);
+        $exampleModel = $this->_loadModal('example', $params);
 
-        $this->_loadPageView('index', $exampleModel);
+        $this->_loadPageView('example/index', $exampleModel);
     }
 }

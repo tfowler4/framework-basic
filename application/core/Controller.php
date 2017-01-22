@@ -16,6 +16,20 @@ abstract class Controller {
     public function __construct() {
         $this->_dbh = Database::getHandler();
         $this->_setSiteName();
+
+        $currController = '';
+        $newController  = static::CONTROLLER_NAME;
+
+        if ( !empty(SessionData::get('controller')) ) {
+            $currController = SessionData::get('controller');
+            SessionData::set('prev_controller', $currController);
+        }
+
+        SessionData::set('controller', $newController);
+
+        if ( $currController != $newController ) {
+            SessionData::remove('form');
+        }
     }
 
     protected function _loadModal($modalName, $params = '') {
@@ -25,12 +39,12 @@ abstract class Controller {
         return new $modelFile($this->_dbh, $params);
     }
 
-    protected function _loadView($viewName, $data = '') {
+    protected function _loadView($view, $data = '') {
         $viewFile = '';
 
-        if ( !empty($viewName) ) {
-            $viewName = strtolower($viewName);
-            $viewFile = $this->_viewPath . $this->_modelName . '/' . $viewName . '.html';
+        if ( !empty($view) ) {
+            $view = strtolower($view);
+            $viewFile = $this->_viewPath . $view . '.html';
         } else {
             $this->_loadError();
         }
@@ -49,11 +63,11 @@ abstract class Controller {
             echo '<script src="' . $globalFile . '"></script>';
         }
 
-        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) {
-            $filePath = FOLDER_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/*.js';
+        if ( defined('static::CONTROLLER_NAME') && !empty(static::CONTROLLER_NAME) ) {
+            $filePath = FOLDER_JS . 'modules/' . strtolower(static::CONTROLLER_NAME) . '/*.js';
 
             foreach(glob($filePath) as $file) {
-                $file = SITE_JS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
+                $file = SITE_JS . 'modules/' . strtolower(static::CONTROLLER_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
                 echo '<script src="' . $file . '"></script>';
             }
         }
@@ -68,11 +82,11 @@ abstract class Controller {
             echo '<link rel="stylesheet" type="text/css" href="' . $globalFile  . '">';
         }
 
-        if ( defined('static::MODEL_NAME') && !empty(static::MODEL_NAME) ) {
-            $filePath = FOLDER_CSS . 'modules/' . strtolower(static::MODEL_NAME) . '/*.css';
+        if ( defined('static::CONTROLLER_NAME') && !empty(static::CONTROLLER_NAME) ) {
+            $filePath = FOLDER_CSS . 'modules/' . strtolower(static::CONTROLLER_NAME) . '/*.css';
 
             foreach(glob($filePath) as $file) {
-                $file = SITE_CSS . 'modules/' . strtolower(static::MODEL_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
+                $file = SITE_CSS . 'modules/' . strtolower(static::CONTROLLER_NAME) . '/' . basename($file) . '?v=' . TIMESTAMP;
                 echo '<link rel="stylesheet" type="text/css" href="' . $file  . '">';
             }
         }
@@ -90,13 +104,13 @@ abstract class Controller {
     }
 
     protected function _loadHeader() {
-        $headerModel = $this->_loadModal('header', static::MODEL_NAME);
-        $this->_loadView('index', $headerModel);
+        $headerModel = $this->_loadModal('header', static::CONTROLLER_NAME);
+        $this->_loadView('header/index', $headerModel);
     }
 
     protected function _loadFooter() {
         $footerModel = $this->_loadModal('footer');
-        $this->_loadView('index', $footerModel);
+        $this->_loadView('footer/index', $footerModel);
     }
 
     protected function _loadPageView($view, $model) {
@@ -109,7 +123,6 @@ abstract class Controller {
         $this->_loadHeader();
 
         // load main content
-        $this->_modelName = static::MODEL_NAME;
         $this->_loadView($view, $model);
 
         // load footer

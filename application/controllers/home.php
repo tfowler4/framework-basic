@@ -4,7 +4,7 @@
  * home controller
  */
 class Home extends Controller {
-    const MODEL_NAME       = 'Home';
+    const CONTROLLER_NAME  = 'Home';
     const PAGE_TITLE       = 'Home';
     const PAGE_DESCRIPTION = 'Home Description';
 
@@ -12,21 +12,22 @@ class Home extends Controller {
         parent::__construct();
         $this->_setPageTitle();
         $this->_setPageDescription();
+
     }
 
     public function index($params = array()) {
-        $homeModel = $this->_loadModal(self::MODEL_NAME, $params);
+        $homeModel = $this->_loadModal('home', $params);
         $homeModel->getArticles();
         $homeModel->getCategories();
 
-        $this->_loadPageView('index', $homeModel);
+        $this->_loadPageView('home/index', $homeModel);
     }
 
     public function grid($params = array()) {
-        $homeModel = $this->_loadModal(self::MODEL_NAME, $params);
+        $homeModel = $this->_loadModal('home', $params);
         $homeModel->getArticles();
         $homeModel->getCategories();
 
-        $this->_loadPageView('grid', $homeModel);
+        $this->_loadPageView('home/grid', $homeModel);
     }
 }

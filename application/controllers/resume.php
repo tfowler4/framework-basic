@@ -4,7 +4,7 @@
  * resume controller
  */
 class Resume extends Controller {
-    const MODEL_NAME       = 'Resume';
+    const CONTROLLER_NAME  = 'Resume';
     const PAGE_TITLE       = 'Resume';
     const PAGE_DESCRIPTION = 'Interactive Resume';
 
@@ -22,8 +22,8 @@ class Resume extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $resumeModel = $this->_loadModal(self::MODEL_NAME, $params);
+        $resumeModel = $this->_loadModal('resume', $params);
 
-        $this->_loadPageView('index', $resumeModel);
+        $this->_loadPageView('resume/index', $resumeModel);
     }
 }

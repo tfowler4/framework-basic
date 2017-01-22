@@ -5,16 +5,17 @@
  */
 
 class FormHandler {
-    public $alertMessage = array();
     private $_form;
     private $_formName;
-    private $_hasMessage   = FALSE;
+    private $_hasMessage = FALSE;
     private $_dbh;
+
+    public $alertMessage = array();
 
     const MESSAGE_GENERIC = array('type' => 'warning', 'title' => 'Rut Roh', 'message' => 'Something happened and we dunno what it was with FormHandler!');
 
     public function __construct($dbh) {
-        $this->_dbh =$dbh;
+        $this->_dbh = $dbh;
     }
 
     public function process() {
@@ -23,7 +24,7 @@ class FormHandler {
             return;
         }
 
-        $this->_getForm($this->_formName);
+        $this->_setForm($this->_formName);
         $this->_populateFormFields();
         $this->_submit();
 
@@ -46,8 +47,6 @@ class FormHandler {
 
         if ( !empty($formResponse) && $formResponse > 0 ) {
             SessionData::set('message', $formResponse);
-
-            SessionData::remove($this->_formName);
         } else {
             $this->_generateError();
         }
@@ -58,17 +57,17 @@ class FormHandler {
 
         if ( !empty(Post::get('form')) ) {
             $this->_formName = Post::get('form');
-            $this->_formName = str_replace('-', '', $this->_formName);
-            $hasFormName = TRUE;
+            $this->_formName = ucfirst(str_replace('-', '', $this->_formName));
+            $hasFormName     = TRUE;
         }
 
         return $hasFormName;
     }
 
-    private function _getForm($formName) {
+    private function _setForm($formName) {
         $className = $formName . 'Form';
 
-        $this->_form = new $className;
+        $this->_form = new $className($this->_dbh);
     }
 
     private function _generateError() {
@@ -77,15 +76,14 @@ class FormHandler {
 
     private function _populateFormFields() {
         $formArray       = array();
-        $formName        = get_class($this->_form);
-        $this->_formName = $formName;
+        $this->_formName = $this->_form->form;
 
-        foreach( $this->_form as $formField => $fieldValue) {
-            if ( !empty(Post::get($formField)) && is_string(Post::get($formField)) ) {
-                $formArray[$formField]  = Post::get($formField);
+        foreach( $this->_form as $formField => $formValue ) {
+            if ( is_string($formValue) ) {
+                $formArray[$formField] = $formValue;
             }
         }
 
-        SessionData::set($formName, $formArray);
+        SessionData::set('form', $formArray);
     }
 }

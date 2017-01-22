@@ -1,0 +1,11 @@
+2017-01-22 03:51 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | DELETE FROM article_table WHERE article_id = '0'
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | ID:
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:52 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | ID:
+2017-01-22 03:58 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:58 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | ID: 25
+2017-01-22 03:58 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | yeh we logging this
+2017-01-22 03:58 | DBUG | user | l8t6dnr1q21dr90p6s5p32ghp4 | ID: 24

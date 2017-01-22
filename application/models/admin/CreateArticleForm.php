@@ -9,28 +9,38 @@ class CreateArticleForm extends Form {
     public $category;
     public $content;
 
+    const FORM_NAME       = 'create-article';
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully created!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article!');
 
-    public function __construct() {
-        parent::__construct();
+    public function __construct($dbh) {
+        parent::__construct($dbh);
 
-        $this->setFieldRequired(array('title', 'category', 'content'));
+        $this->_setFieldRequired(array('title', 'category', 'content'));
+        $this->_setRepopulateFields(array('title', 'category', 'content'));
+
+        $this->populateForm();
+    }
+
+    public function populateForm() {
+        $this->form     = $this->_populateField('form');
+        $this->title    = $this->_populateField('title');
+        $this->category = $this->_populateField('category');
+        $this->content  = $this->_populateField('content');
     }
 
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
-        $this->prePopulateFields();
-
-        if ( $this->validateRequiredFields() ) {
+        if ( $this->_validateRequiredFields() ) {
             if ( $this->_insertArticletoDb() && $this->_updateCategoryArticleCount() ) {
                 $response = self::MESSAGE_SUCCESS;
+                SessionData::remove('form');
             } else {
                 $response = self::MESSAGE_ERROR;
             }
         } else {
-            $response = $this->generateMissingFieldsError($this->form);
+            $response = $this->_generateMissingFieldsError($this->form);
         }
 
         return $response;

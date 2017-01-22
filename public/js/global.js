@@ -5,23 +5,21 @@ var global = function(siteUrl, timestamp) {
         $.getScript(siteUrl + fileName +'.js?v=' + timestamp, function( data, textStatus, jqxhr ) {});
     }
 
-    $(document).on('click', '#admin-nav2', function() {
+    $(document).on('click', '#admin-nav', function() {
         $('#global-modal').modal();
 
-        getAdminForm(function(data) {
+        getLoginForm(function(data) {
             populateModal(data);
         });
     });
 
-    function getAdminForm(callBack) {
+    function getLoginForm(callBack) {
         $.ajax({
             type : "GET",
-            url :'./services/getAdminForm/',
+            url :'./services/getLoginForm/',
             dataType : 'json',
             cache : true,
             success: function(data) {
-                console.log('data');
-                console.log(data);
                 callBack(data);
             },
             error: function(xhr, status, thrownError, error){
@@ -35,6 +33,7 @@ var global = function(siteUrl, timestamp) {
     }
 
     function populateModal(data) {
-        $('#global-body').html(data);
+        $('#global-title').html(data.title);
+        $('#global-body').html(data.body);
     }
 }();

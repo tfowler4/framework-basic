@@ -4,7 +4,7 @@
  * session controller
  */
 class Session extends Controller {
-    const MODEL_NAME = 'Session';
+    const CONTROLLER_NAME = 'Session';
 
     public function __construct() {
         parent::__construct();

@@ -83,6 +83,7 @@
             type : "GET",
             url :'./services/getArticle/' + articleId,
             cache : true,
+            dataType: 'json',
             success: function(data) {
                 console.log(data);
                 callBack(data);

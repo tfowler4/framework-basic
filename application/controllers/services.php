@@ -4,7 +4,7 @@
  * services controller
  */
 class Services extends Controller {
-    const MODEL_NAME = 'Services';
+    const CONTROLLER_NAME = 'Services';
 
     public function __construct() {
         parent::__construct();
@@ -81,13 +81,15 @@ class Services extends Controller {
         echo json_encode($category);
     }
 
-    public function getAdminForm() {
-        $adminModel = $this->_loadModal('admin');
+    public function getLoginForm() {
+        $adminModel = $this->_loadModal('login');
 
         ob_start();
-        $this->_loadView('admin-login');
+        $this->_loadView('login/login-form');
 
-        $data = array(ob_get_clean());
+        $data['title'] = 'User Login';
+        $data['body']  = ob_get_clean();
+
         echo json_encode($data);
     }
 }

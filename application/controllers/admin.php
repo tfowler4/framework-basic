@@ -4,7 +4,7 @@
  * admin controller
  */
 class Admin extends Controller {
-    const MODEL_NAME       = 'Admin';
+    const CONTROLLER_NAME  = 'Admin';
     const PAGE_TITLE       = 'Administration';
     const PAGE_DESCRIPTION = 'Admin Description';
 
@@ -15,10 +15,10 @@ class Admin extends Controller {
     }
 
     public function index($params = array()) {
-        $adminModel = $this->_loadModal(self::MODEL_NAME, $params);
+        $adminModel = $this->_loadModal('admin', $params);
         $adminModel->getArticles();
         $adminModel->getCategories();
 
-        $this->_loadPageView('index', $adminModel);
+        $this->_loadPageView('admin/index', $adminModel);
     }
 }

@@ -4,8 +4,14 @@
  * register model
  */
 class RegisterModel extends Model {
+    const MODEL_NAME = 'Register';
+
     /**
      * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
      */
     public function __construct($dbh, $params) {
         parent::__construct($dbh);
@@ -13,6 +19,11 @@ class RegisterModel extends Model {
         $this->_loadForms();
     }
 
+    /**
+     * load all forms associated with model
+     *
+     * @return void
+     */
     protected function _loadForms() {
         $this->forms = new stdClass();
         $this->forms->register = new RegisterForm($this->_dbh);

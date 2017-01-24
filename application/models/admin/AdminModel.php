@@ -1,14 +1,21 @@
 <?php
 
 /**
- * Admin model
+ * administration model
  */
 class AdminModel extends Model {
     public $articles   = array();
     public $categories = array();
 
+    const MODEL_NAME = 'Admin';
+
     /**
      * constructor
+     *
+     * @param obj   $dbh    [ database handler ]
+     * @param array $params [ parameters sent by the url ]
+     *
+     * @return void
      */
     public function __construct($dbh, $params) {
         parent::__construct($dbh);
@@ -16,6 +23,11 @@ class AdminModel extends Model {
         $this->_loadForms();
     }
 
+    /**
+     * load all forms associated with model
+     *
+     * @return void
+     */
     protected function _loadForms() {
         $this->forms = new stdClass();
         $this->forms->createArticle  = new CreateArticleForm($this->_dbh);
@@ -31,7 +43,7 @@ class AdminModel extends Model {
     }
 
     /**
-     * get a list of all article categories from database
+     * get a list of all categories from database
      *
      * @return void
      */

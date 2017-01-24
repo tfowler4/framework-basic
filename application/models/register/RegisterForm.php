@@ -14,6 +14,13 @@ class RegisterForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Registration successful!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while attempting to register!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -23,6 +30,11 @@ class RegisterForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->form            = $this->_populateField('form');
         $this->username        = $this->_populateField('username');
@@ -31,6 +43,11 @@ class RegisterForm extends Form {
         $this->confirmPassword = $this->_populateField('confirm-password');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -48,6 +65,15 @@ class RegisterForm extends Form {
         return $response;
     }
 
+    private function _encodePassword() {
+
+    }
+
+    /**
+     * [_registerUserToDb description]
+     *
+     * @return [type] [description]
+     */
     private function _registerUserToDb() {
         $dbh = Database::getHandler();
 

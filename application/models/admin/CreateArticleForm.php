@@ -13,6 +13,13 @@ class CreateArticleForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully created!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article!');
 
+    /**
+     * constructor
+     *
+     * @param obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -22,6 +29,11 @@ class CreateArticleForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->form     = $this->_populateField('form');
         $this->title    = $this->_populateField('title');
@@ -29,6 +41,11 @@ class CreateArticleForm extends Form {
         $this->content  = $this->_populateField('content');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -46,9 +63,12 @@ class CreateArticleForm extends Form {
         return $response;
     }
 
+    /**
+     * insert article into the database
+     *
+     * @return boolean [ query success or failure ]
+     */
     private function _insertArticletoDb() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "INSERT INTO
                 article_table (title, category_id, content)
@@ -59,16 +79,19 @@ class CreateArticleForm extends Form {
             $this->content
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }
 
+    /**
+     * update the number of articles per category in the database
+     *
+     * @return boolean [ query success or failure ]
+     */
     private function _updateCategoryArticleCount() {
-        $dbh = Database::getHandler();
-
-        $updateString        = '';
-        $categories          = '';
+        $updateString = '';
+        $categories   = '';
 
         $query = sprintf(
             "SELECT
@@ -80,7 +103,7 @@ class CreateArticleForm extends Form {
                 category_id"
         );
 
-        $query = $dbh->query($query);
+        $query = $this->_dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $categoryId    = $row['category_id'];
@@ -106,7 +129,7 @@ class CreateArticleForm extends Form {
             $categories
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

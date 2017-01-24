@@ -11,6 +11,13 @@ class RemoveArticleForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully removed!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -19,11 +26,21 @@ class RemoveArticleForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->id   = $this->_populateField('id');
         $this->form = $this->_populateField('form');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -41,10 +58,12 @@ class RemoveArticleForm extends Form {
         return $response;
     }
 
+    /**
+     * remove article from the database
+     *
+     * @return boolean [ response from database query ]
+     */
     private function _removeArticleFromDb() {
-        logger(0,'yeh we logging this');
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "DELETE
             FROM
@@ -53,8 +72,8 @@ class RemoveArticleForm extends Form {
                 article_id = '%d'",
             $this->id
         );
-logger(0, 'ID: ' . $this->id);
-        $query = $dbh->prepare($query);
+
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

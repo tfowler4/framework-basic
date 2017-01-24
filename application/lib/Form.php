@@ -1,7 +1,7 @@
 <?php
 
 /**
- * generate form class
+ * base form class
  */
 abstract class Form {
     protected $_dbh;
@@ -12,14 +12,24 @@ abstract class Form {
 
     const MESSAGE_GENERIC = array('type' => 'warning', 'title' => 'Rut Roh', 'message' => 'Something happened and we dunno what it was!');
 
-    /* Test Lorem
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ultrices erat a lectus vestibulum, ac viverra velit ultrices. Vestibulum lacus tortor, finibus non dui non, posuere placerat enim. Sed ac fringilla velit. Phasellus non nunc ut leo facilisis auctor. Aliquam ac diam ipsum. Donec eget nunc lorem. In erat sapien, suscipit ut felis sed, rutrum vulputate eros. Nullam gravida justo vel arcu euismod, a molestie tellus auctor. Sed at nisl sagittis, porta mauris eget, tincidunt lorem. Nam magna erat, hendrerit sed egestas quis, pharetra vitae dolor
-    */
-
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         $this->_dbh = $dbh;
     }
 
+    /**
+     * repopulate a form with data from the active session
+     *
+     * @param  obj $form [ form class object ]
+     *
+     * @return void
+     */
     public function repopulateForm($form) {
         $sessionForm = SessionData::get('form');
 
@@ -34,6 +44,11 @@ abstract class Form {
         }
     }
 
+    /**
+     * checks if the required fields have been populated
+     *
+     * @return boolean [ if all required fields have been populated ]
+     */
     protected function _validateRequiredFields() {
         $areRequiredFieldsValid = TRUE;
 
@@ -46,14 +61,35 @@ abstract class Form {
         return $areRequiredFieldsValid;
     }
 
+    /**
+     * set the required form fields
+     *
+     * @param  array $fields [ array of field names ]
+     *
+     * @return void
+     */
     protected function _setFieldRequired($fields) {
         $this->requiredFields = $fields;
     }
 
+    /**
+     * set the array of fields that need to be repopulated if form submission fails
+     *
+     * @param  array $fields [ array of field names ]
+     *
+     * @return void
+     */
     protected function _setRepopulateFields($fields) {
         $this->repopulateFields = $fields;
     }
 
+    /**
+     * get the value from the provided field name and mark if its empty into the missing fields
+     *
+     * @param  string $field [ name of field ]
+     *
+     * @return string [ value for field ]
+     */
     protected function _populateField($field) {
         $formValue = Post::get($field);
 
@@ -64,6 +100,13 @@ abstract class Form {
         return $formValue;
     }
 
+    /**
+     * generate an error message based on missing fields that are required
+     *
+     * @param  string $formName [ form field name ]
+     *
+     * @return array [ error message array ]
+     */
     protected function _generateMissingFieldsError($formName) {
         $message = '';
 
@@ -84,6 +127,13 @@ abstract class Form {
         return $errorMessage;
     }
 
+    /**
+     * format the form field name to go from html format to php format (camelcase)
+     *
+     * @param  string $formName [ name of field ]
+     *
+     * @return string [ formatted form field name ]
+     */
     protected function _formatFormFieldName($formName) {
         if ( strpos($formName, '-') > -1 ) {
             $formNameArray = explode('-', $formName);

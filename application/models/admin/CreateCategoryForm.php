@@ -12,6 +12,13 @@ class CreateCategoryForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully created!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article Category!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -20,12 +27,22 @@ class CreateCategoryForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->form = $this->_populateField('form');
         $this->name = $this->_populateField('name');
         $this->meta = $this->_populateField('meta');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -43,9 +60,12 @@ class CreateCategoryForm extends Form {
         return $response;
     }
 
+    /**
+     * insert category into the database
+     *
+     * @return boolean [ query success or failure ]
+     */
     private function _insertCategorytoDb() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "INSERT INTO
                 category_table (name, meta)
@@ -55,7 +75,7 @@ class CreateCategoryForm extends Form {
             $this->meta
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

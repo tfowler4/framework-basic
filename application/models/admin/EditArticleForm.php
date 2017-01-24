@@ -14,6 +14,13 @@ class EditArticleForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully saved!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while saving your Article!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -22,6 +29,11 @@ class EditArticleForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->id       = $this->_populateField('edit-article-id');
         $this->form     = $this->_populateField('form');
@@ -30,6 +42,11 @@ class EditArticleForm extends Form {
         $this->content  = $this->_populateField('content');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -47,9 +64,12 @@ class EditArticleForm extends Form {
         return $response;
     }
 
+    /**
+     * update article in the database
+     *
+     * @return boolean [ response from database query ]
+     */
     private function _updateArticletoDb() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "UPDATE
                 article_table
@@ -65,16 +85,19 @@ class EditArticleForm extends Form {
             $this->id
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }
 
+    /**
+     * update the number of articles per category in the database
+     *
+     * @return boolean [ query success or failure ]
+     */
     private function _updateCategoryArticleCount() {
-        $dbh = Database::getHandler();
-
-        $updateString        = '';
-        $categories          = '';
+        $updateString = '';
+        $categories   = '';
 
         $query = sprintf(
             "SELECT
@@ -86,7 +109,7 @@ class EditArticleForm extends Form {
                 category_id"
         );
 
-        $query = $dbh->query($query);
+        $query = $this->_dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $categoryId    = $row['category_id'];
@@ -112,7 +135,7 @@ class EditArticleForm extends Form {
             $categories
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

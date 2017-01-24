@@ -11,6 +11,13 @@ class RemoveCategoryForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully removed!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Category!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -19,11 +26,21 @@ class RemoveCategoryForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->id   = $this->_populateField('edit-category-id');
         $this->form = $this->_populateField('form');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -45,9 +62,12 @@ class RemoveCategoryForm extends Form {
         return $response;
     }
 
+    /**
+     * check if there are any articles remaining for the category
+     *
+     * @return boolean [ if there are any articles for specified category id ]
+     */
     private function _verifyRemainingCategoryArticles() {
-        $dbh = Database::getHandler();
-
         $clearedArticlesWithCategory = TRUE;
 
         $query = sprintf(
@@ -62,7 +82,7 @@ class RemoveCategoryForm extends Form {
             $this->id
         );
 
-        $query = $dbh->query($query);
+        $query = $this->_dbh->query($query);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $numOfArticles = $row['num_of_articles'];
@@ -77,9 +97,12 @@ class RemoveCategoryForm extends Form {
         return $clearedArticlesWithCategory;
     }
 
+    /**
+     * remove category from the database
+     *
+     * @return boolean [ response from database query ]
+     */
     private function _removeCategoryFromDb() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "DELETE
             FROM
@@ -89,7 +112,7 @@ class RemoveCategoryForm extends Form {
             $this->id
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

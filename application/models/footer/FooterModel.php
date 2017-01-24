@@ -6,8 +6,14 @@
 class FooterModel extends Model {
     public $footerItems = array();
 
+    const MODEL_NAME = 'Footer';
+
     /**
      * constructor
+     *
+     * @param obj $dbh [ database handler ]
+     *
+     * @return void
      */
     public function __construct($dbh) {
         parent::__construct($dbh);

@@ -10,8 +10,15 @@ class HeaderModel extends Model {
     public $siteLink;
     public $activeModel;
 
+    const MODEL_NAME = 'Header';
+
     /**
      * constructor
+     *
+     * @param  obj $dbh         [ database handler ]
+     * @param  obj $activeModel [ current active page model ]
+     *
+     * @return void
      */
     public function __construct($dbh, $activeModel) {
         parent::__construct($dbh);
@@ -28,6 +35,13 @@ class HeaderModel extends Model {
         }
     }
 
+    /**
+     * add attributes to navigation array item
+     *
+     * @param  array $navItem [ navigation item ]
+     *
+     * @return array [ navigation item ]
+     */
     private function _createNavItem($navItem) {
         if ( empty($navItem['link']) ) {
             $navItem['link'] = SITE_URL . strtolower($navItem['model']);
@@ -45,6 +59,11 @@ class HeaderModel extends Model {
         return $navItem;
     }
 
+    /**
+     * sets site header navigation items
+     *
+     * @return void
+     */
     private function _loadSiteNavigation() {
         $navigationArray = array();
 
@@ -65,8 +84,8 @@ class HeaderModel extends Model {
         array_push($navigationArray, $navItem);
 
         // Admin
-        //$navItem = array('id' => 'admin-nav', 'title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
-        //array_push($navigationArray, $navItem);
+        $navItem = array('id' => 'admin-nav', 'title' => 'Administrator', 'model' => 'Admin', 'link' => '', 'icon' => 'fa fa-lock', 'dropdown' => array());
+        array_push($navigationArray, $navItem);
 
         // Github
         $navItem = array('id' => 'git-nav','title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());

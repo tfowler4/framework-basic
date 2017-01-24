@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * logger class for when handling site error & database logging
+ */
 class Logger {
     private $_timestamp;
     private $_userType;
@@ -15,6 +18,15 @@ class Logger {
         'EROR'
     );
 
+    /**
+     * log call to write log entry
+     *
+     * @param  int    $severity [ level of severity integer ]
+     * @param  string $message  [ log message ]
+     * @param  string $userType [ client type ]
+     *
+     * @return void
+     */
     public function log($severity, $message, $userType = 'user') {
         $this->_setTimestamp();
         $this->_setUserType($userType);
@@ -26,11 +38,23 @@ class Logger {
         $this->_logMsgToDb();
     }
 
+    /**
+     * set timestamp for log entry
+     *
+     * @return void
+     */
     private function _setTimestamp() {
         $timestamp = date('Y-m-d H:i');
         $this->_timestamp = $timestamp;
     }
 
+    /**
+     * set user type depending on supplied value
+     *
+     * @param string $userType [ client type ]
+     *
+     * @return void
+     */
     private function _setUserType($userType) {
         switch ( $userType ) {
             case 'user':
@@ -46,6 +70,13 @@ class Logger {
         }
     }
 
+    /**
+     * set severity level of log entry
+     *
+     * @param  int $severity [ level of severity integer ]
+     *
+     * @return void
+     */
     private function _setSeverity($severity) {
         $severityIndex = 0;
 
@@ -60,6 +91,13 @@ class Logger {
         }
     }
 
+    /**
+     * sets log message for entry
+     *
+     * @param string $message [ log message ]
+     *
+     * @return void
+     */
     private function _setLogMessage($message) {
         if ( is_string($message) ) {
             $this->_logMessage = preg_replace('/\s+/', ' ', trim($message));
@@ -68,6 +106,11 @@ class Logger {
         }
     }
 
+    /**
+     * set folder path for logging
+     *
+     * @return void
+     */
     private function _setFolderPath() {
         $year  = date('Y');
         $month = date('n') . '-' . date('M');
@@ -86,12 +129,22 @@ class Logger {
         }
     }
 
+    /**
+     * set log file path
+     *
+     * @return void
+     */
     private function _setLogFile() {
         $currentDate = date('Y-m-d');
 
         $this->_logFile = strtolower($this->_logFilePath . '/' . $currentDate . '.txt');
     }
 
+    /**
+     * log the entry into the database
+     *
+     * @return void
+     */
     private function _logMsgToDB() {
         $dbh = Database::getHandler();
 
@@ -112,6 +165,11 @@ class Logger {
         $query->execute();
     }
 
+    /**
+     * log the entry into the text file
+     *
+     * @return void
+     */
     private function _logMsgToFile() {
         $fileHandle = fopen($this->_logFile, 'a+');
         $logMsg     = $this->_timestamp . ' | ' . $this->_severity . ' | ' . $this->_userType . ' | ' . session_id() . ' | ' . $this->_logMessage;

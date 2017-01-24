@@ -13,6 +13,13 @@ class EditCategoryForm extends Form {
     const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully saved!');
     const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while saving your Category!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         parent::__construct($dbh);
 
@@ -21,6 +28,11 @@ class EditCategoryForm extends Form {
         $this->populateForm();
     }
 
+    /**
+     * populate the form with values in POST or SESSION
+     *
+     * @return void
+     */
     public function populateForm() {
         $this->id   = $this->_populateField('edit-category-id');
         $this->form = $this->_populateField('form');
@@ -28,6 +40,11 @@ class EditCategoryForm extends Form {
         $this->meta = $this->_populateField('meta');
     }
 
+    /**
+     * attempt to submit the form using the populated fields
+     *
+     * @return boolean [ response from database query ]
+     */
     public function submitForm() {
         $response = parent::MESSAGE_GENERIC;
 
@@ -45,9 +62,12 @@ class EditCategoryForm extends Form {
         return $response;
     }
 
+    /**
+     * update category in the database
+     *
+     * @return boolean [ response from database query ]
+     */
     private function _updateCategorytoDb() {
-        $dbh = Database::getHandler();
-
         $query = sprintf(
             "UPDATE
                 category_table
@@ -61,7 +81,7 @@ class EditCategoryForm extends Form {
             $this->id
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
     }

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * form handling class
+ * form handling class to be used when attempting to submit forms
  */
-
 class FormHandler {
     private $_form;
     private $_formName;
@@ -14,10 +13,22 @@ class FormHandler {
 
     const MESSAGE_GENERIC = array('type' => 'warning', 'title' => 'Rut Roh', 'message' => 'Something happened and we dunno what it was with FormHandler!');
 
+    /**
+     * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
+     */
     public function __construct($dbh) {
         $this->_dbh = $dbh;
     }
 
+    /**
+     * process any form data in POST
+     *
+     * @return void
+     */
     public function process() {
         if ( !$this->_getFormName() ) {
             $this->_generateError();
@@ -28,10 +39,14 @@ class FormHandler {
         $this->_populateFormFields();
         $this->_submit();
 
-        header('Location: http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-        exit;
+        redirect('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     }
 
+    /**
+     * check if any form data has been submitted to POST
+     *
+     * @return boolean [ if any form data has been submitted ]
+     */
     public function isFormSubmitted() {
         $isFormSubmitted = FALSE;
 
@@ -42,6 +57,11 @@ class FormHandler {
         return $isFormSubmitted;
     }
 
+    /**
+     * sattempt to submit the form data from POST
+     *
+     * @return void
+     */
     private function _submit() {
         $formResponse = $this->_form->submitForm();
 
@@ -52,6 +72,11 @@ class FormHandler {
         }
     }
 
+    /**
+     * get the name of the form submitted
+     *
+     * @return boolean [ was a form name submitted ]
+     */
     private function _getFormName() {
         $hasFormName = FALSE;
 
@@ -64,16 +89,31 @@ class FormHandler {
         return $hasFormName;
     }
 
+    /**
+     * set the form object from the form name
+     *
+     * @param void
+     */
     private function _setForm($formName) {
         $className = $formName . 'Form';
 
         $this->_form = new $className($this->_dbh);
     }
 
+    /**
+     * set error message in session data to be displayed in an alert
+     *
+     * @return void
+     */
     private function _generateError() {
         SessionData::set('message', self::MESSAGE_GENERIC);
     }
 
+    /**
+     * populate the form and place into session to be submitted
+     *
+     * @return void
+     */
     private function _populateFormFields() {
         $formArray       = array();
         $this->_formName = $this->_form->form;

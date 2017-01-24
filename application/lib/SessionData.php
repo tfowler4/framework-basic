@@ -61,6 +61,11 @@ class SessionData {
         }
     }
 
+    /**
+     * end active session
+     *
+     * @return void
+     */
     public static function end() {
         if ( session_id() ) {
             session_destroy();

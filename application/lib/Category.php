@@ -1,7 +1,7 @@
 <?php
 
 /**
- * category class
+ * category class for article segmentation
  */
 class Category {
     public $categoryId;
@@ -9,6 +9,13 @@ class Category {
     public $meta;
     public $numOfArticles;
 
+    /**
+     * constructor
+     *
+     * @param  array $data [ array containing category data ]
+     *
+     * @return void
+     */
     public function __construct($data) {
         $this->categoryId    = $data['category_id'];
         $this->name          = $data['name'];

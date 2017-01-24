@@ -13,6 +13,11 @@ abstract class Controller {
 
     public $alert;
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         $this->_dbh = Database::getHandler();
         $this->_setSiteName();
@@ -32,6 +37,14 @@ abstract class Controller {
         }
     }
 
+    /**
+     * load a model file
+     *
+     * @param  string $modalName [ name of model ]
+     * @param  string $params    [ parameters for ]
+     *
+     * @return obj [ model class object ]
+     */
     protected function _loadModal($modalName, $params = '') {
         $this->_modelName = strtolower($modalName);
         $modelFile        = ucfirst($this->_modelName) . 'Model';
@@ -39,6 +52,14 @@ abstract class Controller {
         return new $modelFile($this->_dbh, $params);
     }
 
+    /**
+     * load a view file
+     *
+     * @param  string $view [ name of view file ]
+     * @param  string $data [ dat to be used in the view ]
+     *
+     * @return void
+     */
     protected function _loadView($view, $data = '') {
         $viewFile = '';
 
@@ -54,6 +75,11 @@ abstract class Controller {
         include strtolower($viewFile);
     }
 
+    /**
+     * load all javascript files associated with the controller page
+     *
+     * @return void
+     */
     protected function _loadJS() {
         // load global JS file
         $globalFile = FOLDER_JS . 'global.js';
@@ -73,6 +99,11 @@ abstract class Controller {
         }
     }
 
+    /**
+     * load all css files associated with the controller page
+     *
+     * @return void
+     */
     protected function _loadCSS() {
         // load global CSS file
         $globalFile = FOLDER_CSS . 'global.css';
@@ -92,27 +123,56 @@ abstract class Controller {
         }
     }
 
+    /**
+     * load a HTML file
+     *
+     * @param  string $filePath [ path of html file ]
+     *
+     * @return void
+     */
     protected function _loadFile($filePath) {
         if ( file_exists($filePath) ) {
             include $filePath;
         }
     }
 
+    /**
+     * redirect to error page
+     *
+     * @return void
+     */
     protected function _loadError() {
-        header('Location: ' . SITE_URL . 'error');
-        exit;
+        redirect(SITE_URL . 'error');
     }
 
+    /**
+     * load the header page
+     *
+     * @return void
+     */
     protected function _loadHeader() {
         $headerModel = $this->_loadModal('header', static::CONTROLLER_NAME);
         $this->_loadView('header/index', $headerModel);
     }
 
+    /**
+     * load the footer page
+     *
+     * @return void
+     */
     protected function _loadFooter() {
         $footerModel = $this->_loadModal('footer');
         $this->_loadView('footer/index', $footerModel);
     }
 
+    /**
+     * load entire page view with header, footer, and content view
+     *
+     * @param  string $view  [ name of view ]
+     * @param  obj    $model [ model file ]
+     *
+     * @return void
+     */
     protected function _loadPageView($view, $model) {
         $this->_handleSessionData();
 
@@ -131,6 +191,11 @@ abstract class Controller {
         ob_end_flush();
     }
 
+    /**
+     * handle any data in the session for forms
+     *
+     * @return void
+     */
     protected function _handleSessionData() {
         $formHandler = new FormHandler($this->_dbh);
 
@@ -144,6 +209,11 @@ abstract class Controller {
         }
     }
 
+    /**
+     * set name of web application site
+     *
+     * @return void
+     */
     protected function _setSiteName() {
         if ( defined('SITE_NAME') && !empty(SITE_NAME) ) {
             $this->_siteName = SITE_NAME;
@@ -152,6 +222,11 @@ abstract class Controller {
         }
     }
 
+    /**
+     * set title of page
+     *
+     * @return void
+     */
     protected function _setPageTitle() {
         if ( defined('static::PAGE_TITLE') && !empty(static::PAGE_TITLE) ) {
             $this->_pageTitle = static::PAGE_TITLE;
@@ -162,6 +237,11 @@ abstract class Controller {
         $this->_pageTitle .= ' | ' . $this->_siteName;
     }
 
+    /**
+     * set description of page
+     *
+     * @return void
+     */
     protected function _setPageDescription() {
         if ( defined('static::PAGE_DESCRIPTION') && !empty(static::PAGE_DESCRIPTION) ) {
             $this->_pageDescription = static::PAGE_DESCRIPTION;

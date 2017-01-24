@@ -7,8 +7,14 @@ class HomeModel extends Model {
     public $articles   = array();
     public $categories = array();
 
+    const MODEL_NAME = 'Home';
+
     /**
      * constructor
+     *
+     * @param  obj $dbh [ database handler ]
+     *
+     * @return void
      */
     public function __construct($dbh, $params) {
         parent::__construct($dbh);

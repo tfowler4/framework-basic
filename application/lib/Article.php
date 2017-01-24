@@ -1,7 +1,7 @@
 <?php
 
 /**
- * article class
+ * article class for displaying front page articles
  */
 class Article {
     public $articleId;
@@ -13,7 +13,13 @@ class Article {
     public $dateAdded;
     public $lastModified;
 
-
+    /**
+     * constructor
+     *
+     * @param  array $data [ array containing article data ]
+     *
+     * @return void
+     */
     public function __construct($data) {
         $this->articleId    = $data['article_id'];
         $this->title        = $data['title'];

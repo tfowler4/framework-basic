@@ -48,8 +48,11 @@ class LoginForm extends Form {
         $response = parent::MESSAGE_GENERIC;
 
         if ( $this->_validateRequiredFields() ) {
-            if ( $this->_verifyLoginInfo() ) {
+            if ( !empty($this->_verifyLoginInfo()) ) {
                 $response = self::MESSAGE_SUCCESS;
+                SessionData::remove('form');
+
+                redirect(SITE_URL . 'userpanel');
             } else {
                 $response = self::MESSAGE_ERROR;
             }
@@ -60,15 +63,28 @@ class LoginForm extends Form {
         return $response;
     }
 
+
+    private function _checkPassword($hash) {
+        $validPassword = FALSE;
+
+        if (password_verify($this->password, $hash)) {
+            $validPassword = TRUE;
+            // Login successful.
+            //if (password_needs_rehash($hash, PASSWORD_DEFAULT, ['cost' => 12])) {
+                // Recalculate a new password_hash() and overwrite the one we stored previously
+            //}
+        }
+
+        return $validPassword;
+    }
+
     /**
      * [_verifyLoginInfo description]
      *
      * @return [type] [description]
      */
     private function _verifyLoginInfo() {
-        return TRUE;
-        /*
-        $dbh = Database::getHandler();
+        $user = array();
 
         $query = sprintf(
             "SELECT
@@ -76,16 +92,22 @@ class LoginForm extends Form {
             FROM
                 user_table
             WHERE
-                username = '%s'
-            AND
-                password = '%s'",
-            $this->username,
-            $this->password
+                username = '%s'",
+            $this->username
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->query($query);
 
-        return $query->execute();
-        */
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            if ( $this->_checkPassword($row['password']) ) {
+                $user = $row;
+
+                SessionData::set('login', TRUE);
+                SessionData::set('user', $user);
+                break;
+            }
+        }
+
+        return $user;
     }
 }

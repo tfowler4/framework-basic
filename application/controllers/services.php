@@ -92,4 +92,24 @@ class Services extends Controller {
 
         echo json_encode($data);
     }
+
+    public function getLogoutForm() {
+        //$adminModel = $this->_loadModal('logout');
+
+        ob_start();
+        $this->_loadView('logout/logout-form');
+
+        $data['title'] = 'User Logout';
+        $data['body']  = ob_get_clean();
+
+        echo json_encode($data);
+    }
+
+    public function logoutUser() {
+        SessionData::set('login', FALSE);
+        SessionData::remove('user');
+
+        $message = array('type' => 'success',  'title' => 'Logout',   'message' => 'You logged out so....bye!');
+        SessionData::set('message', $message);
+    }
 }

@@ -52,9 +52,13 @@ class RegisterForm extends Form {
         $response = parent::MESSAGE_GENERIC;
 
         if ( $this->_validateRequiredFields() ) {
-            if ( $this->_registerUserToDb() ) {
-                $response = self::MESSAGE_SUCCESS;
-                SessionData::remove('form');
+            if ( $this->_checkUserInDb() == 0 ) {
+                if ( $this->_registerUserToDb() ) {
+                    $response = self::MESSAGE_SUCCESS;
+                    SessionData::remove('form');
+                } else {
+                    $response = self::MESSAGE_ERROR;
+                }
             } else {
                 $response = self::MESSAGE_ERROR;
             }
@@ -65,8 +69,10 @@ class RegisterForm extends Form {
         return $response;
     }
 
-    private function _encodePassword() {
+    private function _hashPassword($password) {
+        $hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
 
+        return $hash;
     }
 
     /**
@@ -75,23 +81,50 @@ class RegisterForm extends Form {
      * @return [type] [description]
      */
     private function _registerUserToDb() {
-        $dbh = Database::getHandler();
-
-        /*
         $query = sprintf(
             "INSERT INTO
-                article_table (title, category_id, content)
+                user_table (username, email_address, password)
             values
-                ('%s', '%d', '%s')",
-            $this->title,
-            $this->category,
-            $this->content
+                ('%s', '%s', '%s')",
+            $this->username,
+            $this->email,
+            $this->_hashPassword($this->password)
         );
 
-        $query = $dbh->prepare($query);
+        $query = $this->_dbh->prepare($query);
 
         return $query->execute();
-        */
-       return TRUE;
+    }
+
+    /**
+     * [_registerUserToDb description]
+     *
+     * @return [type] [description]
+     */
+    private function _checkUserInDb() {
+        $usersFound = 0;
+
+        $query = sprintf(
+            "SELECT
+                user_id,
+                username,
+                email_address,
+                password,
+                date_added,
+                last_modified
+            FROM
+               user_table
+            WHERE
+                username = '%s'",
+            $this->username
+        );
+
+        $query = $this->_dbh->query($query);
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $usersFound++;
+        }
+
+       return $usersFound;
     }
 }

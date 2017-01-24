@@ -51,7 +51,11 @@
                     </ul>
 
                     <div class="pull-right">
-                        <button type="button" class="btn btn-primary navbar-btn" id="admin-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                        <?php if ( SessionData::get('login') ) { ?>
+                            <button type="button" class="btn btn-primary navbar-btn" id="admin-nav-out"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                        <?php } else { ?>
+                            <button type="button" class="btn btn-primary navbar-btn" id="admin-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

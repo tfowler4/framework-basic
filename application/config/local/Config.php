@@ -40,7 +40,8 @@ class Config {
         define('MODULE_EXAMPLE_SET', 1);
 
         // database settings
-        define('DB_HOST', 'localhost');
+        //define('DB_HOST', 'localhost');
+        define('DB_HOST', '198.57.149.136');
         define('DB_NAME', 'xeonsold_framework_test');
         define('DB_USER', 'xeonsold_test');
         define('DB_PASS', 'test74108520');

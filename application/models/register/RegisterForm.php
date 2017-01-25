@@ -10,9 +10,11 @@ class RegisterForm extends Form {
     public $password;
     public $confirmPassword;
 
-    const FORM_NAME       = 'register';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Registration successful!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while attempting to register!');
+    const FORM_NAME          = 'register';
+    const SUCCESS_GENERIC    = array('type' => 'success', 'title' => 'Success', 'message' => 'Registration successful!');
+    const ERROR_GENERIC      = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while attempting to register!');
+    const ERROR_EMAIL_EXISTS = array('type' => 'warning',  'title' => 'Error',   'message' => 'Email Address already registered!');
+    const ERROR_USER_EXISTS  = array('type' => 'warning',  'title' => 'Error',   'message' => 'Username already registered!');
 
     /**
      * constructor
@@ -49,26 +51,33 @@ class RegisterForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( $this->_checkUserInDb() == 0 ) {
-                if ( $this->_registerUserToDb() ) {
-                    $response = self::MESSAGE_SUCCESS;
-                    SessionData::remove('form');
-                } else {
-                    $response = self::MESSAGE_ERROR;
-                }
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( $this->_checkUserInDb() > 0 ) {
+            return self::ERROR_USER_EXISTS;
+        }
+
+        if ( $this->_checkEmailInDb() > 0 ) {
+            return self::ERROR_EMAIL_EXISTS;
+        }
+
+        if ( $this->_registerUserToDb() ) {
+            SessionData::remove('form');
+            return self::SUCCESS_GENERIC;
+        } else {
+            return self::ERROR_GENERIC;
+        }
     }
 
+    /**
+     * hash the given password with an algorithm
+     *
+     * @param  string $password [ user password string in plain text]
+     *
+     * @return string [ hashed password ]
+     */
     private function _hashPassword($password) {
         $hash = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
 
@@ -76,16 +85,16 @@ class RegisterForm extends Form {
     }
 
     /**
-     * [_registerUserToDb description]
+     * add user to the database
      *
-     * @return [type] [description]
+     * @return boolean [ response from database query ]
      */
     private function _registerUserToDb() {
         $query = sprintf(
             "INSERT INTO
-                user_table (username, email_address, password)
+                user_table (username, email_address, password, date_added, last_modified)
             values
-                ('%s', '%s', '%s')",
+                ('%s', '%s', '%s', null, null)",
             $this->username,
             $this->email,
             $this->_hashPassword($this->password)
@@ -97,9 +106,9 @@ class RegisterForm extends Form {
     }
 
     /**
-     * [_registerUserToDb description]
+     * check the database to see if the username exists
      *
-     * @return [type] [description]
+     * @return integer [ number of users found ]
      */
     private function _checkUserInDb() {
         $usersFound = 0;
@@ -117,6 +126,38 @@ class RegisterForm extends Form {
             WHERE
                 username = '%s'",
             $this->username
+        );
+
+        $query = $this->_dbh->query($query);
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $usersFound++;
+        }
+
+       return $usersFound;
+    }
+
+    /**
+     * check the database to see if the email address exists
+     *
+     * @return integer [ number of users found ]
+     */
+    private function _checkEmailInDb() {
+        $usersFound = 0;
+
+        $query = sprintf(
+            "SELECT
+                user_id,
+                username,
+                email_address,
+                password,
+                date_added,
+                last_modified
+            FROM
+               user_table
+            WHERE
+                email_address = '%s'",
+            $this->email
         );
 
         $query = $this->_dbh->query($query);

@@ -82,24 +82,20 @@ class Services extends Controller {
     }
 
     public function getLoginForm() {
-        $adminModel = $this->_loadModal('login');
-
         ob_start();
         $this->_loadView('login/login-form');
 
-        $data['title'] = 'User Login';
+        $data['title'] = 'Login';
         $data['body']  = ob_get_clean();
 
         echo json_encode($data);
     }
 
     public function getLogoutForm() {
-        //$adminModel = $this->_loadModal('logout');
-
         ob_start();
         $this->_loadView('logout/logout-form');
 
-        $data['title'] = 'User Logout';
+        $data['title'] = 'Logout';
         $data['body']  = ob_get_clean();
 
         echo json_encode($data);

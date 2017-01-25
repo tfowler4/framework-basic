@@ -9,8 +9,8 @@ class CreateCategoryForm extends Form {
     public $meta;
 
     const FORM_NAME       = 'create-category';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully created!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article Category!');
+    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully created!');
+    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article Category!');
 
     /**
      * constructor
@@ -44,20 +44,16 @@ class CreateCategoryForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( $this->_insertCategorytoDb() ) {
-                $response = self::MESSAGE_SUCCESS;
-                SessionData::remove('form');
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( $this->_insertCategorytoDb() ) {
+            SessionData::remove('form');
+            return self::SUCCESS_GENERIC;
+        } else {
+            return self::ERROR_GENERIC;
+        }
     }
 
     /**
@@ -68,9 +64,9 @@ class CreateCategoryForm extends Form {
     private function _insertCategorytoDb() {
         $query = sprintf(
             "INSERT INTO
-                category_table (name, meta)
+                category_table (name, meta, date_added, last_modified)
             values
-                ('%s', '%s')",
+                ('%s', '%s', null, null)",
             $this->name,
             $this->meta
         );

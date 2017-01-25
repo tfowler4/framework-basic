@@ -8,8 +8,8 @@ class RemoveCategoryForm extends Form {
     public $form;
 
     const FORM_NAME       = 'remove-category';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully removed!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Category!');
+    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully removed!');
+    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Category!');
 
     /**
      * constructor
@@ -42,24 +42,20 @@ class RemoveCategoryForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( $this->_verifyRemainingCategoryArticles() ) {
-                if ( $this->_removeCategoryFromDb() ) {
-                    $response = self::MESSAGE_SUCCESS;
-                    SessionData::remove('form');
-                } else {
-                    $response = self::MESSAGE_ERROR;
-                }
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( !$this->_verifyRemainingCategoryArticles() ) {
+            return self::ERROR_GENERIC;
+        }
+
+        if ( $this->_removeCategoryFromDb() ) {
+            SessionData::remove('form');
+            return self::SUCCESS_GENERIC;
+        } else {
+            return self::ERROR_GENERIC;
+        }
     }
 
     /**

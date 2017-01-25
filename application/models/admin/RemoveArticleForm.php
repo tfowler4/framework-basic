@@ -8,8 +8,8 @@ class RemoveArticleForm extends Form {
     public $form;
 
     const FORM_NAME       = 'remove-article';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully removed!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article!');
+    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully removed!');
+    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while removing your Article!');
 
     /**
      * constructor
@@ -42,20 +42,16 @@ class RemoveArticleForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( $this->_removeArticleFromDb() ) {
-                $response = self::MESSAGE_SUCCESS;
-                SessionData::remove('form');
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( $this->_removeArticleFromDb() ) {
+            SessionData::remove('form');
+            return self::SUCCESS_GENERIC;
+        } else {
+            return self::ERROR_GENERIC;
+        }
     }
 
     /**

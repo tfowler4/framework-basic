@@ -10,8 +10,8 @@ class CreateArticleForm extends Form {
     public $content;
 
     const FORM_NAME       = 'create-article';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully created!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article!');
+    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Article successfully created!');
+    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while creating your Article!');
 
     /**
      * constructor
@@ -47,20 +47,16 @@ class CreateArticleForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( $this->_insertArticletoDb() && $this->_updateCategoryArticleCount() ) {
-                $response = self::MESSAGE_SUCCESS;
-                SessionData::remove('form');
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( $this->_insertArticletoDb() && $this->_updateCategoryArticleCount() ) {
+            SessionData::remove('form');
+            return self::SUCCESS_GENERIC;
+        } else {
+            return self::ERROR_GENERIC;
+        }
     }
 
     /**
@@ -71,9 +67,9 @@ class CreateArticleForm extends Form {
     private function _insertArticletoDb() {
         $query = sprintf(
             "INSERT INTO
-                article_table (title, category_id, content)
+                article_table (title, category_id, content, date_added, last_modified)
             values
-                ('%s', '%d', '%s')",
+                ('%s', '%d', '%s', null, null)",
             $this->title,
             $this->category,
             $this->content

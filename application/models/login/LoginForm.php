@@ -5,12 +5,12 @@
  */
 class LoginForm extends Form {
     public $form;
-    public $username;
+    public $email;
     public $password;
 
     const FORM_NAME       = 'login';
-    const MESSAGE_SUCCESS = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
-    const MESSAGE_ERROR   = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Username/Password combo!');
+    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
+    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email/Password combo!');
 
     /**
      * constructor
@@ -22,8 +22,8 @@ class LoginForm extends Form {
     public function __construct($dbh) {
         parent::__construct($dbh);
 
-        $this->_setFieldRequired(array('username', 'password'));
-        $this->_setRepopulateFields(array('username'));
+        $this->_setFieldRequired(array('email-address', 'password'));
+        $this->_setRepopulateFields(array('email-address'));
 
         $this->populateForm();
     }
@@ -35,7 +35,7 @@ class LoginForm extends Form {
      */
     public function populateForm() {
         $this->form     = $this->_populateField('form');
-        $this->username = $this->_populateField('username');
+        $this->username = $this->_populateField('email-address');
         $this->password = $this->_populateField('password');
     }
 
@@ -45,45 +45,41 @@ class LoginForm extends Form {
      * @return boolean [ response from database query ]
      */
     public function submitForm() {
-        $response = parent::MESSAGE_GENERIC;
-
-        if ( $this->_validateRequiredFields() ) {
-            if ( !empty($this->_verifyLoginInfo()) ) {
-                $response = self::MESSAGE_SUCCESS;
-                SessionData::remove('form');
-
-                redirect(SITE_URL . 'userpanel');
-            } else {
-                $response = self::MESSAGE_ERROR;
-            }
-        } else {
-            $response = $this->_generateMissingFieldsError($this->form);
+        if ( !$this->_validateRequiredFields() ) {
+            return $this->_generateMissingFieldsError($this->form);
         }
 
-        return $response;
+        if ( empty($this->_getUserFromDb()) ) {
+            return self::ERROR_GENERIC;
+        }
+
+        SessionData::remove('form');
+        redirect(SITE_URL . 'userpanel');
     }
 
-
+    /**
+     * check to see if user supplied password matches stored hash
+     *
+     * @param  string $hash [ password hash string from database ]
+     *
+     * @return boolean [ if password matches hash ]
+     */
     private function _checkPassword($hash) {
         $validPassword = FALSE;
 
         if (password_verify($this->password, $hash)) {
             $validPassword = TRUE;
-            // Login successful.
-            //if (password_needs_rehash($hash, PASSWORD_DEFAULT, ['cost' => 12])) {
-                // Recalculate a new password_hash() and overwrite the one we stored previously
-            //}
         }
 
         return $validPassword;
     }
 
     /**
-     * [_verifyLoginInfo description]
+     * get the user from the database
      *
-     * @return [type] [description]
+     * @return array [ array of user details ]
      */
-    private function _verifyLoginInfo() {
+    private function _getUserFromDb() {
         $user = array();
 
         $query = sprintf(
@@ -92,7 +88,7 @@ class LoginForm extends Form {
             FROM
                 user_table
             WHERE
-                username = '%s'",
+                email_address = '%s'",
             $this->username
         );
 

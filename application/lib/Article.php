@@ -12,6 +12,8 @@ class Article {
     public $meta;
     public $dateAdded;
     public $lastModified;
+    public $primaryColor;
+    public $icon;
 
     /**
      * constructor
@@ -29,5 +31,7 @@ class Article {
         $this->meta         = $data['meta'];
         $this->dateAdded    = $data['date_added'];
         $this->lastModified = $data['last_modified'];
+        $this->primaryColor = $data['color_1'];
+        $this->icon         = $data['icon'];
     }
 }

@@ -35,7 +35,9 @@ class HomeModel extends Model {
                 meta,
                 category_table.name as category,
                 article_table.date_added as date_added,
-                article_table.last_modified as last_modified
+                article_table.last_modified as last_modified,
+                category_table.color_1,
+                category_table.icon
             FROM
                 article_table
             INNER JOIN
@@ -68,6 +70,8 @@ class HomeModel extends Model {
                 category_id,
                 name,
                 meta,
+                icon,
+                color_1,
                 num_of_articles,
                 date_added,
                 last_modified

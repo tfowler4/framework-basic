@@ -7,6 +7,8 @@ class CreateCategoryForm extends Form {
     public $form;
     public $name;
     public $meta;
+    public $icon;
+    public $primaryColor;
 
     const FORM_NAME       = 'create-category';
     const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Article Category successfully created!');
@@ -33,9 +35,11 @@ class CreateCategoryForm extends Form {
      * @return void
      */
     public function populateForm() {
-        $this->form = $this->_populateField('form');
-        $this->name = $this->_populateField('name');
-        $this->meta = $this->_populateField('meta');
+        $this->form         = $this->_populateField('form');
+        $this->name         = $this->_populateField('name');
+        $this->meta         = $this->_populateField('meta');
+        $this->icon         = $this->_populateField('icon');
+        $this->primaryColor = $this->_populateField('primary-color');
     }
 
     /**
@@ -64,11 +68,13 @@ class CreateCategoryForm extends Form {
     private function _insertCategorytoDb() {
         $query = sprintf(
             "INSERT INTO
-                category_table (name, meta, date_added, last_modified)
+                category_table (name, meta, icon, color_1, date_added, last_modified)
             values
-                ('%s', '%s', null, null)",
+                ('%s', '%s', '%s', '%s', null, null)",
             $this->name,
-            $this->meta
+            $this->meta,
+            $this->icon,
+            $this->primaryColor
         );
 
         $query = $this->_dbh->prepare($query);

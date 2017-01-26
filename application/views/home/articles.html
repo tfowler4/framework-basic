@@ -6,12 +6,12 @@
         <div class="panel-body">
             <?php echo $article->content; ?>
         </div>
-        <div class="panel-footer" style="vertical-align: middle;">
+        <div class="panel-footer">
             <div class="pull-left" style="vertical-align: middle; height:30px; line-height:30px;">
                 <i>Posted on <?php echo $article->dateAdded; ?></i>
             </div>
-            <div class="pull-right" style="vertical-align: middle;">
-                <button type="button" class="btn btn-sm btn-primary"><i><?php echo $article->category; ?></i></button>
+            <div class="pull-right">
+                <button type="button" class="btn btn-sm btn-primary"><i class="<?php echo $article->icon; ?>"></i> <i><?php echo $article->category; ?></i></button>
             </div>
             <div class="clearfix"></div>
         </div>

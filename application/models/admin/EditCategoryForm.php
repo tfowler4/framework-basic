@@ -8,6 +8,8 @@ class EditCategoryForm extends Form {
     public $form;
     public $name;
     public $meta;
+    public $icon;
+    public $primaryColor;
 
     const FORM_NAME       = 'edit-category';
     const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Category successfully saved!');
@@ -34,10 +36,12 @@ class EditCategoryForm extends Form {
      * @return void
      */
     public function populateForm() {
-        $this->id   = $this->_populateField('edit-category-id');
-        $this->form = $this->_populateField('form');
-        $this->name = $this->_populateField('name');
-        $this->meta = $this->_populateField('meta');
+        $this->id           = $this->_populateField('id');
+        $this->form         = $this->_populateField('form');
+        $this->name         = $this->_populateField('name');
+        $this->meta         = $this->_populateField('meta');
+        $this->icon         = $this->_populateField('icon');
+        $this->primaryColor = $this->_populateField('primary-color');
     }
 
     /**
@@ -69,11 +73,15 @@ class EditCategoryForm extends Form {
                 category_table
             SET
                 name = '%s',
-                meta = '%s'
+                meta = '%s',
+                icon = '%s',
+                color_1 = '%s'
             WHERE
                 category_id = '%d'",
             $this->name,
             $this->meta,
+            $this->icon,
+            $this->primaryColor,
             $this->id
         );
 

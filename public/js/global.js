@@ -5,7 +5,7 @@ var global = function(siteUrl, timestamp) {
         //$.getScript(siteUrl + fileName +'.js?v=' + timestamp, function( data, textStatus, jqxhr ) {});
     //}
 
-    $(document).on('click', '#admin-nav', function() {
+    $(document).on('click', '#login-nav', function() {
         $('#global-modal').modal();
 
         getLoginForm(function(data) {
@@ -13,7 +13,7 @@ var global = function(siteUrl, timestamp) {
         });
     });
 
-    $(document).on('click', '#admin-nav-out', function() {
+    $(document).on('click', '#logout-nav', function() {
         $('#global-modal').modal();
 
         getLogoutForm(function(data) {
@@ -70,13 +70,13 @@ var global = function(siteUrl, timestamp) {
             type : "GET",
             url :'./services/logoutUser/',
             cache : true,
-            success: function(data) {console.log('success');
+            success: function(data) {
                 callBack(data);
             },
             error: function(xhr, status, thrownError, error){
                 // handle the error here
             },
-            complete: function(data) {console.log('complete');
+            complete: function(data) {
                 $('#modal-spinner').hide();
             },
             async : true

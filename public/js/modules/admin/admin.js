@@ -78,6 +78,14 @@
         $('[href="#category-add"').click();
     });
 
+    $(document).on('keyup', '#create-category-icon, #edit-category-icon', function() {
+        var value     = $(this).val();
+        var previewId = '#' + $(this).attr('id') + '-preview';
+        var preview   =  $(previewId + ' i');
+
+        preview.attr('class', value);
+    });
+
     function getArticle(articleId, callBack) {
         $.ajax({
             type : "GET",
@@ -123,6 +131,11 @@
         $('#edit-category-name').val(data.name);
         $('#edit-category-meta').val(data.meta);
         $('#edit-category-articles').val(data.numOfArticles);
+        $('#edit-category-primary-color').val(data.primaryColor);
+        $('#edit-category-icon').val(data.icon);
+        $('#edit-category-icon-preview i').attr('class', data.icon);
+
+        $('#edit-category-primary-color').pickAColor();
     }
 
     function populateRemoveConfirmForm(id, data, type) {

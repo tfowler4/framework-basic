@@ -32,7 +32,7 @@ class RemoveCategoryForm extends Form {
      * @return void
      */
     public function populateForm() {
-        $this->id   = $this->_populateField('edit-category-id');
+        $this->id   = $this->_populateField('id');
         $this->form = $this->_populateField('form');
     }
 

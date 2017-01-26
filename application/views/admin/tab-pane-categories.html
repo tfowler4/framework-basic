@@ -3,13 +3,26 @@
 
     <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
         <div class="form-group has-feedback">
-            <label for="input-name-text" class="control-label">Name</label>
-            <input type="text" class="form-control" id="input-name-text" placeholder="Name of Category" name="name" value="<?php echo $forms->createCategory->name; ?>">
+            <label for="create-category-name" class="control-label">Name</label>
+            <input type="text" class="form-control" id="create-category-name" placeholder="Name of Category" name="name" value="<?php echo $forms->createCategory->name; ?>">
         </div>
 
         <div class="form-group has-feedback">
-            <label for="input-meta-text" class="control-label">Meta Tags</label>
-            <input type="text" class="form-control" id="input-meta-text" placeholder="Ex. cars,sports,games" name="meta" value="<?php echo $forms->createCategory->meta; ?>">
+            <label for="create-category-meta" class="control-label">Meta Tags</label>
+            <input type="text" class="form-control" id="create-category-meta" placeholder="Ex. cars,sports,games" name="meta" value="<?php echo $forms->createCategory->meta; ?>">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label for="create-category-color" class="control-label">Primary Color</label>
+            <input type="text" class="pick-a-color form-control" id="create-category-primary-color" placeholder="" name="primary-color" value="<?php echo $forms->createCategory->primaryColor; ?>">
+        </div>
+
+        <div class="form-group has-feedback">
+            <label for="create-category-icon" class="control-label">Icon</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="create-category-icon" placeholder="fa fa-star" name="icon" value="<?php echo $forms->createCategory->icon; ?>">
+                <span class="input-group-addon" id="create-category-icon-preview"><i class="<?php echo $forms->createCategory->icon; ?>"></i></span>
+            </div>
         </div>
 
         <button type="submit" name="form" value="create-category" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Category</button>
@@ -42,17 +55,30 @@
         <div id="edit-category-pane" style="display:none;">
             <div class="form-group has-feedback">
                 <label for="edit-category-name" class="control-label">Title</label>
-                <input type="text" class="form-control" id="edit-category-name" placeholder="Name of Category" name="name" value="">
+                <input type="text" class="form-control" id="edit-category-name" placeholder="Name of Category" name="name" value="<?php echo $forms->editCategory->name; ?>">
             </div>
 
             <div class="form-group has-feedback">
                 <label for="edit-category-meta" class="control-label">Meta Tags</label>
-                <input type="text" class="form-control" id="edit-category-meta" placeholder="Ex. cars,sports,games" name="meta" value="">
+                <input type="text" class="form-control" id="edit-category-meta" placeholder="Ex. cars,sports,games" name="meta" value="<?php echo $forms->editCategory->meta; ?>">
+            </div>
+
+            <div class="form-group has-feedback">
+                <label for="edit-category-color" class="control-label">Primary Color</label>
+                <input type="text" class="pick-a-color form-control" id="edit-category-primary-color" placeholder="" name="primary-color" value="<?php echo $forms->editCategory->primaryColor; ?>">
+            </div>
+
+            <div class="form-group has-feedback">
+                <label for="edit-category-icon" class="control-label">Icon</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="edit-category-icon" placeholder="fa fa-star" name="icon" value="<?php echo $forms->editCategory->icon; ?>">
+                    <span class="input-group-addon" id="edit-category-icon-preview"><i class="<?php echo $forms->editCategory->icon; ?>"></i></span>
+                </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label for="edit-category-articles" class="control-label">Number of Articles</label>
-                <input type="text" class="form-control" id="edit-category-articles" placeholder="0" value="" disabled>
+                <input type="text" class="form-control" id="edit-category-articles" placeholder="0" value="<?php echo $forms->editCategory->numOfArticles; ?>" disabled>
             </div>
 
             <button type="button" class="btn btn-danger btn-remove-category"><i class="fa fa-times" aria-hidden="true"></i> Remove</button>
@@ -60,3 +86,7 @@
         </div>
     </form>
 </div>
+
+<script>
+    $("#create-category-primary-color").pickAColor();
+</script>

@@ -9,6 +9,10 @@ class Admin extends Controller {
     const PAGE_DESCRIPTION = 'Admin Description';
 
     public function __construct() {
+        if ( !SessionData::get('admin') ) {
+            redirect('home');
+        }
+
         parent::__construct();
         $this->_setPageTitle();
         $this->_setPageDescription();

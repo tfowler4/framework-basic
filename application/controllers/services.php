@@ -62,6 +62,8 @@ class Services extends Controller {
                 category_id,
                 name,
                 meta,
+                icon,
+                color_1,
                 num_of_articles,
                 date_added,
                 last_modified
@@ -104,6 +106,7 @@ class Services extends Controller {
     public function logoutUser() {
         SessionData::set('login', FALSE);
         SessionData::remove('user');
+        SessionData::remove('admin');
 
         $message = array('type' => 'success',  'title' => 'Logout',   'message' => 'You logged out so....bye!');
         SessionData::set('message', $message);

@@ -100,6 +100,10 @@ class LoginForm extends Form {
 
                 SessionData::set('login', TRUE);
                 SessionData::set('user', $user);
+
+                if ( $user['account_type'] == 1 ) {
+                    SessionData::set('admin', TRUE);
+                }
                 break;
             }
         }

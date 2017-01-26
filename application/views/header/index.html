@@ -52,9 +52,13 @@
 
                     <div class="pull-right">
                         <?php if ( SessionData::get('login') ) { ?>
-                            <button type="button" class="btn btn-primary navbar-btn" id="admin-nav-out"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                            <?php if ( SessionData::get('admin') ) { ?>
+                                <a href="<?php echo SITE_URL . 'admin'; ?>" class="btn btn-info navbar-btn" id="admin-nav"><i class="fa fa-star" aria-hidden="true"></i> Administration</a>
+                            <?php } ?>
+
+                            <button type="button" class="btn btn-primary navbar-btn" id="logout-nav"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
                         <?php } else { ?>
-                            <button type="button" class="btn btn-primary navbar-btn" id="admin-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
+                            <button type="button" class="btn btn-primary navbar-btn" id="login-nav"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</button>
                         <?php } ?>
                     </div>
                 </div>

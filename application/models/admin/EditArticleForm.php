@@ -35,7 +35,7 @@ class EditArticleForm extends Form {
      * @return void
      */
     public function populateForm() {
-        $this->id       = $this->_populateField('edit-article-id');
+        $this->id       = $this->_populateField('id');
         $this->form     = $this->_populateField('form');
         $this->title    = $this->_populateField('title');
         $this->category = $this->_populateField('category');

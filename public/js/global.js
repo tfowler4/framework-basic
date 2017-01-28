@@ -1,90 +1,62 @@
-var global = function(siteUrl, timestamp) {
-    //siteUrl += 'public/js/modules/';
+var global = (function() {
+    var siteUrl   = 'public/';
+    var jsPath    = siteUrl + 'js/';
+    var cssPath   = siteUrl + 'css/';
+    var timestamp = Math.floor(Math.random() * 100000) + 0;
 
-    //this.loadScript = function(fileName) {
-        //$.getScript(siteUrl + fileName +'.js?v=' + timestamp, function( data, textStatus, jqxhr ) {});
-    //}
+    this.loadScript = function(fileName) {
+        $.getScript(jsPath + fileName +'.js?v=' + timestamp, function( data, textStatus, jqxhr ) {});
+    };
 
-    $(document).on('click', '#login-nav', function() {
-        $('#global-modal').modal();
+    this.loadCSS = function(filePath) {
+        $("<link/>", {
+            rel: "stylesheet",
+            type: "text/css",
+            href: cssPath + filePath
+        }).appendTo("head");
+    };
 
-        getLoginForm(function(data) {
-            populateModal(data);
+    this.loadColorPicker = function() {
+        this.loadCSS('pick-a-color/pick-a-color-1.2.3.min.css');
+
+        $.getScript(jsPath + 'pick-a-color/pick-a-color-1.2.3.min.js', function( data, textStatus, jqxhr ) {
+            $.getScript(jsPath + 'pick-a-color/tinycolor-0.9.15.min.js', function( data, textStatus, jqxhr ) {
+                $('.pick-a-color').pickAColor();
+            });
         });
-    });
+    };
 
-    $(document).on('click', '#logout-nav', function() {
-        $('#global-modal').modal();
-
-        getLogoutForm(function(data) {
-            populateModal(data);
+    this.loadTinyMCE = function() {
+        $.getScript('//cdn.tinymce.com/4/tinymce.min.js', function( data, textStatus, jqxhr ) {
+            tinymce.init({
+                selector: 'textarea',
+                height: 500,
+                resize: false,
+                theme: 'modern',
+                plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                ],
+                toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                image_advtab: true,
+                content_css: [
+                '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                '//www.tinymce.com/css/codepen.min.css'
+                ]
+            });
         });
-    });
+    };
 
-    $(document).on('click', '#logout-confirm', function() {
-        logoutUser(function(data) {
-            window.location.href = siteUrl;
-        });
-    });
-
-    function getLoginForm(callBack) {
-        $.ajax({
-            type : "GET",
-            url :'./services/getLoginForm/',
-            dataType : 'json',
-            cache : true,
-            success: function(data) {
-                callBack(data);
-            },
-            error: function(xhr, status, thrownError, error){
-                // handle the error here
-            },
-            complete: function(data) {
-                $('#modal-spinner').hide();
-            },
-            async : true
-        });
-    }
-
-    function getLogoutForm(callBack) {
-        $.ajax({
-            type : "GET",
-            url :'./services/getLogoutForm/',
-            dataType : 'json',
-            cache : true,
-            success: function(data) {
-                callBack(data);
-            },
-            error: function(xhr, status, thrownError, error){
-                // handle the error here
-            },
-            complete: function(data) {
-                $('#modal-spinner').hide();
-            },
-            async : true
-        });
-    }
-
-    function logoutUser(callBack) {
-        $.ajax({
-            type : "GET",
-            url :'./services/logoutUser/',
-            cache : true,
-            success: function(data) {
-                callBack(data);
-            },
-            error: function(xhr, status, thrownError, error){
-                // handle the error here
-            },
-            complete: function(data) {
-                $('#modal-spinner').hide();
-            },
-            async : true
-        });
-    }
-
-    function populateModal(data) {
+    this.populateModal = function(data) {
         $('#global-title').html(data.title);
         $('#global-body').html(data.body);
-    }
-}();
+    };
+
+    this.loadScript('global.events');
+    this.loadScript('global.services');
+
+    return self;
+}());

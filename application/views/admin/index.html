@@ -1,6 +1,6 @@
 <div id="content" class="container-fluid" style="background-color:#fff;">
     <div class="row">
-        <div class="col-xs-8 col-xs-push-2">
+        <div class="col-lg-8 col-lg-push-2 col-xs-12">
             <div class="row">
                 <?php if ( isset($this->alert) ) { ?>
                     <div class="alert alert-<?php echo $this->alert->type; ?> alert-dismissible fade in">
@@ -11,11 +11,11 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-3">
+                <div class="col-md-3 col-xs-4">
                     <?php include 'left-menu.html'; ?>
                 </div>
 
-                <div class="col-xs-9">
+                <div class="col-md-9 col-xs-8">
                     <div class="tab-content">
                         <div id="welcome" class="tab-pane fade in active">
                             <div class="well text-center">
@@ -67,3 +67,6 @@
         </div>
     </div>
 </div>
+
+<script>global.loadTinyMCE();</script>
+<script>global.loadColorPicker();</script>

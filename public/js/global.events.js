@@ -16,8 +16,10 @@
     });
 
     $(document).on('click', '#logout-confirm', function() {
+        var returnUrl = $(this).parent().parent().attr('action');
+
         globalServices.logoutUser(function(data) {
-            window.location.href = global.siteUrl;
+            window.location.href = returnUrl;
         });
     });
 })();

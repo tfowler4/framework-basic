@@ -1,6 +1,6 @@
 <h2>Categories <small>Add New Categories</small></h2>
 
-<form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+<form action="<?php echo SITE_URL . 'admin' ?>" method="POST">
     <div class="form-group has-feedback">
         <label for="create-category-name" class="control-label">Name</label>
         <input type="text" class="form-control" id="create-category-name" placeholder="Name of Category" name="name" value="<?php echo $forms->createCategory->name; ?>">

@@ -4,7 +4,7 @@
             <?php if ( $this->alert) { echo $this->alert->getHtml(); } ?>
 
             <div class="row">
-                <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+                <form action="<?php echo SITE_URL . 'register' ?>" method="POST">
                     <div class="form-group has-feedback">
                         <label for="register-user" class="control-label">Username</label>
                         <div class="input-group">

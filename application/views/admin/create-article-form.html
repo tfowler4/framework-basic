@@ -1,6 +1,6 @@
 <h2>Articles <small>Add New Article</small></h2>
 
-<form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">
+<form action="<?php echo SITE_URL . 'admin' ?>" method="POST">
     <div class="form-group has-feedback">
         <label for="create-article-title" class="control-label">Title</label>
         <input type="text" class="form-control" id="create-article-title" placeholder="Title of Article" name="title" value="<?php echo $forms->createArticle->title; ?>">

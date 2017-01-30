@@ -73,11 +73,9 @@ class Services extends Controller {
     }
 
     public function logoutUser() {
-        SessionData::set('login', FALSE);
-        SessionData::remove('user');
-        SessionData::remove('admin');
+        SessionData::reset();
 
-        $message = array('type' => 'success',  'title' => 'Logout',   'message' => 'You logged out so....bye!');
+        $message = array('type' => 'success',  'title' => 'Logout', 'message' => 'You logged out so....bye!');
         SessionData::set('message', $message);
     }
 }

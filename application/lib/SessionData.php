@@ -72,4 +72,14 @@ class SessionData {
             session_destroy();
         }
     }
+
+    /**
+     * resets the current session by ending and starting a new one
+     *
+     * @return void
+     */
+    public static function reset() {
+        self::end();
+        self::start();
+    }
 }

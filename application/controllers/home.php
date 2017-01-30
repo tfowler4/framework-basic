@@ -8,26 +8,46 @@ class Home extends Controller {
     const PAGE_TITLE       = 'Home';
     const PAGE_DESCRIPTION = 'Home Description';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
         $this->_setPageTitle();
         $this->_setPageDescription();
-
     }
 
+    /**
+     * index page of controller
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
     public function index($params = array()) {
         $homeModel = $this->_loadModal('home', $params);
-        $homeModel->getArticles();
-        $homeModel->getCategories();
 
-        $this->_loadPageView('home/index', $homeModel);
+        $this->_data['articles']   = $homeModel->getArticles();
+        $this->_data['categories'] = $homeModel->getCategories();
+
+        $this->_loadPageView('home/index', $this->_data);
     }
 
+    /**
+     * grid page of controller
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
     public function grid($params = array()) {
         $homeModel = $this->_loadModal('home', $params);
-        $homeModel->getArticles();
-        $homeModel->getCategories();
 
-        $this->_loadPageView('home/grid', $homeModel);
+        $this->_data['articles']   = $homeModel->getArticles();
+        $this->_data['categories'] = $homeModel->getCategories();
+
+        $this->_loadPageView('home/grid', $this->_data);
     }
 }

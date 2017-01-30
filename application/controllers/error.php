@@ -1,13 +1,18 @@
 <?php
 
 /**
- * Error controller
+ * error controller
  */
 class Error extends Controller {
     const CONTROLLER_NAME  = 'Error';
     const PAGE_TITLE       = 'Error';
     const PAGE_DESCRIPTION = 'An Error Page';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
         $this->_setPageTitle();
@@ -15,7 +20,7 @@ class Error extends Controller {
     }
 
     /**
-     * index model function when page is accessed
+     * index page of controller
      *
      * @param  array [ url GET parameters ]
      *
@@ -24,6 +29,6 @@ class Error extends Controller {
     public function index($params = array()) {
         $errorModel = $this->_loadModal('error', $params);
 
-        $this->_loadPageView('error/index', $errorModel);
+        $this->_loadPageView('error/index', $this->_data);
     }
 }

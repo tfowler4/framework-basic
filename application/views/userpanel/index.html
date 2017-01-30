@@ -1,6 +1,8 @@
-<div id="content" class="container-fluid" style="background-color:#fff;">
+<div id="content" class="container-fluid">
     <div class="row">
         <div class="col-xs-8 col-xs-push-2">
+            <?php if ( $this->alert) { echo $this->alert->getHtml(); } ?>
+
             <div class="row">
                 <div class="col-xs-3">
                     <div class="panel panel-default">

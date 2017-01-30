@@ -8,6 +8,11 @@ class Resume extends Controller {
     const PAGE_TITLE       = 'Resume';
     const PAGE_DESCRIPTION = 'Interactive Resume';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
         $this->_setPageTitle();
@@ -15,7 +20,7 @@ class Resume extends Controller {
     }
 
     /**
-     * index model function when page is accessed
+     * index page of controller
      *
      * @param  array [ url GET parameters ]
      *
@@ -24,6 +29,6 @@ class Resume extends Controller {
     public function index($params = array()) {
         $resumeModel = $this->_loadModal('resume', $params);
 
-        $this->_loadPageView('resume/index', $resumeModel);
+        $this->_loadPageView('resume/index', $this->_data);
     }
 }

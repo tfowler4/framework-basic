@@ -8,6 +8,11 @@ class Example extends Controller {
     const PAGE_TITLE       = 'Example';
     const PAGE_DESCRIPTION = 'Example Test Page';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
         $this->_setPageTitle();
@@ -15,7 +20,7 @@ class Example extends Controller {
     }
 
     /**
-     * index model function when page is accessed
+     * index page of controller
      *
      * @param  array [ url GET parameters ]
      *
@@ -24,6 +29,6 @@ class Example extends Controller {
     public function index($params = array()) {
         $exampleModel = $this->_loadModal('example', $params);
 
-        $this->_loadPageView('example/index', $exampleModel);
+        $this->_loadPageView('example/index', $this->_data);
     }
 }

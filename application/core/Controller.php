@@ -10,6 +10,7 @@ abstract class Controller {
     protected $_modelName;
     protected $_viewPath = FOLDER_VIEWS;
     protected $_dbh;
+    protected $_data = array();
 
     public $alert;
 
@@ -81,14 +82,15 @@ abstract class Controller {
      * @return void
      */
     protected function _loadJS() {
-        // load global JS file
-        $globalFile = FOLDER_JS . 'global.js';
+        // load global JS files
+        $filePath = FOLDER_JS . '*.js';
 
-        if ( file_exists($globalFile) ) {
-            $globalFile = SITE_JS . 'global.js?v=' . TIMESTAMP;
-            echo '<script src="' . $globalFile . '"></script>';
+        foreach(glob($filePath) as $file) {
+            $file = SITE_JS . basename($file) . '?v=' . TIMESTAMP;
+            echo '<script src="' . $file . '"></script>';
         }
 
+        // load controller JS files
         if ( defined('static::CONTROLLER_NAME') && !empty(static::CONTROLLER_NAME) ) {
             $filePath = FOLDER_JS . 'modules/' . strtolower(static::CONTROLLER_NAME) . '/*.js';
 

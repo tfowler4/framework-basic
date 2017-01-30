@@ -17,7 +17,7 @@
 
     $(document).on('click', '#logout-confirm', function() {
         globalServices.logoutUser(function(data) {
-            window.location.href = siteUrl;
+            window.location.href = global.siteUrl;
         });
     });
 })();

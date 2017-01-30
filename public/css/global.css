@@ -1,5 +1,28 @@
 /* Global CSS */
 
 textarea {
-    resize: none;
+    resize:none;
+}
+
+html, body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+#body {
+    min-height:100%;
+    position:relative;
+}
+
+#content {
+    padding-bottom:210px;
+}
+
+#footer {
+    margin-top:20px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:200px;
 }

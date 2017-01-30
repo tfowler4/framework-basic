@@ -1,4 +1,5 @@
 <?php
+
 /**
  * static class to handle $_SESSION values
  */

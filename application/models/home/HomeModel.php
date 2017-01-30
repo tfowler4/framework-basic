@@ -4,15 +4,13 @@
  * home model
  */
 class HomeModel extends Model {
-    public $articles   = array();
-    public $categories = array();
-
     const MODEL_NAME = 'Home';
 
     /**
      * constructor
      *
-     * @param  obj $dbh [ database handler ]
+     * @param obj   $dbh    [ database handler ]
+     * @param array $params [ parameters sent by the url ]
      *
      * @return void
      */
@@ -26,37 +24,17 @@ class HomeModel extends Model {
      * @return void
      */
     public function getArticles() {
-        $query = sprintf(
-            "SELECT
-                article_id,
-                title,
-                content,
-                category_table.category_id,
-                meta,
-                category_table.name as category,
-                article_table.date_added as date_added,
-                article_table.last_modified as last_modified,
-                category_table.color_1,
-                category_table.icon
-            FROM
-                article_table
-            INNER JOIN
-                category_table
-            ON
-                article_table.category_id = category_table.category_id
-            ORDER BY
-                article_table.date_added DESC
-            LIMIT
-                5"
-        );
-
-        $query = $this->_dbh->query($query);
+        $articles = array();
+        $database = new DatabaseModel($this->_dbh);
+        $query    = $database->getAllArticles();
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $article = new Article($row);
 
-            array_push($this->articles, $article);
+            array_push($articles, $article);
         }
+
+        return $articles;
     }
 
     /**
@@ -65,28 +43,16 @@ class HomeModel extends Model {
      * @return void
      */
     public function getCategories() {
-        $query = sprintf(
-            "SELECT
-                category_id,
-                name,
-                meta,
-                icon,
-                color_1,
-                num_of_articles,
-                date_added,
-                last_modified
-            FROM
-               category_table
-            ORDER BY
-                name DESC"
-        );
-
-        $query = $this->_dbh->query($query);
+        $categories = array();
+        $database   = new DatabaseModel($this->_dbh);
+        $query      = $database->getAllCategories();
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $category = new Category($row);
 
-            array_push($this->categories, $category);
+            array_push($categories, $category);
         }
+
+        return $categories;
     }
 }

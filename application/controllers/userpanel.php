@@ -8,17 +8,31 @@ class Userpanel extends Controller {
     const PAGE_TITLE       = 'User Panel';
     const PAGE_DESCRIPTION = 'User Panel Description';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
-
+        $this->_setPageTitle();
+        $this->_setPageDescription();
     }
 
+    /**
+     * index page of controller
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
     public function index($params = array()) {
         $userpanelModel = $this->_loadModal('userpanel', $params);
-        $userpanelModel->loadUserFromSession();
 
-        if ( $userpanelModel->loggedIn ) {
-            $this->_loadPageView('userpanel/index', $userpanelModel);
+        $this->_data['user'] = $userpanelModel->loadUserFromSession();
+
+        if ( $this->_data['user'] != NULL ) {
+            $this->_loadPageView('userpanel/index', $this->_data);
         } else {
             $this->_loadError();
         }

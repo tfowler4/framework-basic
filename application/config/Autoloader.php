@@ -30,7 +30,7 @@ function __autoload($className)  {
             $modelPath = ABS_BASE_PATH . 'application/' . $directory . $className . '/*.php';
 
             foreach( glob($modelPath) as $model ) {
-                include_once  $model;
+                include_once $model;
             }
         }
     }

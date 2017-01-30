@@ -8,6 +8,11 @@ class Admin extends Controller {
     const PAGE_TITLE       = 'Administration';
     const PAGE_DESCRIPTION = 'Admin Description';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         if ( !SessionData::get('admin') ) {
             redirect('home');
@@ -18,11 +23,19 @@ class Admin extends Controller {
         $this->_setPageDescription();
     }
 
+    /**
+     * index page of controller
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
     public function index($params = array()) {
         $adminModel = $this->_loadModal('admin', $params);
-        $adminModel->getArticles();
-        $adminModel->getCategories();
 
-        $this->_loadPageView('admin/index', $adminModel);
+        $this->_data['articles']   = $adminModel->getArticles();
+        $this->_data['categories'] = $adminModel->getCategories();
+
+        $this->_loadPageView('admin/index', $this->_data);
     }
 }

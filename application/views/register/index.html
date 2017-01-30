@@ -1,14 +1,7 @@
-<div id="content" class="container-fluid" style="background-color:#fff;">
+<div id="content" class="container-fluid">
     <div class="row">
         <div class="col-xs-8 col-xs-push-2">
-            <div class="row">
-                <?php if ( isset($this->alert) ) { ?>
-                    <div class="alert alert-<?php echo $this->alert->type; ?> alert-dismissible fade in">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong><?php echo $this->alert->title; ?></strong> <span><?php echo $this->alert->message; ?></span>
-                    </div>
-                <?php } ?>
-            </div>
+            <?php if ( $this->alert) { echo $this->alert->getHtml(); } ?>
 
             <div class="row">
                 <form action="<?php echo 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']; ?>" method="POST">

@@ -69,4 +69,22 @@ class Alert {
             $this->message = $data['message'];
         }
     }
+
+    /**
+     * get the html of the alert to display
+     *
+     * @return string [ html string containing the alert ]
+     */
+    public function getHtml() {
+        $html = ''
+
+        $html .= '<div class="row">';
+            $html .= '<div class="alert alert-' . $this->type . 'alert-dismissible fade in">';
+                $html .= '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>';
+                $html .= '<strong>' . $this->title . '</strong> <span>' . $this->message . '</span>';
+            $html .= '</div>';
+        $html .= '</div>';
+
+        return $html = '';
+    }
 }

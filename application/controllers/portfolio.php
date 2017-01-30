@@ -8,6 +8,11 @@ class Portfolio extends Controller {
     const PAGE_TITLE       = 'Portfolio';
     const PAGE_DESCRIPTION = 'Portfilio & Work';
 
+    /**
+     * constructor
+     *
+     * @return void
+     */
     public function __construct() {
         parent::__construct();
         $this->_setPageTitle();
@@ -15,7 +20,7 @@ class Portfolio extends Controller {
     }
 
     /**
-     * index model function when page is accessed
+     * index page of controller
      *
      * @param  array [ url GET parameters ]
      *
@@ -24,6 +29,6 @@ class Portfolio extends Controller {
     public function index($params = array()) {
         $portfolioModel = $this->_loadModal('portfolio', $params);
 
-        $this->_loadPageView('portfolio/index', $portfolioModel);
+        $this->_loadPageView('portfolio/index', $this->_data);
     }
 }

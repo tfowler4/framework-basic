@@ -1,21 +1,21 @@
 <?php
 
 /**
- * forgot form
+ * change email form
  */
-class ForgotForm extends Form {
+class ChangeEmailForm extends Form {
     public $form;
     public $emailAddress;
 
-    const FORM_NAME           = 'forgot';
-    const SUCCESS_GENERIC     = array('type' => 'success', 'title' => 'Success', 'message' => 'Please check your email for instructions on how to recover your password!');
-    const ERROR_GENERIC       = array('type' => 'danger',  'title' => 'Error',   'message' => 'An Error occurred while trying to recover your paassword!');
-    const ERROR_INVALID_EMAIL = array('type' => 'danger',  'title' => 'Error',   'message' => 'Unable to find an account associated with the email address provided.');
+    const FORM_NAME            = 'change-email';
+    const SUCCESS_GENERIC      = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully updated your Email Address!');
+    const ERROR_GENERIC        = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email!');
+    const ERROR_EXISTING_EMAIL = array('type' => 'danger',  'title' => 'Error',   'message' => 'Email already exists!');
 
     /**
      * constructor
      *
-     * @param obj $dbh [ database handler ]
+     * @param  obj $dbh [ database handler ]
      *
      * @return void
      */
@@ -34,7 +34,6 @@ class ForgotForm extends Form {
      * @return void
      */
     public function populateForm() {
-        $this->form         = $this->_populateField('form');
         $this->emailAddress = $this->_populateField('email-address');
     }
 
@@ -48,17 +47,16 @@ class ForgotForm extends Form {
             return $this->_generateMissingFieldsError($this->form);
         }
 
-        if ( $this->_checkEmailInDb() == 0 ) {
-            return self::ERROR_INVALID_EMAIL;
+        if ( $this->_checkEmailInDb() > 0 ) {
+            return self::ERROR_EXISTING_EMAIL;
         }
 
-
-        if ( !$this->_lockAccountInDb() ) {
-            return self::ERROR_GENERIC;
-        }
-
-        if ( $this->_sendRecoveryEmail() !== FALSE ) {
+        if ( $this->_updateEmailInDb() ) {
             SessionData::remove('form');
+
+            $user = SessionData::get('user');
+            $user['email_address'] = $this->emailAddress;
+            SessionData::set('user', $user);
             return self::SUCCESS_GENERIC;
         } else {
             return self::ERROR_GENERIC;
@@ -82,7 +80,7 @@ class ForgotForm extends Form {
                 date_added,
                 last_modified
             FROM
-               user_table
+                user_table
             WHERE
                 email_address = '%s'",
             $this->emailAddress
@@ -98,36 +96,24 @@ class ForgotForm extends Form {
     }
 
     /**
-     * lock account in database by updating locked field
+     * update user email address in the database
      *
      * @return boolean [ response from database query ]
      */
-    private function _lockAccountInDb() {
+    private function _updateEmailInDb() {
         $query = sprintf(
             "UPDATE
                 user_table
             SET
-                locked = 1
+                email_address = '%s'
             WHERE
-                email_address='%s'",
-            $this->emailAddress
+                user_id='%d'",
+            $this->emailAddress,
+            SessionData::get('user')['user_id']
         );
 
         $query = $this->_dbh->prepare($query);
 
         return $query->execute();
-    }
-
-    /**
-     * lock account in database by updating locked field
-     *
-     * @return boolean [ response from database query ]
-     */
-    private function _sendRecoveryEmail() {
-        $email   = $this->emailAddress;
-        $message = '';
-        $title   = '';
-
-        mail('terrijonfowler@gmail.com','Testing', 'Test message');
     }
 }

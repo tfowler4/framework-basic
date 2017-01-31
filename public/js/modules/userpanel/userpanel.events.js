@@ -8,4 +8,8 @@
         $(this).removeClass('panel-info');
         $(this).addClass('panel-primary');
     });
+
+    $(document).on("click", 'div[data-toggle="collapse"]', function(){
+        $('.collapse.in').collapse('hide');
+    });
 })();

@@ -7,6 +7,9 @@ class User {
     public $userId;
     public $username;
     public $emailAddress;
+    public $accountType;
+    public $active;
+    public $locked;
     public $dateJoined;
 
     /**
@@ -20,6 +23,9 @@ class User {
         $this->userId       = $data['user_id'];
         $this->username     = $data['username'];
         $this->emailAddress = $data['email_address'];
-        $this->dateJoined   = $data['last_modified'];
+        $this->dateJoined   = $data['date_added'];
+        $this->accountType  = $data['account_type'];
+        $this->active       = $data['active'];
+        $this->locked       = $data['locked'];
     }
 }

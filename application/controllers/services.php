@@ -39,11 +39,11 @@ class Services extends Controller {
         echo json_encode($article);
     }
 
-    public function getCategory($categoryId) {
+    public function getCategory($params) {
         $category;
 
         $database = $this->_loadModal('database', '');
-        $query    = $database->getArticleById($params[0]);
+        $query    = $database->getCategoryById($params[0]);
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $category = new Category($row);

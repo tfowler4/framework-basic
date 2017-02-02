@@ -35,6 +35,7 @@ class Admin extends Controller {
 
         $this->_data['articles']   = $adminModel->getArticles();
         $this->_data['categories'] = $adminModel->getCategories();
+        $this->_data['forms']      = $adminModel->forms;
 
         $this->_loadPageView('admin/index', $this->_data);
     }

@@ -79,10 +79,6 @@ class HeaderModel extends Model {
         $navItem = array('id' => 'portfolio-nav','title' => 'Portfolio', 'model' => 'Portfolio', 'link' => '', 'icon' => 'fa fa-file-text', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
-        // Example Page
-        $navItem = array('id' => 'example-nav','title' => 'Example', 'model' => 'Example', 'link' => '', 'icon' => 'fa fa-info-circle', 'dropdown' => array());
-        array_push($navigationArray, $navItem);
-
         // Github
         $navItem = array('id' => 'git-nav','title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());
         array_push($navigationArray, $navItem);

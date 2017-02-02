@@ -31,4 +31,25 @@ class Forgot extends Controller {
 
         $this->_loadPageView('forgot/index', $this->_data);
     }
+
+    /**
+     * reset password page of controller
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
+    public function reset($params = array()) {
+        $forgotModel = $this->_loadModal('forgot', $params);
+
+        $this->_data['token'] = $forgotModel->token;
+
+        $isTokenValid = $forgotModel->validateToken();
+
+        if ( $isTokenValid ) {
+            $this->_loadPageView('forgot/reset', $this->_data);
+        } else {
+            $this->_loadPageView('forgot/index', $this->_data);
+        }
+    }
 }

@@ -149,7 +149,7 @@ class UpdatePasswordForm extends Form {
     }
 
     /**
-     * update user email address in the database
+     * update user password in the database
      *
      * @return boolean [ response from database query ]
      */

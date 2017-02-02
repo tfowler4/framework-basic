@@ -71,6 +71,10 @@ abstract class Controller {
             $this->_loadError();
         }
 
+        if ( !file_exists($viewFile) ) {
+            $this->_loadError();
+        }
+
         extract((array)$data);
 
         include strtolower($viewFile);

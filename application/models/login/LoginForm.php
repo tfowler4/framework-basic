@@ -8,9 +8,10 @@ class LoginForm extends Form {
     public $email;
     public $password;
 
-    const FORM_NAME       = 'login';
-    const SUCCESS_GENERIC = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
-    const ERROR_GENERIC   = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email/Password combo!');
+    const FORM_NAME         = 'login';
+    const SUCCESS_GENERIC   = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
+    const ERROR_GENERIC     = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email/Password combo!');
+    const ERROR_ACCT_LOCKED = array('type' => 'danger',  'title' => 'Error',   'message' => 'Account has been locked! Password must be reset!');
 
     /**
      * constructor
@@ -49,8 +50,18 @@ class LoginForm extends Form {
             return $this->_generateMissingFieldsError($this->form);
         }
 
-        if ( empty($this->_getUserFromDb()) ) {
+        $user = $this->_getUserFromDb();
+
+        if ( empty($user) ) {
             return self::ERROR_GENERIC;
+        }
+
+        if ( $user['locked'] == 1 ) {
+            SessionData::remove('login');
+            SessionData::remove('user');
+            SessionData::remove('admin');
+
+            return self::ERROR_ACCT_LOCKED;
         }
 
         SessionData::remove('form');
@@ -80,7 +91,7 @@ class LoginForm extends Form {
      * @return array [ array of user details ]
      */
     private function _getUserFromDb() {
-        $user = array();
+        $user = null;
 
         $query = sprintf(
             "SELECT
@@ -104,6 +115,7 @@ class LoginForm extends Form {
                 if ( $user['account_type'] == 1 ) {
                     SessionData::set('admin', TRUE);
                 }
+
                 break;
             }
         }

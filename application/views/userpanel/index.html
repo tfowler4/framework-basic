@@ -1,32 +1,10 @@
 <div id="content" class="container-fluid">
     <div class="row">
-        <div class="col-xs-8 col-xs-push-2">
+        <div class="col-lg-10 col-lg-push-1 col-xs-12">
             <?php if ( $this->alert) { echo $this->alert->getHtml(); } ?>
 
             <div class="row">
-                <div class="col-xs-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">User Details</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li class="list-group-item text-center"><b>User Name</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->username; ?></li>
-                                <li class="list-group-item text-center"><b>Email Address</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->emailAddress; ?></li>
-                                <li class="list-group-item text-center"><b>Date Joined</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->dateJoined; ?></li>
-                            </ul>
-                        </div>
-
-                        <div class="panel-footer text-center">
-                            <a href="#" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-9">
+                <div class="col-lg-9 col-xs-12">
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="panel panel-primary settings-panel noselect" data-toggle="collapse" data-target="#change-email">
@@ -126,6 +104,29 @@
                             <div id="change-user-settings" class="collapse">
 
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">User Details</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item text-center"><b>User Name</b></li>
+                                <li class="list-group-item text-center"><?php echo $user->username; ?></li>
+                                <li class="list-group-item text-center"><b>Email Address</b></li>
+                                <li class="list-group-item text-center"><?php echo $user->emailAddress; ?></li>
+                                <li class="list-group-item text-center"><b>Date Joined</b></li>
+                                <li class="list-group-item text-center"><?php echo $user->dateJoined; ?></li>
+                            </ul>
+                        </div>
+
+                        <div class="panel-footer text-center">
+                            <a href="#" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</a>
                         </div>
                     </div>
                 </div>

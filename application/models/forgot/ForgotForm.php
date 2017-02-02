@@ -119,6 +119,29 @@ class ForgotForm extends Form {
     }
 
     /**
+     * store token hash in database
+     *
+     * @return boolean [ response from database query ]
+     */
+    private function _storeTokenInDb($token) {
+        $query = sprintf(
+            "UPDATE
+                user_table
+            SET
+                token = '%s',
+                token_expire_time =  NOW() + INTERVAL 15 MINUTE
+            WHERE
+                email_address='%s'",
+            $token,
+            $this->emailAddress
+        );
+
+        $query = $this->_dbh->prepare($query);
+
+        return $query->execute();
+    }
+
+    /**
      * lock account in database by updating locked field
      *
      * @return boolean [ response from database query ]
@@ -128,6 +151,59 @@ class ForgotForm extends Form {
         $message = '';
         $title   = '';
 
-        mail('terrijonfowler@gmail.com','Testing', 'Test message');
+        $token = $this->_generateResetToken(40);
+        $this->_storeTokenInDb($token);
+
+        $message = SITE_URL . 'forgot/reset/' . $token;
+
+        mail('terrijonfowler@gmail.com', SITE_NAME .' - Password Recovery', $message);
+    }
+
+    /**
+     * generate a reset token to be emailed
+     *
+     * @param  integer $length [ number of characters in token ]
+     * @return string          [ hashed token value ]
+     */
+    private function _generateResetToken($length) {
+        $token        = '';
+        $codeAlphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $codeAlphabet.= 'abcdefghijklmnopqrstuvwxyz';
+        $codeAlphabet.= '0123456789';
+        $max          = strlen($codeAlphabet); // edited
+
+        for ( $i = 0; $i < $length; $i++ ) {
+            $token .= $codeAlphabet[$this->_cryptoRandSecure(0, $max - 1)];
+        }
+
+        return $token;
+    }
+
+    /**
+     * crypting the hash with a secure algorithm
+     *
+     * @param  integer $min [ min integer ]
+     * @param  integer $max [ max integer ]
+     *
+     * @return integer      [ minumum value plus a random integer not exceeding the maximum ]
+     */
+    private function _cryptoRandSecure($min, $max) {
+        $range = $max - $min;
+
+        if ( $range < 1 ) {
+            return $min;
+        } // not so random...
+
+        $log    = ceil(log($range, 2));
+        $bytes  = (int) ($log / 8) + 1; // length in bytes
+        $bits   = (int) $log + 1; // length in bits
+        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
+
+        do {
+            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
+            $rnd = $rnd & $filter; // discard irrelevant bits
+        } while ($rnd > $range);
+
+        return $min + $rnd;
     }
 }

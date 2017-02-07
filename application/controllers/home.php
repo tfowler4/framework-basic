@@ -27,7 +27,7 @@ class Home extends Controller {
      * @return void
      */
     public function index($params = array()) {
-        $homeModel = $this->_loadModal('home', $params);
+        $homeModel = $this->_loadModal('home');
 
         $this->_data['articles']   = $homeModel->getArticles();
         $this->_data['categories'] = $homeModel->getCategories();
@@ -43,11 +43,27 @@ class Home extends Controller {
      * @return void
      */
     public function grid($params = array()) {
-        $homeModel = $this->_loadModal('home', $params);
+        $homeModel = $this->_loadModal('home');
 
         $this->_data['articles']   = $homeModel->getArticles();
         $this->_data['categories'] = $homeModel->getCategories();
 
         $this->_loadPageView('home/grid', $this->_data);
+    }
+
+    /**
+     * list of articles based on category
+     *
+     * @param  array [ url GET parameters ]
+     *
+     * @return void
+     */
+    public function category($params = array()) {
+        $homeModel = $this->_loadModal('home');
+
+        $this->_data['articles']   = $homeModel->getArticlesByCategory($params);
+        $this->_data['categories'] = $homeModel->getCategories();
+
+        $this->_loadPageView('home/index', $this->_data);
     }
 }

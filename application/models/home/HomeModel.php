@@ -14,7 +14,7 @@ class HomeModel extends Model {
      *
      * @return void
      */
-    public function __construct($dbh, $params) {
+    public function __construct($dbh) {
         parent::__construct($dbh);
     }
 
@@ -27,6 +27,31 @@ class HomeModel extends Model {
         $articles = array();
         $database = new DatabaseModel($this->_dbh);
         $query    = $database->getAllArticles();
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $article = new Article($row);
+
+            array_push($articles, $article);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * get a list of all articles by category from database
+     *
+     * @return void
+     */
+    public function getArticlesByCategory($category = '') {
+        $articles = array();
+        $database = new DatabaseModel($this->_dbh);
+        $query;
+
+        if ( empty($category) ) {
+            $query = $database->getAllArticles();
+        } else {
+            $query = $database->getArticlesByCategory($category[0]);
+        }
 
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $article = new Article($row);

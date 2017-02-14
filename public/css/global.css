@@ -27,6 +27,41 @@ html, body {
     height:200px;
 }
 
+#footer > .copyright-row {
+    height:30px;
+    background-color:#111111;
+    color:#777777;
+}
+
+#footer > .content-row {
+    height:170px;
+    background-color:#000000;
+}
+
+#footer i {
+    font-size:52px;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+#footer div > div {
+    display:table;
+    table-layout:fixed;
+    height:100%;
+}
+
+#footer div > div > div {
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+}
+
+#footer > .content-row > div {
+    display:flex;
+    justify-content:center;
+    flex-direction:column;
+}
+
 .noselect {
     cursor:default;
     -webkit-touch-callout:none; /* iOS Safari */

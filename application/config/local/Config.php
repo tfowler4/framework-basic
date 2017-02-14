@@ -3,7 +3,7 @@
 // site details
 define('SITE_NAME', 'Framework Basic');
 define('APP_NAME',  'framework-basic');
-define('SITE_URL',  'http://localhost/framework-basic/');
+define('SITE_URL',  'http://localhost:8080/framework-basic/');
 define('SITE_STATUS', 1);
 define('TIMESTAMP', rand(0,100000000));
 define('SITE_TEMPLATE', 'default');
@@ -26,7 +26,7 @@ define('MODULE_HOME_STATUS', 1);
 define('MODULE_EXAMPLE_SET', 1);
 
 // database settings
-define('DB_HOST', '198.57.149.136');
+define('DB_HOST', '127.0.0.1:3308');
 define('DB_NAME', 'xeonsold_framework_test');
 define('DB_USER', 'xeonsold_test');
 define('DB_PASS', 'test74108520');

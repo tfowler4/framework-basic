@@ -202,7 +202,7 @@ class ForgotForm extends Form {
         do {
             $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
             $rnd = $rnd & $filter; // discard irrelevant bits
-        } while ($rnd > $range);
+        } while ( $rnd > $range );
 
         return $min + $rnd;
     }

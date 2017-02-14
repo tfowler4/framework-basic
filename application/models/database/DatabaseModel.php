@@ -109,6 +109,40 @@ class DatabaseModel extends Model {
     }
 
     /**
+     * get a list of articles by category
+     *
+     * @param  integer $articleId [ id of article ]
+     *
+     * @return obj [ database query results ]
+     */
+    public function getArticlesByCategory($category) {
+        $query = sprintf(
+            "SELECT
+                article_id,
+                title,
+                content,
+                category_table.category_id,
+                meta,
+                category_table.name as category,
+                article_table.date_added as date_added,
+                article_table.last_modified as last_modified,
+                category_table.color_1,
+                category_table.icon
+            FROM
+                article_table
+            INNER JOIN
+                category_table
+            ON
+                article_table.category_id = category_table.category_id
+            WHERE
+                category_table.name = '%s'",
+            $category
+        );
+
+        return $this->_dbh->query($query);
+    }
+
+    /**
      * get a category from the database by category id
      *
      * @param  integer $categoryId [ id of category ]

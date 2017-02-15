@@ -12,4 +12,12 @@
     $(document).on("click", 'div[data-toggle="collapse"]', function(){
         $('.collapse.in').collapse('hide');
     });
+
+    $(document).on('click', '#deactivate-account', function() {
+        $('#userpanel-modal').modal();
+
+        userpanelServices.getDeactivationForm(function(data) {
+            userpanel.populateDeactivateForm(data);
+        });
+    });
 })();

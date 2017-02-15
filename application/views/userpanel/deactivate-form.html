@@ -1,0 +1,49 @@
+<form action="<?php echo SITE_URL . 'userpanel'; ?>" method="POST">
+    <div class="well well-sm text-center">
+        Are you sure you want to deactivate your account? Your content and posts will not be deleted, but the only way to regain access is through the "Forgot Password" method.
+    </div>
+
+    <style>
+    .badge {
+        padding:15px 20px 15px 20px;
+        background-color:#c9302c;
+    }
+    </style>
+
+    <div class="row">
+        <div class="col-xs-4 text-center">
+            <span class="badge">
+                <i class="fa fa-envelope" style="font-size:100px;"></i>
+            </span>
+
+            <br>
+
+            <i>Emails & Notifications Turned Off</i>
+        </div>
+
+        <div class="col-xs-4 text-center">
+            <span class="badge">
+                <i class="fa fa-power-off" style="font-size:100px;"></i>
+            </span>
+
+            <br>
+
+            <i>Account Turned Off</i>
+        </div>
+
+        <div class="col-xs-4 text-center">
+            <span class="badge">
+                <i class="fa fa-comments" style="font-size:100px;"></i>
+            </span>
+
+            <br>
+
+            <i>Posts & Comments Saved</i>
+        </div>
+    </div>
+
+    <br>
+    <div class="text-center">
+        <button type="submit" name="form" value="deactivate" class="btn btn-danger"><i class="fa fa-close" aria-hidden="true"></i> Deactivate</button>
+    </div>
+</form>

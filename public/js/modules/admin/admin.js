@@ -27,12 +27,12 @@ var admin = (function() {
             confirmText = 'Are you sure you want to remove the "' + data.name + '" category?';
         }
 
-        $('#adminModal').find('.modal-title').text('Confirmation');
-        $('#confirmText').text(confirmText);
+        $('#admin-modal').find('.modal-title').text('Confirmation');
+        $('#confirm-text').text(confirmText);
         $('#remove-id').val(id);
-        $('#modalForm').find('[type="submit"]').attr('value', 'remove-' + type);
+        $('#modal-form').find('[type="submit"]').attr('value', 'remove-' + type);
 
-        $('#adminModal').modal('show');
+        $('#admin-modal').modal('show');
     }
 
     return self;

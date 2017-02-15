@@ -126,10 +126,40 @@
                         </div>
 
                         <div class="panel-footer text-center">
-                            <a href="#" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</a>
+                            <button id="deactivate-account" type="button" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</button>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="userpanel-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">...</h4>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-center">
+                    <span id="confirm-text"></span>
+                    <form id="deactivate-form" action="<?php echo SITE_URL . 'userpanel' ?>" method="POST">
+                        <div class="form-group has-feedback">
+                            <input id="deactivate-id" type="hidden" name="id" value="">
+                        </div>
+
+                        <div class="form-group has-feedback text-center">
+                            <button type="submit" name="form" class="btn btn-danger"><i class="fa fa-times"></i> Deactivate</button>
+                        </div>
+                    </form>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

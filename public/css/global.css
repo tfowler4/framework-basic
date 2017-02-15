@@ -30,12 +30,13 @@ html, body {
 #footer > .copyright-row {
     height:30px;
     background-color:#111111;
-    color:#777777;
+    color:#999999;
 }
 
 #footer > .content-row {
     height:170px;
     background-color:#000000;
+    color:#999999;
 }
 
 #footer i {

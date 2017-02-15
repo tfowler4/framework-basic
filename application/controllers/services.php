@@ -72,6 +72,16 @@ class Services extends Controller {
         echo json_encode($data);
     }
 
+    public function getDeactivationForm() {
+        ob_start();
+        $this->_loadView('userpanel/deactivate-form');
+
+        $data['title'] = 'Confirm Account Deactivation';
+        $data['body']  = ob_get_clean();
+
+        echo json_encode($data);
+    }
+
     public function logoutUser() {
         SessionData::reset();
 

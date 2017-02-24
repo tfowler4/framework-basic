@@ -34,7 +34,7 @@ class Userpanel extends Controller {
         if ( $this->_data['user'] != NULL ) {
             $this->_loadPageView('userpanel/index', $this->_data);
         } else {
-            $this->_loadError();
+            redirect(SITE_URL);
         }
     }
 }

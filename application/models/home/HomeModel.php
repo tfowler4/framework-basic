@@ -23,7 +23,32 @@ class HomeModel extends Model {
      *
      * @return void
      */
-    public function getArticles() {
+    public function getArticles($limit = '') {
+        $articles = array();
+        $database = new DatabaseModel($this->_dbh);
+        $query;
+
+        if ( !empty($limit) && is_numeric($limit) && $limit > 0 ) {
+            $query = $database->getAllArticles($limit);
+        } else {
+            $query = $database->getAllArticles();
+        }
+
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            $article = new Article($row);
+
+            array_push($articles, $article);
+        }
+
+        return $articles;
+    }
+
+    /**
+     * get latest 10 archives
+     *
+     * @return void
+     */
+    public function getArchives() {
         $articles = array();
         $database = new DatabaseModel($this->_dbh);
         $query    = $database->getAllArticles();

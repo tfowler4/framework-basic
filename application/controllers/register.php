@@ -29,6 +29,8 @@ class Register extends Controller {
     public function index($params = array()) {
         $registerModel = $this->_loadModal('register', $params);
 
+        $this->_data['forms'] = $registerModel->forms;
+
         $this->_loadPageView('register/index', $this->_data);
     }
 }

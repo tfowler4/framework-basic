@@ -48,7 +48,7 @@ class DatabaseModel extends Model {
      *
      * @return obj [ database query results ]
      */
-    public function getAllArticles() {
+    public function getAllArticles($limit = '') {
         $query = sprintf(
             "SELECT
                 article_id,
@@ -70,6 +70,10 @@ class DatabaseModel extends Model {
             ORDER BY
                 article_table.date_added DESC"
         );
+
+        if ( !empty($limit) ) {
+            $query .= ' LIMIT ' . $limit;
+        }
 
         return $this->_dbh->query($query);
     }

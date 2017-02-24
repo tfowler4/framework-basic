@@ -8,10 +8,11 @@ class LoginForm extends Form {
     public $email;
     public $password;
 
-    const FORM_NAME         = 'login';
-    const SUCCESS_GENERIC   = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
-    const ERROR_GENERIC     = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email/Password combo!');
-    const ERROR_ACCT_LOCKED = array('type' => 'danger',  'title' => 'Error',   'message' => 'Account has been locked! Password must be reset!');
+    const FORM_NAME           = 'login';
+    const SUCCESS_GENERIC     = array('type' => 'success', 'title' => 'Success', 'message' => 'Successfully logged in!');
+    const ERROR_GENERIC       = array('type' => 'danger',  'title' => 'Error',   'message' => 'Invalid Email/Password combo!');
+    const ERROR_ACCT_LOCKED   = array('type' => 'danger',  'title' => 'Error',   'message' => 'Account is currently locked!');
+    const ERROR_ACCT_INACTIVE = array('type' => 'danger',  'title' => 'Error',   'message' => 'Account has been deactivated! Password must be reset to reactivate!');
 
     /**
      * constructor
@@ -56,10 +57,18 @@ class LoginForm extends Form {
             return self::ERROR_GENERIC;
         }
 
+        if ( $user['active'] == 0 ) {
+            SessionData::set('login', FALSE);
+            SessionData::set('user', NULL);
+            SessionData::set('admin', FALSE);
+
+            return self::ERROR_ACCT_INACTIVE;
+        }
+
         if ( $user['locked'] == 1 ) {
-            SessionData::remove('login');
-            SessionData::remove('user');
-            SessionData::remove('admin');
+            SessionData::set('login', FALSE);
+            SessionData::set('user', NULL);
+            SessionData::set('admin', FALSE);
 
             return self::ERROR_ACCT_LOCKED;
         }

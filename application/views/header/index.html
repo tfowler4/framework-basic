@@ -52,8 +52,8 @@
                         </ul>
 
                         <div class="pull-right">
-                            <?php if ( SessionData::get('login') ) { ?>
-                                <?php if ( SessionData::get('admin') ) { ?>
+                            <?php if ( SessionData::get('login') == TRUE) { ?>
+                                <?php if ( SessionData::get('admin')  == TRUE ) { ?>
                                     <a href="<?php echo SITE_URL . 'admin'; ?>" class="btn btn-success navbar-btn" id="admin-nav"><i class="fa fa-star" aria-hidden="true"></i> Administration</a>
                                 <?php } ?>
 

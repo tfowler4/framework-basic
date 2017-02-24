@@ -3,3 +3,12 @@
 .settings-panel {
     cursor:pointer;
 }
+
+#userpanel-modal .badge {
+    padding:15px 20px 15px 20px;
+    background-color:#c9302c;
+}
+
+#userpanel-modal .badge i {
+    font-size:100px;
+}

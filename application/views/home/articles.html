@@ -1,23 +1,65 @@
-<?php foreach( $articles as $article ) { ?>
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="panel-title"><?php echo $article->title; ?></h3>
-        </div>
+<?php $secondaryArticles = 0; ?>
 
-        <div class="panel-body">
-            <?php echo $article->content; ?>
-        </div>
+<?php foreach( $articles as $index => $article ) { ?>
+    <?php if ( $index == 0 ) { ?>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><?php echo $article->title; ?></h3>
+                    </div>
 
-        <div class="panel-footer">
-            <div class="pull-left" style="vertical-align: middle; height:30px; line-height:30px;">
-                <i>Posted on <?php echo $article->dateAdded; ?></i>
+                    <div class="panel-body">
+                        <?php echo $article->content; ?>
+                    </div>
+
+                    <div class="panel-footer">
+                        <div class="pull-left" style="vertical-align: middle; height:30px; line-height:30px;">
+                            <i>Posted on <?php echo $article->dateAdded; ?></i>
+                        </div>
+
+                        <div class="pull-right">
+                            <a href="<?php echo SITE_URL . 'category/' . strtolower($article->category); ?>" class="btn btn-sm btn-primary"><i class="<?php echo $article->icon; ?>"></i> <i><?php echo $article->category; ?></i></a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
             </div>
-
-            <div class="pull-right">
-                <a href="<?php echo SITE_URL . 'category/' . strtolower($article->category); ?>" class="btn btn-sm btn-primary"><i class="<?php echo $article->icon; ?>"></i> <i><?php echo $article->category; ?></i></a>
-            </div>
-
-            <div class="clearfix"></div>
         </div>
-    </div>
+    <?php } else if ( $index > 0 ) { ?>
+        <?php if ( $secondaryArticles == 0 || $secondaryArticles % 3 == 0 ) { ?>
+            <div class="row">
+        <?php } ?>
+
+        <div class="col-xs-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo $article->title; ?></h3>
+                </div>
+
+                <div class="panel-body">
+                    <?php echo $article->content; ?>
+                </div>
+
+                <div class="panel-footer">
+                    <div class="pull-left" style="vertical-align: middle; height:30px; line-height:30px;">
+                        <i>Posted on <?php echo $article->dateAdded; ?></i>
+                    </div>
+
+                    <div class="pull-right">
+                        <a href="<?php echo SITE_URL . 'category/' . strtolower($article->category); ?>" class="btn btn-sm btn-primary"><i class="<?php echo $article->icon; ?>"></i> <i><?php echo $article->category; ?></i></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+        <?php if ( $index == (count($articles) - 1) || $secondaryArticles % 3 == 0 ) { ?>
+            </div>
+        <?php } ?>
+
+        <?php $secondaryArticles++; ?>
+    <?php } ?>
 <?php } ?>

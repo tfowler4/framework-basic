@@ -57,9 +57,7 @@ class SessionData {
      * @return void
      */
     public static function start() {
-        if ( session_id() == '' || !isset($_SESSION) ) {
-            session_start();
-        }
+        session_start();
     }
 
     /**
@@ -68,7 +66,7 @@ class SessionData {
      * @return void
      */
     public static function end() {
-        if ( session_id() ) {
+        if ( !empty(session_id()) ) {
             session_destroy();
         }
     }
@@ -79,7 +77,8 @@ class SessionData {
      * @return void
      */
     public static function reset() {
-        self::end();
-        self::start();
+        self::set('login', FALSE);
+        self::set('admin', FALSE);
+        self::set('user', NULL);
     }
 }

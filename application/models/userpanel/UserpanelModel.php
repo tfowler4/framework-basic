@@ -26,7 +26,7 @@ class UserpanelModel extends Model {
     public function loadUserFromSession() {
         $user = NULL;
 
-        if ( SessionData::get('login') ) {
+        if ( SessionData::get('login') === TRUE ) {
             $user = new User(SessionData::get('user'));
         }
 

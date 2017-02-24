@@ -29,8 +29,9 @@ class Home extends Controller {
     public function index($params = array()) {
         $homeModel = $this->_loadModal('home');
 
-        $this->_data['articles']   = $homeModel->getArticles();
+        $this->_data['articles']   = $homeModel->getArticles(10);
         $this->_data['categories'] = $homeModel->getCategories();
+        $this->_data['archives']   = $homeModel->getArchives();
 
         $this->_loadPageView('home/index', $this->_data);
     }

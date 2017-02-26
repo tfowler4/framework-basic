@@ -7,6 +7,7 @@ function __autoload($className)  {
     $directorys = array(
         'config/',
         'controllers/',
+        'interfaces/',
         'lib/',
         'models/',
         'views/'

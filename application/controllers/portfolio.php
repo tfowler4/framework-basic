@@ -3,7 +3,7 @@
 /**
  * portfolio controller
  */
-class Portfolio extends Controller {
+class Portfolio extends AbstractController {
     const CONTROLLER_NAME  = 'Portfolio';
     const PAGE_TITLE       = 'Portfolio';
     const PAGE_DESCRIPTION = 'Portfilio & Work';

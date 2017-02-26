@@ -3,7 +3,7 @@
 /**
  * login form
  */
-class LoginForm extends Form {
+class LoginForm extends Form implements FormInterface {
     public $form;
     public $email;
     public $password;

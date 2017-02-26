@@ -3,7 +3,7 @@
 /**
  * home model
  */
-class HomeModel extends Model {
+class HomeModel extends AbstractModel {
     const MODEL_NAME = 'Home';
 
     /**

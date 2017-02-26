@@ -3,7 +3,7 @@
 /**
  * resume controller
  */
-class Resume extends Controller {
+class Resume extends AbstractController {
     const CONTROLLER_NAME  = 'Resume';
     const PAGE_TITLE       = 'Resume';
     const PAGE_DESCRIPTION = 'Interactive Resume';

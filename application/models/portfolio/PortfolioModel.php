@@ -3,7 +3,7 @@
 /**
  * portfolio model
  */
-class PortfolioModel extends Model {
+class PortfolioModel extends AbstractModel {
     const MODEL_NAME = 'Portfolio';
 
     /**

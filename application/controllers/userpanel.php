@@ -3,7 +3,7 @@
 /**
  * userpanel controller
  */
-class Userpanel extends Controller {
+class Userpanel extends AbstractController {
     const CONTROLLER_NAME  = 'Userpanel';
     const PAGE_TITLE       = 'User Panel';
     const PAGE_DESCRIPTION = 'User Panel Description';

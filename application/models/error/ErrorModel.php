@@ -3,7 +3,7 @@
 /**
  * error model
  */
-class ErrorModel extends Model {
+class ErrorModel extends AbstractModel {
     const MODEL_NAME = 'Error';
 
     /**

@@ -3,7 +3,7 @@
 /**
  * userpanel model
  */
-class UserpanelModel extends Model {
+class UserpanelModel extends AbstractModel {
     const MODEL_NAME = 'Userpanel';
 
     /**

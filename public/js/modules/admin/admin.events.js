@@ -85,4 +85,25 @@
 
         preview.attr('class', value);
     });
+
+    $(document).on('change', '#site-maintenance-script', function() {
+        admin.updateScriptDescription($(this));
+    });
+
+    $(document).on('click', '#execute-script-btn', function() {
+        var scriptName = $('#site-maintenance-script').val();
+
+        if ( scriptName.length == 0 ) {
+            return false;
+        }
+
+        $('#loading-modal').modal();
+
+        adminServices.runScript(scriptName, function(data) {
+            setTimeout(function() {
+                $('#loading-modal').modal('hide');
+                admin.populateConsoleOutput(scriptName, data);
+            }, 3000);
+        });
+    });
 })();

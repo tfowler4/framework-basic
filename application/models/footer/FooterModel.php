@@ -3,7 +3,7 @@
 /**
  * footer class
  */
-class FooterModel extends Model {
+class FooterModel extends AbstractModel {
     public $footerItems = array();
 
     const MODEL_NAME = 'Footer';

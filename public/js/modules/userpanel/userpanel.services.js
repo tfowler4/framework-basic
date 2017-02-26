@@ -1,21 +1,24 @@
 var userpanelServices = (function() {
     this.getDeactivationForm = function(callBack) {
-        console.log('getDeactivationForm');
         $.ajax({
-            type : "GET",
-            url :'./services/getDeactivationForm/',
-            dataType : 'json',
-            cache : true,
+            type: 'GET',
+            url: './services/getDeactivationForm/',
+            dataType: 'json',
+            cache: true,
             success: function(data) {
                 callBack(data);
             },
             error: function(xhr, status, thrownError, error){
-                // handle the error here
+                console.log('error');
+                console.log(xhr);
+                console.log(status);
+                console.log(thrownError);
+                console.log(error);
             },
-            complete: function(data) {console.log('complete');
+            complete: function(data) {
                 $('#modal-spinner').hide();
             },
-            async : true
+            async: true
         });
     };
 

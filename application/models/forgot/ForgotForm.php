@@ -3,7 +3,7 @@
 /**
  * forgot form
  */
-class ForgotForm extends Form {
+class ForgotForm extends Form  implements FormInterface {
     public $form;
     public $emailAddress;
 

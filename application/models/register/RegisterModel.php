@@ -3,7 +3,7 @@
 /**
  * register model
  */
-class RegisterModel extends Model {
+class RegisterModel extends AbstractModel {
     const MODEL_NAME = 'Register';
 
     /**

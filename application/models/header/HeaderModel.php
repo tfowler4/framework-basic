@@ -3,7 +3,7 @@
 /**
  * header class
  */
-class HeaderModel extends Model {
+class HeaderModel extends AbstractModel {
     public $headerItems = array();
     public $siteLogo;
     public $siteName;

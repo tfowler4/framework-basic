@@ -3,7 +3,7 @@
 /**
  * remove article form
  */
-class RemoveArticleForm extends Form {
+class RemoveArticleForm extends Form implements FormInterface {
     public $id;
     public $form;
 

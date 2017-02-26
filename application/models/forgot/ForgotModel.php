@@ -3,7 +3,7 @@
 /**
  * forgot model
  */
-class ForgotModel extends Model {
+class ForgotModel extends AbstractModel {
     public $token;
 
     const MODEL_NAME = 'Home';

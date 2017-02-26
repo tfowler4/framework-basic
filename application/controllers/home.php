@@ -3,7 +3,7 @@
 /**
  * home controller
  */
-class Home extends Controller {
+class Home extends AbstractController {
     const CONTROLLER_NAME  = 'Home';
     const PAGE_TITLE       = 'Home';
     const PAGE_DESCRIPTION = 'Home Description';

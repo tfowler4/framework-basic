@@ -3,7 +3,7 @@
 /**
  * administration model
  */
-class AdminModel extends Model {
+class AdminModel extends AbstractModel {
     const MODEL_NAME = 'Admin';
 
     /**
@@ -42,7 +42,7 @@ class AdminModel extends Model {
     /**
      * get a list of all articles from database
      *
-     * @return void
+     * @return array [ list of articles ]
      */
     public function getArticles() {
         $articles = array();
@@ -61,7 +61,7 @@ class AdminModel extends Model {
     /**
      * get a list of all article categories from database
      *
-     * @return void
+     * @return array [ list of categories ]
      */
     public function getCategories() {
         $categories = array();
@@ -75,5 +75,36 @@ class AdminModel extends Model {
         }
 
         return $categories;
+    }
+
+    /**
+     * get all scripts from scripts folder
+     *
+     * @return array [ list of script items in script folder ]
+     */
+    public function getScripts() {
+        $listOfScripts = array();
+
+        $script = $this->setScriptItem('Test Script', 'test', 'Just a tester');
+        if ( $script != null ) { array_push($listOfScripts, $script); }
+
+        $script = $this->setScriptItem('Backup Database', 'backupDatabase', 'Backup the entire database with timestamp');
+        if ( $script != null ) { array_push($listOfScripts, $script); }
+
+        return $listOfScripts;
+    }
+
+    public function setScriptItem($title, $fileName, $description) {
+        $item = array();
+
+        if ( !file_exists(FOLDER_SCRIPTS . $fileName . '.php') ) {
+            return null;
+        }
+
+        $item['title']       = $title;
+        $item['file']        = $fileName;
+        $item['description'] = $description;
+
+        return $item;
     }
 }

@@ -3,7 +3,7 @@
 /**
  * base model class
  */
-abstract class Model {
+abstract class AbstractModel {
     protected $_dbh;
 
     public $forms;

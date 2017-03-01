@@ -3,7 +3,7 @@
 /**
  * create category form
  */
-class CreateCategoryForm extends Form {
+class CreateCategoryForm extends Form implements FormInterface {
     public $form;
     public $name;
     public $meta;

@@ -35,5 +35,39 @@ var admin = (function() {
         $('#admin-modal').modal('show');
     }
 
+    this.populateConsoleOutput = function(scriptName, data) {
+        var icon = '';
+
+        switch ( data.status ) {
+            case 'success':
+                icon = 'glyphicon glyphicon-ok-sign';
+                break;
+            case 'fail':
+                icon = 'glyphicon glyphicon-exclamation-sign';
+                break;
+            default:
+                icon = 'glyphicon glyphicon-warning-sign';
+                break;
+        }
+
+        $('#console-output').val(scriptName + ' : ' + data.response);
+        $('#console-output-icon').attr('class', icon + ' form-control-feedback');
+    }
+
+    this.updateScriptDescription = function(element) {
+        var value       = element.val();
+        var description = '';
+
+        if ( value.length > 0 ) {
+            $('#execute-script-btn').removeAttr('disabled');
+            description = element.find('option:selected').data('description');
+        } else {
+            $('#execute-script-btn').attr('disabled', 'disabled');
+            description = 'Script Description';
+        }
+
+        $('#script-description').text(description);
+    }
+
     return self;
 }());

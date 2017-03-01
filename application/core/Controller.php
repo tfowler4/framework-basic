@@ -3,7 +3,7 @@
 /**
  * base controller class
  */
-abstract class Controller {
+abstract class AbstractController {
     protected $_pageTitle;
     protected $_pageDescription;
     protected $_siteName;

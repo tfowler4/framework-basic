@@ -3,7 +3,7 @@
 /**
  * change email form
  */
-class ChangeEmailForm extends Form {
+class ChangeEmailForm extends Form implements FormInterface {
     public $form;
     public $emailAddress;
 

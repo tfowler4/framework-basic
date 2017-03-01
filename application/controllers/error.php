@@ -3,7 +3,7 @@
 /**
  * error controller
  */
-class Error extends Controller {
+class Error extends AbstractController {
     const CONTROLLER_NAME  = 'Error';
     const PAGE_TITLE       = 'Error';
     const PAGE_DESCRIPTION = 'An Error Page';

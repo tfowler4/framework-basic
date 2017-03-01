@@ -3,7 +3,7 @@
 /**
  * remove category form
  */
-class RemoveCategoryForm extends Form {
+class RemoveCategoryForm extends Form implements FormInterface {
     public $id;
     public $form;
 

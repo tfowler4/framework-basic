@@ -3,7 +3,7 @@
 /**
  * database model
  */
-class DatabaseModel extends Model {
+class DatabaseModel extends AbstractModel {
     const MODEL_NAME = 'Database';
 
     /**

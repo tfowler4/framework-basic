@@ -3,7 +3,7 @@
 /**
  * login controller
  */
-class Login extends Controller {
+class Login extends AbstractController {
     const CONTROLLER_NAME  = 'Login';
     const PAGE_TITLE       = 'Login';
     const PAGE_DESCRIPTION = 'Login Description';

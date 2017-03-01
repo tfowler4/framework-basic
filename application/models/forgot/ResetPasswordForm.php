@@ -3,7 +3,7 @@
 /**
  * reset password form
  */
-class ResetPasswordForm extends Form {
+class ResetPasswordForm extends Form implements FormInterface {
     public $form;
     public $password;
     public $passwordConfirm;

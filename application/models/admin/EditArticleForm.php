@@ -3,7 +3,7 @@
 /**
  * edit article form
  */
-class EditArticleForm extends Form {
+class EditArticleForm extends Form implements FormInterface {
     public $id;
     public $form;
     public $title;

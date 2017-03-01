@@ -3,7 +3,7 @@
 /**
  * update password form
  */
-class UpdatePasswordForm extends Form {
+class UpdatePasswordForm extends Form implements FormInterface {
     public $form;
     public $oldPassword;
     public $confirmPassword;

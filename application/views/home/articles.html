@@ -1,4 +1,10 @@
-<?php $secondaryArticles = 0; ?>
+<?php $secondaryArticles = FALSE; ?>
+<?php $secondaryIndex = 0; ?>
+<?php $isSecondaryRowFull = FALSE; ?>
+
+<?php if ( count($articles) > 1 ) { ?>
+    <?php $secondaryArticles = TRUE; ?>
+<?php } ?>
 
 <?php foreach( $articles as $index => $article ) { ?>
     <?php if ( $index == 0 ) { ?>
@@ -28,7 +34,9 @@
             </div>
         </div>
     <?php } else if ( $index > 0 ) { ?>
-        <?php if ( $secondaryArticles == 0 || $secondaryArticles % 3 == 0 ) { ?>
+        <?php if ( $secondaryIndex == 0 || $isSecondaryRowFull == TRUE ) { ?>
+            <?php $isSecondaryRowFull = FALSE; ?>
+            <?php $secondaryIndex = 0; ?>
             <div class="row">
         <?php } ?>
 
@@ -56,10 +64,15 @@
             </div>
         </div>
 
-        <?php if ( $index == (count($articles) - 1) || $secondaryArticles % 3 == 0 ) { ?>
+        <?php $secondaryIndex++; ?>
+
+        <?php if ( $secondaryIndex == 3 ) { ?>
+            <?php $isSecondaryRowFull = TRUE; ?>
             </div>
         <?php } ?>
-
-        <?php $secondaryArticles++; ?>
     <?php } ?>
+<?php } ?>
+
+<?php if ( $secondaryArticles == TRUE && $isSecondaryRowFull == FALSE ) { ?>
+    </div>
 <?php } ?>

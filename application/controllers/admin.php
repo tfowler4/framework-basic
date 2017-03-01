@@ -3,7 +3,7 @@
 /**
  * admin controller
  */
-class Admin extends Controller {
+class Admin extends AbstractController {
     const CONTROLLER_NAME  = 'Admin';
     const PAGE_TITLE       = 'Administration';
     const PAGE_DESCRIPTION = 'Admin Description';
@@ -36,6 +36,7 @@ class Admin extends Controller {
         $this->_data['articles']   = $adminModel->getArticles();
         $this->_data['categories'] = $adminModel->getCategories();
         $this->_data['forms']      = $adminModel->forms;
+        $this->_data['scripts']    = $adminModel->getScripts();
 
         $this->_loadPageView('admin/index', $this->_data);
     }

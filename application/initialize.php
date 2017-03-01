@@ -9,6 +9,9 @@ require 'config/Globals.php';
 // config class
 require 'config/' . SERVER . '/Config.php';
 
+// general config class
+require 'config/GeneralConfig.php';
+
 // base app class
 require 'core/App.php';
 

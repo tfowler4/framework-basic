@@ -3,7 +3,7 @@
 /**
  * login model
  */
-class LoginModel extends Model {
+class LoginModel extends AbstractModel {
     const MODEL_NAME = 'Login';
 
     /**

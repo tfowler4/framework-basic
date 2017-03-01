@@ -3,7 +3,7 @@
 /**
  * forgot password controller
  */
-class Forgot extends Controller {
+class Forgot extends AbstractController {
     const CONTROLLER_NAME  = 'Forgot';
     const PAGE_TITLE       = 'Forgot';
     const PAGE_DESCRIPTION = 'Forgot Password Recovery';

@@ -3,7 +3,7 @@
 /**
  * register form
  */
-class RegisterForm extends Form {
+class RegisterForm extends Form implements FormInterface {
     public $form;
     public $username;
     public $email;

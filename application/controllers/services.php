@@ -3,7 +3,7 @@
 /**
  * services controller
  */
-class Services extends Controller {
+class Services extends AbstractController {
     const CONTROLLER_NAME = 'Services';
 
     /**
@@ -26,6 +26,14 @@ class Services extends Controller {
         return;
     }
 
+    /**
+     * get a specific article by article id
+     *
+     * @param  array $params [ array containing article id ]
+     *
+     * @return void
+     *
+     */
     public function getArticle($params) {
         $article;
 
@@ -39,6 +47,14 @@ class Services extends Controller {
         echo json_encode($article);
     }
 
+    /**
+     * get a specific category by category id
+     *
+     * @param  array $params [ array containing category id ]
+     *
+     * @return void
+     *
+     */
     public function getCategory($params) {
         $category;
 
@@ -52,6 +68,11 @@ class Services extends Controller {
         echo json_encode($category);
     }
 
+    /**
+     * get the html for a the login form
+     *
+     * @return void
+     */
     public function getLoginForm() {
         ob_start();
         $this->_loadView('login/login-form');
@@ -62,6 +83,11 @@ class Services extends Controller {
         echo json_encode($data);
     }
 
+    /**
+     * get the html for a the logout form
+     *
+     * @return void
+     */
     public function getLogoutForm() {
         ob_start();
         $this->_loadView('logout/logout-form');
@@ -72,6 +98,11 @@ class Services extends Controller {
         echo json_encode($data);
     }
 
+    /**
+     * get the html for a the deactivate account form
+     *
+     * @return void
+     */
     public function getDeactivationForm() {
         ob_start();
         $this->_loadView('userpanel/deactivate-form');
@@ -82,10 +113,28 @@ class Services extends Controller {
         echo json_encode($data);
     }
 
+    /**
+     * logout the user and reset the session data
+     *
+     * @return void
+     */
     public function logoutUser() {
         SessionData::reset();
 
-        $message = array('type' => 'success',  'title' => 'Logout', 'message' => 'You logged out so....bye!');
+        $message = array('type' => 'success',  'title' => 'Logout', 'message' => 'You logged out successfully!');
         SessionData::set('message', $message);
+    }
+
+    /**
+     * run the site maintenance script
+     *
+     * @param  array $params [ array containing parameters to execute wit hthe script ]
+     *
+     * @return void
+     */
+    public function runScript($params) {
+        $scriptName = $params[0];
+
+        include FOLDER_SCRIPTS . $scriptName . '.php';
     }
 }

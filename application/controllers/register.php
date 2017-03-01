@@ -3,7 +3,7 @@
 /**
  * register controller
  */
-class Register extends Controller {
+class Register extends AbstractController {
     const CONTROLLER_NAME  = 'Register';
     const PAGE_TITLE       = 'Registration';
     const PAGE_DESCRIPTION = 'Register Description';

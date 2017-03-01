@@ -1,0 +1,22 @@
+<h2>Site Maintenance <small>Excute scripts n stuff</small></h2>
+
+<div class="form-group has-feedback">
+    <label for="site-maintenance-script" class="control-label">Maintenance Script</label>
+    <select class="form-control" id="site-maintenance-script" <?php if ( empty($scripts) ) { ?> disabled <?php } ?> >
+        <option value=""></option>
+        <?php foreach( $scripts as $script ) { ?>
+            <option data-description="<?php echo $script['description']; ?>" value="<?php echo $script['file']; ?>">
+                <?php echo $script['title']; ?>
+            </option>
+        <?php } ?>
+    </select>
+    <i class="fa fa-info-circle"></i> <i id="script-description" class="small text-muted">Script Description</i>
+</div>
+
+<div class="form-group has-feedback">
+    <label for="console-output" class="control-label">Console Output</label>
+    <span id="console-output-icon" class="form-control-feedback"></span>
+    <input type="text" class="form-control" id="console-output" placeholder="Output of Script File..." disabled>
+</div>
+
+<button type="button" id="execute-script-btn" class="btn btn-primary" disabled><i class="fa fa-upload" aria-hidden="true"></i> Execute Script</button>

@@ -3,7 +3,7 @@
 /**
  * resume model
  */
-class ResumeModel extends Model {
+class ResumeModel extends AbstractModel {
     const MODEL_NAME = 'Resume';
 
     /**

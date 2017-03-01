@@ -3,7 +3,7 @@
 /**
  * deactivate account form
  */
-class DeactivateForm extends Form {
+class DeactivateForm extends Form implements FormInterface {
     public $form;
     public $userId;
 
@@ -21,6 +21,8 @@ class DeactivateForm extends Form {
     public function __construct($dbh) {
         parent::__construct($dbh);
     }
+
+    public function populateForm() {}
 
     /**
      * attempt to submit the form using the populated fields

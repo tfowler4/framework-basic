@@ -16,5 +16,5 @@ function logger($severity, $message, $user = 'user') {
 
 function redirect($address) {
     header('Location: ' . $address);
-    exit;
+    die();
 }

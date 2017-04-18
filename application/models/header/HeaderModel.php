@@ -68,19 +68,19 @@ class HeaderModel extends AbstractModel {
         $navigationArray = array();
 
         // Biography
-        $navItem = array('id' => 'bio-nav','title' => 'Bio', 'model' => 'Bio', 'link' => '', 'icon' => 'glyphicon glyphicon-user', 'dropdown' => array());
+        $navItem = array('id' => 'bio-nav','title' => 'Bio', 'model' => 'Bio', 'link' => '', 'icon' => 'fa fa-user fa-fw', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
         // Resume
-        $navItem = array('id' => 'resume-nav','title' => 'Resume', 'model' => 'Resume', 'link' => '', 'icon' => 'fa fa-file-pdf-o', 'dropdown' => array());
+        $navItem = array('id' => 'resume-nav','title' => 'Resume', 'model' => 'Resume', 'link' => '', 'icon' => 'fa fa-file-pdf-o fa-fw', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
         // Portfolio
-        $navItem = array('id' => 'portfolio-nav','title' => 'Portfolio', 'model' => 'Portfolio', 'link' => '', 'icon' => 'fa fa-file-text', 'dropdown' => array());
+        $navItem = array('id' => 'portfolio-nav','title' => 'Portfolio', 'model' => 'Portfolio', 'link' => '', 'icon' => 'fa fa-file-text fa-fw', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
         // Github
-        $navItem = array('id' => 'git-nav','title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt', 'dropdown' => array());
+        $navItem = array('id' => 'git-nav','title' => 'GitHub', 'model' => ' ', 'link' => 'http://www.github.com/tfowler4', 'icon' => 'fa fa-github-alt fa-fw', 'dropdown' => array());
         array_push($navigationArray, $navItem);
 
         // navigation

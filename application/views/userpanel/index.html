@@ -57,78 +57,17 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <div id="change-email" class="collapse">
-                                <form action="<?php echo SITE_URL . 'userpanel'; ?>" method="POST">
-                                    <div class="form-group has-feedback">
-                                        <label for="userpanel-email" class="control-label">New Email Address</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                            <input type="text" class="form-control" id="userpanel-email" placeholder="" name="email-address" value="">
-                                        </div>
-                                    </div>
+                            <?php include 'change-email-form.html'; ?>
 
-                                    <button type="submit" name="form" value="change-email" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Update</button>
-                                </form>
-                            </div>
+                            <?php include 'change-password-form.html'; ?>
 
-                            <div id="change-password" class="collapse">
-                                <form action="<?php echo SITE_URL . 'userpanel'; ?>" method="POST">
-                                    <div class="form-group has-feedback">
-                                        <label for="userpanel-new-password" class="control-label">Current Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="userpanel-old-password" placeholder="" name="old-password" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group has-feedback">
-                                        <label for="userpanel-old-password" class="control-label">New Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="userpanel-new-password" placeholder="" name="new-password" value="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group has-feedback">
-                                        <label for="userpanel-old-password" class="control-label">Confirm Password</label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input type="password" class="form-control" id="userpanel-new-password" placeholder="" name="confirm-password" value="">
-                                        </div>
-                                    </div>
-
-                                    <button type="submit" name="form" value="update-password" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Update</button>
-                                </form>
-                            </div>
-
-                            <div id="change-user-settings" class="collapse">
-
-                            </div>
+                            <?php include 'change-user-settings-form.html'; ?>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-xs-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">User Details</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li class="list-group-item text-center"><b>User Name</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->username; ?></li>
-                                <li class="list-group-item text-center"><b>Email Address</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->emailAddress; ?></li>
-                                <li class="list-group-item text-center"><b>Date Joined</b></li>
-                                <li class="list-group-item text-center"><?php echo $user->dateJoined; ?></li>
-                            </ul>
-                        </div>
-
-                        <div class="panel-footer text-center">
-                            <button id="deactivate-account" type="button" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</button>
-                        </div>
-                    </div>
+                    <?php include 'right-menu.html'; ?>
                 </div>
             </div>
         </div>
@@ -156,10 +95,6 @@
                         </div>
                     </form>
                 </p>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

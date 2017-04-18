@@ -20,8 +20,11 @@ class App {
             array_splice($url, 0, 1);
         }
 
+        // set parameters from url
+        $this->_params = $url ? array_values($url) : array();
+
         // load the new controller
-        $this->_controller = new $this->_controller;
+        $this->_controller = new $this->_controller($this->_params);
 
         if ( !empty($url[0]) ) {
             if ( method_exists($this->_controller, $url[0]) ) {
@@ -30,9 +33,7 @@ class App {
             }
         }
 
-        $this->_params = $url ? array_values($url) : array();
-
-        call_user_func_array( array($this->_controller, $this->_method), array($this->_params));
+        call_user_func_array( array($this->_controller, $this->_method), array());
     }
 
     /**
@@ -42,7 +43,7 @@ class App {
      */
     private function _parseURL() {
         if ( isset($_GET['url']) ) {
-            return explode('/', filter_var(rtrim($_GET['url'], '/'), FILTER_SANITIZE_URL) );
+            return explode('/', filter_var(rtrim($_GET['url'], '/')) ); //FILTER_SANITIZE_URL
         }
     }
 }

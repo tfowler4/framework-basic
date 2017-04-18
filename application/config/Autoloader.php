@@ -9,6 +9,7 @@ function __autoload($className)  {
         'controllers/',
         'interfaces/',
         'lib/',
+        'forms/',
         'models/',
         'views/'
     );

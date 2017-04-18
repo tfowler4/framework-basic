@@ -1,0 +1,20 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">User Details</h3>
+    </div>
+
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item text-center"><b>User Name</b></li>
+            <li class="list-group-item text-center"><?php echo $user->username; ?></li>
+            <li class="list-group-item text-center"><b>Email Address</b></li>
+            <li class="list-group-item text-center"><?php echo $user->emailAddress; ?></li>
+            <li class="list-group-item text-center"><b>Date Joined</b></li>
+            <li class="list-group-item text-center"><?php echo $user->dateJoined; ?></li>
+        </ul>
+    </div>
+
+    <div class="panel-footer text-center">
+        <button id="deactivate-account" type="button" class="btn btn-danger"><i class="fa fa-times"></i> Deactive Account</button>
+    </div>
+</div>

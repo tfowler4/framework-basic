@@ -12,15 +12,6 @@ class Database {
     private static $_dbh;
 
     /**
-     * constructor
-     */
-    private function __construct() {
-        if ( !self::$_dbh ) {
-            new Database();
-        }
-    }
-
-    /**
      * initialize a database object with connection parameters
      *
      * @param  string $username [ user name for database ]

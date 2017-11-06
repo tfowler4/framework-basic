@@ -8,13 +8,6 @@ abstract class AbstractModel {
 
     public $forms;
 
-    /**
-     * constructor
-     *
-     * @param  obj $dbh [ database handler ]
-     *
-     * @return void
-     */
     public function __construct($dbh) {
         $this->_dbh = $dbh;
     }

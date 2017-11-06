@@ -7,9 +7,7 @@ function __autoload($className)  {
     $directorys = array(
         'config/',
         'controllers/',
-        'interfaces/',
         'lib/',
-        'forms/',
         'models/',
         'views/'
     );
@@ -20,6 +18,7 @@ function __autoload($className)  {
         $isModelFile = true;
     }
 
+    //print_r($directorys);
     foreach( $directorys as $directory ) {
         $classPath = ABS_BASE_PATH . 'application/' . $directory . $className . '.php';
 
@@ -37,3 +36,5 @@ function __autoload($className)  {
         }
     }
 }
+
+spl_autoload_register('__autoload');

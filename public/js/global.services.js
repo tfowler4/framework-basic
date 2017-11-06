@@ -1,37 +1,20 @@
 var globalServices = (function() {
-    this.getLoginForm = function(callBack) {
+    this.exampleCall = function(callBack) {
         $.ajax({
             type: 'GET',
-            url: './services/getLoginForm/',
+            url: '', // url of call
             dataType: 'json',
             cache: true,
             success: function(data) {
-                callBack(data);
+                /*
+                    handle the successful ajax call
+                 */
             },
-            error: function(xhr, status, thrownError, error){
-                console.log('error');
-                console.log(xhr);
-                console.log(status);
-                console.log(thrownError);
-                console.log(error);
-            },
-            complete: function(data) {
-                $('#modal-spinner').hide();
-            },
-            async: true
-        });
-    };
+            error: function(xhr, status, thrownError, error) {
+                /*
+                    handle the failure ajax call
+                 */
 
-    this.getLogoutForm = function(callBack) {
-        $.ajax({
-            type: 'GET',
-            url: './services/getLogoutForm/',
-            dataType: 'json',
-            cache: true,
-            success: function(data) {
-                callBack(data);
-            },
-            error: function(xhr, status, thrownError, error){
                 console.log('error');
                 console.log(xhr);
                 console.log(status);
@@ -39,29 +22,9 @@ var globalServices = (function() {
                 console.log(error);
             },
             complete: function(data) {
-                $('#modal-spinner').hide();
-            },
-            async: true
-        });
-    };
-
-    this.logoutUser = function(callBack) {
-        $.ajax({
-            type: 'GET',
-            url: './services/logoutUser/',
-            cache: true,
-            success: function(data) {
-                callBack(data);
-            },
-            error: function(xhr, status, thrownError, error){
-                console.log('error');
-                console.log(xhr);
-                console.log(status);
-                console.log(thrownError);
-                console.log(error);
-            },
-            complete: function(data) {
-                $('#modal-spinner').hide();
+                /*
+                    handle the completion of the call regardless of success/error
+                 */
             },
             async: true
         });

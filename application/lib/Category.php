@@ -8,7 +8,7 @@ class Category {
     public $name;
     public $meta;
     public $icon;
-    public $numOfArticles;
+    public $numOfStories;
     public $primaryColor;
 
     /**
@@ -23,7 +23,7 @@ class Category {
         $this->name          = $data['name'];
         $this->meta          = $data['meta'];
         $this->icon          = $data['icon'];
-        $this->numOfArticles = $data['num_of_articles'];
+        $this->numOfStories  = $data['num_of_stories'];
         $this->primaryColor  = $data['color_1'];
     }
 }

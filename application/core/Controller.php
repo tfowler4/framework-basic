@@ -1,5 +1,7 @@
 <?php
 
+use MatthiasMullie\Minify;
+
 /**
  * base controller class
  */
@@ -12,9 +14,15 @@ abstract class AbstractController {
     protected $_dbh;
     protected $_data = array();
     protected $_params;
-    protected $_breadCrumbs = array();
+    protected $_loadedJSFiles = array();
+    protected $_loadedCSSFiles = array();
 
-    public $alert;
+    public $alert = array(
+        'title'   => '',
+        'message' => '',
+        'type'    => '',
+        'active'  => FALSE
+    );
 
     /**
      * constructor
@@ -48,7 +56,7 @@ abstract class AbstractController {
      *
      * @return obj [ model class object ]
      */
-    protected function _loadModal($modalName, $params = '') {
+    protected function _loadModel($modalName, $params = '') {
         $modalName = strtolower($modalName);
         $modelFile = ucfirst($modalName) . 'Model';
 
@@ -63,7 +71,6 @@ abstract class AbstractController {
      *
      * @return void
      */
-
     protected function _loadView($view, $data = array()) {
         $viewFile = '';
 
@@ -75,12 +82,26 @@ abstract class AbstractController {
         }
 
         if ( !file_exists($viewFile) ) {
-            $this->_loadError();
+            return;
         }
+
+        $moduleFolder = explode('/', $view)[0];
 
         extract((array)$data);
 
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_start('ob_gzhandler');
+        }
+
         include strtolower($viewFile);
+
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_end_flush();
+        }
+
+        // load view js/css if exist
+        $this->_loadJS($moduleFolder);
+        $this->_loadCSS($moduleFolder);
     }
 
     /**
@@ -88,25 +109,58 @@ abstract class AbstractController {
      *
      * @return void
      */
-    protected function _loadJS() {
-        // load global JS files
-        $filePath = FOLDER_JS . '*.js';
+    protected function _loadJS($folder = '') {
+        $jsFilePath = FOLDER_JS . '*.js';
 
-        foreach(glob($filePath) as $file) {
-            $file = SITE_JS . basename($file) . '?v=' . TIMESTAMP;
-            echo '<script src="' . $file . '"></script>';
+        // only load from preferred folder
+        if ( !empty($folder) ) {
+            $jsFilePath = FOLDER_JS . 'modules/' . $folder . '/*.js';
+
+            foreach(glob($jsFilePath) as $file) {
+                if ( in_array($file, $this->_loadedJSFiles) ) {
+                    continue;
+                }
+
+                $this->_loadedJSFiles[] = $file;
+
+                $filePath = SITE_JS . 'modules/' . $folder . '/' . basename($file) . '?v=' . TIMESTAMP;
+                $absFile  = ABS_BASE_PATH . '/public/js/modules/' . $folder . '/' . basename($file);
+
+                echo '<script src="' . $file . '"></script>' . "\n";
+            }
+
+            return;
         }
 
-        // load site settings into javascript
-        echo '<script>global.loadSitePaths("' . SITE_URL . '", "' . ABS_BASE_PATH . '");</script>';
+        // load global JS files
+        foreach(glob($jsFilePath) as $file) {
+            if ( in_array($file, $this->_loadedJSFiles) ) {
+                continue;
+            }
+
+            $this->_loadedJSFiles[] = $file;
+
+            $filePath = SITE_JS . basename($file) . '?v=' . TIMESTAMP;
+            $absFile  = ABS_BASE_PATH . '/public/js/' . basename($file);
+
+            echo '<script src="' . $filePath . '"></script>' . "\n";
+        }
 
         // load controller JS files
         if ( !empty($this->_controllerName) ) {
-            $filePath = FOLDER_JS . 'modules/' . strtolower($this->_controllerName) . '/*.js';
+            $jsFilePath = FOLDER_JS . 'modules/' . strtolower($this->_controllerName) . '/*.js';
 
-            foreach(glob($filePath) as $file) {
-                $file = SITE_JS . 'modules/' . strtolower($this->_controllerName) . '/' . basename($file) . '?v=' . TIMESTAMP;
-                echo '<script src="' . $file . '"></script>';
+            foreach(glob($jsFilePath) as $file) {
+                if ( in_array($file, $this->_loadedJSFiles) ) {
+                    continue;
+                }
+
+                $this->_loadedJSFiles[] = $file;
+
+                $filePath = SITE_JS . 'modules/' . strtolower($this->_controllerName) . '/' . basename($file) . '?v=' . TIMESTAMP;
+                $absFile  = ABS_BASE_PATH . '/public/js/modules/' . strtolower($this->_controllerName)  . '/' . basename($file);
+
+                echo '<script src="' . $file . '"></script>' . "\n";
             }
         }
     }
@@ -116,22 +170,57 @@ abstract class AbstractController {
      *
      * @return void
      */
-    protected function _loadCSS() {
+    protected function _loadCSS($folder = '') {
+        $cssFilePath = FOLDER_CSS . '*.css';
+
+        // only load from preferred folder
+        if ( !empty($folder) ) {
+            $cssFilePath = FOLDER_CSS . 'modules/' . $folder . '/*.css';
+
+            foreach(glob($cssFilePath) as $file) {
+                if ( in_array($file, $this->_loadedCSSFiles) ) {
+                    continue;
+                }
+
+                $this->_loadedCSSFiles[] = $file;
+
+                $filePath = SITE_CSS . 'modules/' . $folder . '/' .basename($file) . '?v=' . TIMESTAMP;
+                $absFile  = ABS_BASE_PATH . '/public/css/modules/' . $folder  . '/' . basename($file);
+
+                echo '<link rel="stylesheet" type="text/css" href="' . $filePath  . '">' . "\n";
+            }
+
+            return;
+        }
+
         // load global CSS file
+        foreach(glob($cssFilePath) as $file) {
+            if ( in_array($file, $this->_loadedCSSFiles) ) {
+                continue;
+            }
 
-        $filePath = FOLDER_CSS . '*.css';
+            $this->_loadedCSSFiles[] = $file;
 
-        foreach(glob($filePath) as $file) {
-            $file = SITE_CSS . basename($file) . '?v=' . TIMESTAMP;
-            echo '<link rel="stylesheet" type="text/css" href="' . $file  . '">';
+            $filePath = SITE_CSS . basename($file) . '?v=' . TIMESTAMP;
+            $absFile  = ABS_BASE_PATH . '/public/css/' . basename($file);
+
+            echo '<link rel="stylesheet" type="text/css" href="' . $filePath  . '">' . "\n";
         }
 
         if ( !empty($this->_controllerName) ) {
-            $filePath = FOLDER_CSS . 'modules/' . strtolower($this->_controllerName) . '/*.css';
+            $filePath = FOLDER_CSS . 'modules/' . strtolower($this->_controllerName) . '/*';
 
             foreach(glob($filePath) as $file) {
-                $file = SITE_CSS . 'modules/' . strtolower($this->_controllerName) . '/' . basename($file) . '?v=' . TIMESTAMP;
-                echo '<link rel="stylesheet" type="text/css" href="' . $file  . '">';
+                if ( in_array($file, $this->_loadedCSSFiles) ) {
+                    continue;
+                }
+
+                $this->_loadedCSSFiles[] = $file;
+
+                $filePath = SITE_CSS . 'modules/' . strtolower($this->_controllerName) . '/' . basename($file) . '?v=' . TIMESTAMP;
+                $absFile  = ABS_BASE_PATH . '/public/css/modules/' . strtolower($this->_controllerName)  . '/' . basename($file);
+
+                echo '<link rel="stylesheet" type="text/css" href="' . $filePath  . '">' . "\n";
             }
         }
     }
@@ -164,30 +253,15 @@ abstract class AbstractController {
      * @return void
      */
     protected function _loadHeader() {
-        $headerModel = $this->_loadModal('header', $this->_controllerName);
-
-        $this->_data['breadCrumbs'] = $this->_loadBreadCrumbs();
-        $this->_data['controller']  = $this->_controllerName;
-
-        $this->_loadView('header/index', $headerModel);
-        $this->_loadView('modals/index');
-    }
-
-    protected function _addBreadCrumb($breadCrumb) {
-        array_push($this->_breadCrumbs, $breadCrumb);
-    }
-
-    protected function _loadBreadCrumbs() {
-        if ( empty($this->_breadCrumbs) ) {
-            return array();
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_start('ob_gzhandler');
         }
 
-        end($this->_breadCrumbs);
-        $breadCrumbIndex = key($this->_breadCrumbs);
-        $this->_breadCrumbs[$breadCrumbIndex]['active'] = TRUE;
-        reset($this->_breadCrumbs);
+        $this->_loadView('header/index', $this->_data);
 
-        return $this->_breadCrumbs;
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_end_flush();
+        }
     }
 
     /**
@@ -196,8 +270,15 @@ abstract class AbstractController {
      * @return void
      */
     protected function _loadFooter() {
-        $footerModel = $this->_loadModal('footer');
-        $this->_loadView('footer/index', $footerModel);
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_start('ob_gzhandler');
+        }
+
+        $this->_loadView('footer/index', $this->_data);
+
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_end_flush();
+        }
     }
 
     /**
@@ -209,10 +290,12 @@ abstract class AbstractController {
      * @return void
      */
     protected function _loadPageView($view, $model) {
-        $this->_handleSessionData();
+        $this->_data['alert']       = $this->alert;
 
         // Begin Compression
-        ob_start('ob_gzhandler');
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_start('ob_gzhandler');
+        }
 
         // load header
         $this->_loadHeader();
@@ -221,26 +304,10 @@ abstract class AbstractController {
         $this->_loadView($view, $model);
 
         // load footer
-        $this->_loadFooter();
+        //$this->_loadFooter();
 
-        ob_end_flush();
-    }
-
-    /**
-     * handle any data in the session for forms
-     *
-     * @return void
-     */
-    protected function _handleSessionData() {
-        $formHandler = new FormHandler($this->_dbh);
-
-        if ( $formHandler->isFormSubmitted() ) {
-            $formHandler->process();
-        }
-
-        if ( !empty(SessionData::get('message')) ) {
-            $this->alert = new Alert(SessionData::get('message'));
-            SessionData::remove('message');
+        if ( defined('SERVER"') && SERVER == 'live' ) {
+            ob_end_flush();
         }
     }
 
@@ -273,7 +340,7 @@ abstract class AbstractController {
             $this->_pageTitle = $pageTitle;
         }
 
-        $this->_pageTitle .= ' | ' . $this->_siteName;
+        $this->_pageTitle = $this->_pageTitle . ' | ' . $this->_siteName;
     }
 
     /**
@@ -299,6 +366,12 @@ abstract class AbstractController {
      * @return void
      */
     protected function _setParameters($params) {
+        if ( !empty($params) ) {
+            foreach ( $params as $index => $param ) {
+                $params[$index] = urldecode($param);
+            }
+        }
+
         $this->_params = $params;
     }
 }

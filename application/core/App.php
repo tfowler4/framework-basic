@@ -8,9 +8,6 @@ class App {
     protected $_method     = 'index';
     protected $_params     = array();
 
-    /**
-     * constructor
-     */
     public function __construct() {
         $url  = $this->_parseURL();
         $file = ABS_BASE_PATH . 'application/controllers/' . $url[0] . '.php';
@@ -36,11 +33,6 @@ class App {
         call_user_func_array( array($this->_controller, $this->_method), array());
     }
 
-    /**
-     * parses the url string into an array
-     *
-     * @return array [ array of url parameters split by '/' ]
-     */
     private function _parseURL() {
         if ( isset($_GET['url']) ) {
             return explode('/', filter_var(rtrim($_GET['url'], '/')) ); //FILTER_SANITIZE_URL

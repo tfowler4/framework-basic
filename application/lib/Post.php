@@ -14,13 +14,13 @@ class Post {
     public static function get($key) {
         $value = '';
 
-        if ( !empty($_POST[$key]) ) {
+        if ( isset($_POST[$key]) ) {
             $value = $_POST[$key];
         } elseif ( !empty($_FILES[$key]) ) {
             $value = $_FILES[$key];
         }
 
-        return trim($value);
+        return $value;
     }
 
     /**

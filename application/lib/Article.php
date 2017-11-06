@@ -1,7 +1,7 @@
 <?php
 
 /**
- * article class for displaying front page articles
+ * article class for displaying front page stories
  */
 class Article {
     public $articleId;

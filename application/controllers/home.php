@@ -3,20 +3,20 @@
 /**
  * home controller
  */
-class Home extends Controller {
-    protected $_modelName = 'Home';
-    /**
-     * index model function when page is accessed
-     *
-     * @param  array [ url GET parameters ]
-     *
-     * @return void
-     */
-    public function index($params = array()) {
-        $this->_view('index', $this->_model($this->_modelName, $params));
+class Home extends AbstractController {
+    const CONTROLLER_NAME  = 'Home';
+    const PAGE_TITLE       = 'Home';
+    const PAGE_DESCRIPTION = 'Home Description';
+
+    public function __construct($params) {
+        parent::__construct();
+        $this->_setPageTitle();
+        $this->_setPageDescription(META_DESCRIPTION);
+        $this->_setParameters($params);
     }
 
-    public function grid($params = array()) {
-        $this->_view('grid', $this->_model($this->_modelName, $params));
+    public function index() {
+        $this->_loadView('header/index', $this->_data);
+        $this->_loadView('home/index', $this->_data);
     }
 }

@@ -1,0 +1,67 @@
+<div id="video-carousel" class="carousel slide" data-ride="carousel" style="margin:20px;">
+    <!-- Indicators -->
+    <ol class="carousel-indicators" style="top:0px; height:12px;">
+        <?php $active = 'active'; ?>
+
+        <?php foreach ( $videos as $index => $video ) { ?>
+            <li data-target="#video-carousel" data-slide-to="<?php echo $index; ?>" class="<?php echo $active; ?>"></li>
+
+            <?php $active = ''; ?>
+        <?php } ?>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <?php $active = 'active'; ?>
+
+        <?php foreach ( $videos as $index => $video ) { ?>
+            <?php
+            $url = $video['url'];
+
+            if ( strpos($video['url'], 'youtube') !== FALSE ) {
+                $url = preg_replace(
+                    "/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
+                    "//www.youtube.com/embed/$1",
+                    $video['url']
+                );
+            }
+
+            if ( strpos($video['url'], 'youtu.be') !== FALSE ) {
+                $url = preg_replace(
+                    "/\s*[a-zA-Z\/\/:\.]*youtu.be\/([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
+                    "//www.youtube.com/embed/$1",
+                    $video['url']
+                );
+            }
+            ?>
+
+            <div class="item <?php echo $active; ?>">
+                <?php if ( strpos($video['url'], 'twitch') !== FALSE ) { ?>
+                    <div>
+                        <a href="<?php echo $video['url']; ?>" target="_blank"><img src="<?php echo SITE_URL . 'public/images/logos/twitch.svg'; ?>"></a>
+                    </div>
+                <?php } else { ?>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class='embed-responsive-item' src="<?php echo $url; ?>" allowfullscreen></iframe>
+                    </div>
+                <?php } ?>
+
+                <br>
+
+                <div class="text-center"><a href="<?php echo $video['url']; ?>;" class="btn btn-primary" target="_blank"><i class="fa fa-reply fa-fw fa-lg"></i> <?php echo $video['url']; ?></a></div>
+            </div>
+            <?php $active = ''; ?>
+        <?php } ?>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control text-primary" href="#video-carousel" role="button" data-slide="prev" style="width:5%; margin-left:-40px; background-image:none !important;">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="right carousel-control text-primary" href="#video-carousel" role="button" data-slide="next" style="width:5%; margin-right:-40px; background-image:none !important;">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

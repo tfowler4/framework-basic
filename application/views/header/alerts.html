@@ -1,0 +1,12 @@
+<!--
+    global alert html
+-->
+
+<div class="row">
+    <div class="col-lg-10 col-lg-push-1 col-xs-12">
+        <div class="alert <?php echo $alert['type']; ?> alert-dismissable fade in" id="global-alert" style="display:<?php if ( $alert['active'] == FALSE ) { ?>none; <?php } else { ?>block; <?php } ?>">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong><?php echo $alert['title']; ?></strong> <span><?php echo $alert['message']; ?></span>
+        </div>
+    </div>
+</div>
